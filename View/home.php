@@ -14,7 +14,7 @@
 <script>
 	$(document).ready(function() {
 		$("a").click(function(){
-			var txt = $(this).attr("id");
+			var txt = $(this).attr("href");
 			console.log(txt);
 		});
 	});
@@ -57,20 +57,26 @@
 						<td style="width: 135px;">使用者名稱</td>
 						<td style="max-width: 600px;">文章</td>
 					</tr>
-					<!--取得文章資料-->
-					<?php
-					for($i=0;$i<20;$i++){
-						echo "
-							<tr class=\"b-list__row\">
-								<td class=\"b-list__account\">
-									<a href=\"#名字".$i."\" class=\"b-list__account__user\"  id=\"name".$i."\">名字</a>
-								</td>
-								<td class=\"b-list__main\">
-									<a href=\"#文章".$i."\" class=\"b-list__main__title\" id=\"article".$i."\">文章名稱文章名稱文章名稱文章名稱文章名稱文章名稱文章名稱文章名稱文章名稱文章名稱文章名稱文章名稱文章名稱</a>
-								</td>
-							</tr>";
-					}
-					?>
+					<form method="post" action>
+						<!--取得文章資料-->
+						<?php
+						for($i=0;$i<20;$i++){
+							echo "
+								<tr class=\"b-list__row\">
+									<td class=\"b-list__account\">
+										<a href=\"test.php?id=".$i."&id2=".$i."\" class=\"b-list__account__user\"  id=\"name".$i."\">
+											名字
+										</a>
+									</td>
+									<td class=\"b-list__main\">
+										<a href=\"#文章".$i."\" class=\"b-list__main__title\" id=\"article".$i."\">
+											文章名稱文章名稱文章名稱文章名稱
+										</a>
+									</td>
+								</tr>";
+						}
+						?>
+					</form>
 				</tbody>
 			</table>
 		</div>
