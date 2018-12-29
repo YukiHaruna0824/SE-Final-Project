@@ -1,10 +1,5 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: shion
- * Date: 2018/12/29
- * Time: 上午 11:39
- */
+
 
 abstract class BaseArticle
 {
@@ -17,6 +12,8 @@ abstract class BaseArticle
     public abstract function  UpdateContent($id,$Content);
 
     public abstract function Choose($id);
+
+    public abstract function  choseAccountArticle($accont,$Range,$Range2);
 
     public abstract function ChooseRange($Range,$Range2);
 }

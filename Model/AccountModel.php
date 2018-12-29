@@ -17,6 +17,7 @@ class AccountModel
         return $this->account->CheckAccount($account);
     }
 
+    //成功回傳該ID 失敗回傳-1
     public function LoginCheck($account,$password)
     {
         return $this->account->LoginCheck($account,$password);
@@ -40,9 +41,26 @@ class AccountModel
         return $this->account->updatePassWord($account,$password);
     }
 
+    public function find($account)
+    {
+        return $this->account->find($account);
+    }
+
+    public function RandomChoose($account)
+    {
+        return $this->account->RandomChoose($account);
+    }
+
     //成功回傳該ID 失敗回傳-1
     public  function  StoreDaSaBi($account,$money)
     {
         return $this->account->StoreDaSaBi($account,$money);
     }
+
+    //成功回傳該ID 失敗||沒錢回傳-1
+    public function UseDaSaBi($account,$money)
+    {
+        return $this->account->UseDaSaBi($account,$money);
+    }
+
 }

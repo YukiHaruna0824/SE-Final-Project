@@ -12,5 +12,11 @@ abstract class  BaseAccount
 
     public abstract function  updatePassWord($account, $password);
 
+    public abstract function find($account);
+
+    public abstract function RandomChoose($account);
+
     public abstract function  StoreDaSaBi($account,$money);
+
+    public abstract function  UseDaSaBi($account,$money);
 }

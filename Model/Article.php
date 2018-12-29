@@ -24,14 +24,15 @@ class Article
         else {
             //否則就代表連線失敗 mysqli_connect_error() 是顯示連線錯誤訊息
             echo '無法連線mysql資料庫 :<br/>' . mysqli_connect_error();
-            return 0;
+            return -1;
         }
 
         $command = "CREATE TABLE IF NOT EXISTS allArticles 
                 (id INTEGER not NULL AUTO_INCREMENT , PRIMARY KEY ( id ) , Owner VARCHAR(30) not NULL
                 , Title VARCHAR(30) not NULL, Content TEXT, DeliveryDate TIMESTAMP)" ;
-        if($this->link->query($command)==true)
-            echo "create table su";
+        $this->link->query($command);
+        //if()
+         //   echo "create table su";
         return 1;
     }
 
@@ -55,7 +56,7 @@ class Article
             }
         }
         else
-            return 0;
+            return -1;
     }
 
     public  function  DeleteAritcle($id)
@@ -82,7 +83,7 @@ class Article
         }
         else
         {
-            return 0;
+            return -1;
         }
     }
 
@@ -90,37 +91,59 @@ class Article
     {
         $command = "UPDATE allArticles 
                 SET Title =  '$Title' WHERE id = '$id' ";
-        return $this->link->query($command);
+        if($this->link->query($command)==true)
+            return 1;
+        else
+            return -1;
+
     }
 
     public  function  UpdateContent($id,$Content)
     {
         $command = "UPDATE allArticles 
                 SET Content =  '$Content' WHERE id = '$id' ";
-        return $this->link->query($command);;
+        if($this->link->query($command)==true)
+            return 1;
+        else
+            return -1;
     }
 
-    public function Choose($id)//*******************************************
+    public function Choose($id)
     {
         $command = "SELECT * FROM allArticles where id = '$id'";
         $result = $this->link->query($command);
         if ($result && mysqli_num_rows($result) > 0) {
-            while($row = $result->fetch_assoc()) {
-                return $row;
-             }
+            return $result;
         }
-        return 0;
+        return -1;
     }
 
-
+    public function  choseAccountArticle($account,$Range,$Range2)
+    {
+        $command = "SELECT * FROM allArticles where Owner = '$account' ORDER BY DeliveryDate ASC LIMIT $Range, $Range2";
+        $result = $this->link->query($command);
+        if ($result && mysqli_num_rows($result) > 0) {
+            return $result;
+        }
+        return -1;
+    }
 
     public function ChooseRange($Range,$Range2)
     {
-        $command = "SELECT * FROM allArticles ORDER BY name ASC LIMIT $Range, $Range2";
+        $command = "SELECT * FROM allArticles ORDER BY DeliveryDate ASC LIMIT $Range, $Range2";
+
         $result = $this->link->query($command);
+
         if ($result && mysqli_num_rows($result) > 0) {
+            /*while ($row = $result->fetch_assoc()) {
+                echo $row["id"];
+                echo $row["Owner"];
+                echo $row["Title"];
+                echo $row["Content"];
+                echo $row["DeliveryDate"];
+            }*/
            return $result;
         }
-        return 0;
+        return -1;
     }
 }

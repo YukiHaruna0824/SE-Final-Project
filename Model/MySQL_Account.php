@@ -27,7 +27,8 @@ class  MySQL_Account extends BaseAccount {
             $command = "CREATE TABLE IF NOT EXISTS account 
                 (id INTEGER not NULL AUTO_INCREMENT , PRIMARY KEY ( id ) , Account VARCHAR(30) not NULL , UNIQUE KEY ( Account ) 
                 , Password TEXT , Gender TEXT , Class TEXT , DaSaBi INT(32) , FriendSheet TEXT , Articles TEXT )" ;
-            //if($this->link->query($command)==true)
+            $this->link->query($command);
+            //if(==true)
              //   echo "create table su";
             return 1;
     }
@@ -56,6 +57,8 @@ class  MySQL_Account extends BaseAccount {
             while($row = $result->fetch_assoc()) {
                 if($password==$row["Password"])
                     return $row["Account"];
+                else
+                    return -1;
             }
         }
         else
@@ -136,6 +139,30 @@ class  MySQL_Account extends BaseAccount {
             return -1;
     }
 
+    public function find($account)
+    {
+        $command = "SELECT * FROM account where Account =  '$account' LIMIT 1";
+        $result = $this->link->query($command);
+        if ($result && mysqli_num_rows($result) > 0) {
+            return $result;
+        }
+        else
+            return -1;
+    }
+
+
+    public function RandomChoose($account)//********************************
+    {
+        $command = "SELECT * FROM account ORDER BY RAND() LIMIT 1";
+        $result = $this->link->query($command);
+
+        if ($result && mysqli_num_rows($result) > 0) {
+            return $result;
+        }
+        else
+            return -1;
+    }
+
     public  function  StoreDaSaBi($account,$money)
     {
         $command = "SELECT * FROM account where Account =  '$account' LIMIT 1";
@@ -155,16 +182,27 @@ class  MySQL_Account extends BaseAccount {
             return -1;
     }
 
-    public function find($account)
+    public  function  UseDaSaBi($account,$money)
     {
         $command = "SELECT * FROM account where Account =  '$account' LIMIT 1";
         $result = $this->link->query($command);
         if ($result && mysqli_num_rows($result) > 0) {
             while($row = $result->fetch_assoc()) {
-                return $row;
+                $DaSaBi = $row["DaSaBi"];
+                $DaSaBi -= $money;
+                if($DaSaBi<0)
+                    return -1;
+                $command = "UPDATE account 
+                SET DaSaBi =  '$DaSaBi' WHERE Account = '$account' ";
+                $this->link->query($command);
+                $id = $row["id"];
+                return $id;
             }
         }
+        else
+            return -1;
     }
+
 
 }
 
