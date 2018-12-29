@@ -1,17 +1,15 @@
-<?php session_start(); ?>
 <?php
 require('../Model/AccountModel.php');
-
 
 class Account
 {
     private $account_name;
     private $id;
     private $account_model;
-    //find this accountnamehas been used
+    //find this accountname has been used or not
     public function detect_name($inaccount_name)
     {
-        return $this->account_model->CheckAccount($inaccount_name);
+        return -1;
     }
     public function register($inaccountname,$password,$Gender,$Class)
     {
@@ -56,7 +54,7 @@ class Account
     }
 }
 //logout
-if((isset($_POST['dm'])&&isset($_POST['un'])))
+if((isset($_POST['dm'])&&isset($_POST['un'])&&(!isset($_POST['gd']))))
 {
     $name=$_POST['un'];
     if(isset($_SESSION[$name]))
@@ -102,3 +100,4 @@ elseif(isset($_POST['un']))
         echo "";
 }
 ?>
+<?php session_start();?>
