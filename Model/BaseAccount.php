@@ -2,8 +2,6 @@
 
 abstract class  BaseAccount
 {
-    public abstract function Connect();
-
     public abstract function Add($account, $password, $Gender, $Class);
 
     public abstract function  Delete($account);

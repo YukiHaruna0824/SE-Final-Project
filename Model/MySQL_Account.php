@@ -13,7 +13,7 @@ class  MySQL_Account extends BaseAccount {
     public $dbname = "ntust";
 
     public $link =null;
-    public function Connect()
+    function __construct()
     {
            $this->link = mysqli_connect($this->host, $this->dbuser, $this->dbpw, $this->dbname);
             if ($this->link) {
@@ -22,7 +22,7 @@ class  MySQL_Account extends BaseAccount {
              else {
                 //否則就代表連線失敗 mysqli_connect_error() 是顯示連線錯誤訊息
                 echo '無法連線mysql資料庫 :<br/>' . mysqli_connect_error();
-                return 0;
+                return -1;
             }
             $command = "CREATE TABLE IF NOT EXISTS account 
                 (id INTEGER not NULL AUTO_INCREMENT , PRIMARY KEY ( id ) , Account VARCHAR(30) not NULL , UNIQUE KEY ( Account ) 
@@ -32,6 +32,17 @@ class  MySQL_Account extends BaseAccount {
             return 1;
     }
 
+    public  function  CheckAccount($account)
+    {
+        $command = "SELECT * FROM account where Account =  '$account'  LIMIT 1";
+        $result = $this->link->query($command);
+        //已存在
+        if ($result && mysqli_num_rows($result) > 0) {
+            return 1;
+        }
+        else -1;
+    }
+
     public  function  Add($account, $password, $Gender, $Class)
     {
         $command = "SELECT * FROM account where Account =  '$account'  LIMIT 1";
@@ -39,7 +50,7 @@ class  MySQL_Account extends BaseAccount {
         //已存在
         if ($result && mysqli_num_rows($result) > 0) {
             echo "Already exit";
-            return 0;
+            return -1;
         }
 
         $FriendSheet = $account."_FriendSheet";
@@ -83,7 +94,7 @@ class  MySQL_Account extends BaseAccount {
             return $id;
         }
         else
-            return 0;
+            return -1;
     }
 
     public  function  updatePassWord($account, $password)
@@ -100,7 +111,7 @@ class  MySQL_Account extends BaseAccount {
             }
         }
         else
-            return 0;
+            return -1;
     }
 
     public  function  StoreDaSaBi($account,$money)
@@ -119,7 +130,7 @@ class  MySQL_Account extends BaseAccount {
             }
         }
         else
-            return 0;
+            return -1;
     }
 
 }

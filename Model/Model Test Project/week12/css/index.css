@@ -1,0 +1,126 @@
+body {
+  background-image: url(../images/battlefield1.jpg);
+  background-position: center top;
+  background-repeat: no-repeat;
+  background-attachment: fixed;
+  background-size: cover;
+  margin: 0;
+  padding-bottom: 30px;
+}
+a, a:hover {
+  text-decoration: none;
+}
+
+nav {
+  width: 300px;
+  margin: 100px auto;
+}
+nav ul {
+  padding-left: 0px;
+  list-style: none;
+}
+nav ul li {
+  margin-bottom: 10px;
+}
+nav ul li a {
+  display: block;
+  width: 100%;
+  text-align: center;
+  padding: 20px;
+  background-color: rgba(255,255,255,.6);
+  border: #fff solid 1px;
+  color: #333;
+  text-decoration: none;
+  border-radius: 15px;
+  position: relative;
+}
+nav ul li a:hover {
+  color: #fff;
+  background-color: rgba(255,255,255,0.5);
+}
+
+/* 設定 動作 keyframes 名稱為 icon_animation */
+@keyframes icon_animation {
+	/* 0% 為一開始的時候*/
+	0%	{
+		right:-800px;
+		top:-45px;
+		-ms-transform: rotate(675deg); /* IE 9 */
+		-webkit-transform: rotate(675deg); /* Chrome, Safari, Opera */
+		transform: rotate(675deg);
+		opacity: 0;
+		filter: alpha(opacity = 0);
+	}
+	
+	/* 100% 為結束的時候*/
+	100% {
+		right:60px;
+		top:-30px;
+		-ms-transform: rotate(-45deg); /* IE 9 */
+		-webkit-transform: rotate(-45deg); /* Chrome, Safari, Opera */
+		transform: rotate(-45deg);
+		opacity: 1;
+		filter: alpha(opacity = 100);
+	}
+}
+span.batman_icon {
+  display: none;
+  position: absolute;
+  right: 60px;
+  top: -30px;
+  width: 100px;
+  -ms-transform: rotate(-45deg); /* IE 9 */
+  -webkit-transform: rotate(-45deg); /* Chrome, Safari, Opera */
+  transform: rotate(-45deg);
+}
+
+/*當 a 被滑鼠移上後，span 這個元素就顯示 並套用 icon_animation動畫keyframes 時間為 0.5秒*/
+nav ul li a:hover span {
+  display: block;
+  animation-name: icon_animation;
+  animation-duration: 0.3s;
+  animation-timing-function: ease;
+}
+
+span.batman_icon img {
+  width: 100%;
+}
+
+footer {
+  position: fixed;
+  width: 100%;
+  height: 30px;
+  line-height: 30px;
+  bottom: 0;
+  background-color: rgba(255,255,255,.5);
+  text-align: center;
+}
+#video_bg {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  min-width: 100%;
+  min-height: 100%;
+  width: auto;
+  height: auto;
+  z-index: -100;
+  -webkit-transform: translateX(-50%) translateY(-50%); /* Chrome, newer versions of Opera*/
+  -moz-transform: translateX(-50%) translateY(-50%); /* Firefox */
+  -ms-transform: translateX(-50%) translateY(-50%); /* nternet Explorer */
+  -o-transform: translateX(-50%) translateY(-50%); /* Old versions of Opera */
+  transform: translateX(-50%) translateY(-50%); /* 沒限制，有支援的瀏覽器就會run */
+  -webkit-transition: 1s opacity;
+  transition: 1s opacity;
+}
+.battlefieldlogo{
+  position:absolute;
+  top: 60%;
+  left: 50%;
+  z-index: -99;
+  width:600px;
+  -webkit-transform: translateX(-50%) translateY(-50%); /* Chrome, newer versions of Opera*/
+  -moz-transform: translateX(-50%) translateY(-50%); /* Firefox */
+  -ms-transform: translateX(-50%) translateY(-50%); /* nternet Explorer */
+  -o-transform: translateX(-50%) translateY(-50%); /* Old versions of Opera */
+  transform: translateX(-50%) translateY(-50%); /* 沒限制，有支援的瀏覽器就會run */
+}
