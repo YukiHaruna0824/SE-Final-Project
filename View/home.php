@@ -16,7 +16,7 @@
 </script>
 
 <head>
-	<title>Bootstrap Example</title>
+	<title>台科交友網站</title>
 	<meta charset="utf-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<link rel="stylesheet" href="bootstrap-4.2.1-dist/css/bootstrap.min.css">
@@ -28,32 +28,28 @@
 	
 <body>
 
-<div class="container-fluid">
-  <h1>Hello World!</h1>
-  <p>Resize the browser window to see the effect.</p>
-  <p>The columns will automatically stack on top of each other when the screen is less than 768px wide.</p>
-  <div class="row">
-    <div class="col-sm-4" style="background-color:lavender;">.col-sm-4</div>
-    <div class="col-sm-4" style="background-color:lavenderblush;">.col-sm-4</div>
-    <div class="col-sm-4" style="background-color:lavender;">.col-sm-4</div>
-  </div>
+<!--不會被覆蓋-->
+<div class="TOP-bh">
+	<input type="button" value="我想登出" style="float:right;width:10%">
 </div>
-
-</br>
-
+<!--將頁面往下挪以免btn被蓋住-->
+<div id="bh-banner" class="bh-banner"></div>
+<!--主畫面-->
 <div class="container"> 
 	<div id="main">
+		<!--btn-->
 		<ul class="b-tags">
 			<li class="b-tags__item">
 				<a href="#抽卡">抽卡</a>
 			</li>
 		</ul>
+		<!--文章區-->
 		<div class="b-list-wrap">
 			<table class="b-list">
 				<tbody>
 					<tr class="b-list__head">
-						<td>使用者名稱</td>
-						<td>文章</td>
+						<td style="width: 135px;">使用者名稱</td>
+						<td style="max-width: 600px;">文章</td>
 					</tr>
 					<!--取得文章資料-->
 					<?php
@@ -62,10 +58,10 @@
 						echo "
 							<tr class=\"b-list__row\">
 								<td class=\"b-list__account\" id=\"name\">
-									<a href=\"#名字\" class=\"b-list__account__user\">名字</a>
+									<a href=\"#名字\" class=\"b-list__account__user\" >名字</a>
 								</td>
 								<td class=\"b-list__main\" id=\"article\">
-									<a href=\"#文章\" class=\"b-list__main__title\">文章名稱</a>
+									<a href=\"#文章\" class=\"b-list__main__title\">文章名稱文章名稱文章名稱文章名稱文章名稱文章名稱文章名稱文章名稱文章名稱文章名稱文章名稱文章名稱文章名稱</a>
 								</td>
 							</tr>";
 					}

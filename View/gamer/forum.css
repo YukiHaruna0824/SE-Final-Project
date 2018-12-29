@@ -7701,11 +7701,12 @@ ul.BH-menuE dl {
   width: 100%;
 }
 
-.b-list__head {
-  padding: 0 12px;
+.b-list__head {  
+  height: 40px;  
+  padding: 3px 6px;
   background: #51A1B4;
   color: #FFF;
-  font-size: 15px;
+  font-size: 20px;
   text-align: center;
 }
 
@@ -7945,11 +7946,14 @@ ul.BH-menuE dl {
 }
 
 /*account -> acaccount*/
-.b-list__acaccount {
+.b-list__account {
   padding: 7px 12px;
   width: 135px;
   text-align: center;
-  font-size: 12px;
+  vertical-align: middle;
+  font-family: "微軟正黑體", Microsoft JhengHei, "黑體-繁", "蘋果儷中黑", sans-serif;
+  font-size: 15px;
+  font-weight: bold;
   box-sizing: border-box;
 }
 
