@@ -46,9 +46,9 @@
               </div>							
               <div class="form-check">
 								<b>性別</b>
-  							<input class="form-check-input" type="radio" name="gender" id="male" value="0">
+  							<input class="form-check-input" type="radio" name="gender" id="gender" value="0">
   							<label class="form-check-label" for="male">男</label>
-								<input class="form-check-input" type="radio" name="gender" id="female" value="1">
+								<input class="form-check-input" type="radio" name="gender" id="gender" value="1">
 								<label class="form-check-label" for="female">女</label>
 							</div>
               <button type="submit" class="btn btn-default">
@@ -75,7 +75,7 @@
       		{
 	      		$.ajax({
 			        type : "POST",	//表單傳送的方式 同 form 的 method 屬性
-			        url : "Account.php",  //目標給哪個檔案 同 form 的 action 屬性
+			        url : "../Controller/Account.php",  //目標給哪個檔案 同 form 的 action 屬性
 			        data : {	//為要傳過去的資料，使用物件方式呈現，因為變數key值為英文的關係，所以用物件方式送。ex: {name : "輸入的名字", password : "輸入的密碼"}
 			          un : $(this).val()	//代表要傳一個 n 變數值為，username 文字方塊裡的值
 			        },
@@ -83,7 +83,7 @@
 			      }).done(function(data) {
 			        //成功的時候
 			        //console.log(data); //透過 console 看回傳的結果
-			        if(data == "yes")
+			        if(data == "use")
 			        {
 			        	//如果為 yes username 文字方塊的復元素先移除 has-error 類別，再加入 has-success 類別
 			        	$("#username").parent().removeClass("has-error").addClass("has-success"); 
@@ -95,7 +95,8 @@
 			        }
 			        else
 			        {
-			        	//alert("帳號有重複，不可以註冊");
+								//alert("帳號有重複，不可以註冊");
+								console.log(data);
 								var warn = document.getElementById("warning");
 								warn.innerHTML = "帳號有重複，不可以註冊";
 			        	$("#username").parent().removeClass("has-success").addClass("has-error");
@@ -136,16 +137,17 @@
 	        	//若當密碼正確無誤，就使用 ajax 送出
 	      		$.ajax({
 			        type : "POST",
-			        url : "Account.php",//新增使用者
+			        url : "../Controller/Account.php",//新增使用者
 			        data : {
 			          un : $("#username").val(), //使用者帳號
-			          pw : $("#password").val(), //使用者密碼
-
+								pw : $("#password").val(), //使用者密碼
+								dm : $("#department").val(),
+								gd : $("#gender").val()
 			        },
 			        dataType : 'html' //設定該網頁回應的會是 html 格式
 			      }).done(function(data) {
 			        //成功的時候
-			        if(data == "yes")
+			        if(data == "AC")
 			        {
 			          alert("註冊成功，將自動前往登入頁。");
 			        	//註冊新增成功，轉跳到登入頁面。
@@ -153,6 +155,7 @@
 			        }
 			        else
 			        {
+								console.log(data);
 			        	alert("註冊失敗，請與系統人員聯繫");
 			        }
 			        

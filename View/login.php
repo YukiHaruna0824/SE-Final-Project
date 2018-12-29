@@ -57,7 +57,7 @@
 				$("form.login").on("submit", function(){
 					$.ajax({
             type : "POST",
-            url : "Account.php",
+            url : "../Controller/Account.php",
             data : {
               un : $("#username").val(), //使用者帳號
               pw : $("#password").val() //使用者密碼
@@ -65,7 +65,7 @@
             dataType : 'html' //設定該網頁回應的會是 html 格式
           }).done(function(data) {
             //成功的時候
-            if(data == "yes")
+            if(data == "AC")
             {
               alert("登入成功，請按確認後登入");
               window.location.href = ""; //跳到文章頁面
