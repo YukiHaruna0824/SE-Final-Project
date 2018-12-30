@@ -13,7 +13,7 @@ class  MySQL_Account extends BaseAccount {
     public $dbname = "ntust";
 
     public $link =null;
-    function __construct()
+    function __construct()//CREATE DATABASE mydatabase CHARACTER SET utf8 COLLATE utf8_general_ci;
     {
            $this->link = mysqli_connect($this->host, $this->dbuser, $this->dbpw, $this->dbname);
             if ($this->link) {
@@ -179,11 +179,12 @@ class  MySQL_Account extends BaseAccount {
 
     public function RandomChoose($account)//********************************
     {
-        $command = "SELECT * FROM account ORDER BY RAND() LIMIT 1";
+        $tmpAccount=$account;
+        $command = "SELECT * FROM account where Account !=  '$account' ORDER BY RAND() LIMIT 1";
         $result = $this->link->query($command);
 
         if ($result && mysqli_num_rows($result) > 0) {
-            return $result;
+           return $result;
         }
         else
             return -1;
