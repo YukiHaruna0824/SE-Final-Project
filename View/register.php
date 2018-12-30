@@ -42,13 +42,13 @@
               </div>
               <div class="form-group">
                 <label for="confirm_password">系所班級</label>
-                <input type="password" class="form-control" id="department" name="department" placeholder="請輸入系所班級" required>
+                <input type="text" class="form-control" id="department" name="department" placeholder="請輸入系所班級" required>
               </div>							
               <div class="form-check">
 								<b>性別</b>
-  							<input class="form-check-input" type="radio" name="gender" id="gender" value="0">
+  							<input class="form-check-input" type="radio" name="gender" value="0">
   							<label class="form-check-label" for="male">男</label>
-								<input class="form-check-input" type="radio" name="gender" id="gender" value="1">
+								<input class="form-check-input" type="radio" name="gender" value="1">
 								<label class="form-check-label" for="female">女</label>
 							</div>
               <button type="submit" class="btn btn-default">
@@ -142,7 +142,7 @@
 			          un : $("#username").val(), //使用者帳號
 								pw : $("#password").val(), //使用者密碼
 								dm : $("#department").val(),
-								gd : $('input[name=gender]:checked').val()
+								gd : $('input[name="gender"]:checked').val()
 			        },
 			        dataType : 'html' //設定該網頁回應的會是 html 格式
 			      }).done(function(data) {
