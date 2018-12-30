@@ -13,9 +13,6 @@
 
 <script>
 	$(document).ready(function(data) {
-		
-		console.log(data.length);
-		console.log(data);
 		$("a").click(function(){
 			var txt = $(this).attr("href");
 			console.log(txt);
@@ -33,7 +30,7 @@ function nextPage() {
 		});
 	}, "json");
 }
- 
+
 function prePage() {
 	jQuery.post('forum_pre',{},
 	function(data) {
