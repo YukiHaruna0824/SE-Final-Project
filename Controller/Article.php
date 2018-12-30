@@ -44,6 +44,7 @@ class Article
             $this->level=($this->level+1);
             $this->level=($this->level%4);
         }
+        $json['count']=$count;
         return $json;
     }
     //add article
@@ -108,7 +109,7 @@ class Article
         }
     }
 }
-//get friend and group and me aticle
+/*//get friend and group and me aticle
 if(isset($_POST['un']))
 {
     $username=$_POST['un'];
@@ -122,5 +123,5 @@ if(isset($_POST['un']))
     {
         //return false
     }
-}
+}*/
 ?>
