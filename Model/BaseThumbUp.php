@@ -8,4 +8,6 @@ abstract class BaseThumbUp
     public abstract function Delete($articleID, $account);
 
     public abstract function GetAll($articleID);
+
+    public abstract function GetNumberOfThumbUp($articleID);
 }

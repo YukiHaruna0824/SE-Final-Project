@@ -8,7 +8,7 @@ class  MySQL_Account extends BaseAccount {
 //以root管理者帳號進入資料庫
     public $dbuser = "root";
 //root的資料庫密碼
-    public $dbpw = "";
+    public $dbpw = "root";
 //登入後要使用的資料庫
     public $dbname = "ntust";
 
@@ -26,7 +26,7 @@ class  MySQL_Account extends BaseAccount {
             }
             $command = "CREATE TABLE IF NOT EXISTS account 
                 (id INTEGER not NULL AUTO_INCREMENT , PRIMARY KEY ( id ) , Account VARCHAR(30) not NULL , UNIQUE KEY ( Account ) 
-                , Password TEXT , Gender TEXT , Class TEXT , DaSaBi INT(32) , FriendSheet TEXT , Articles TEXT )" ;
+                , Password TEXT , Gender TEXT , Class TEXT , DaSaBi INT(32) , FriendSheet TEXT , Articles TEXT, Groups TEXT )" ;
             $this->link->query($command);
             //if(==true)
              //   echo "create table su";
@@ -80,8 +80,9 @@ class  MySQL_Account extends BaseAccount {
 
         $FriendSheet = $account."_FriendSheet";
         $Articles =  $account."_Articles";
-        $command = "Insert into account(Account, Password, Gender, Class, DaSaBi, FriendSheet, Articles)
-             VALUES('$account' , '$password' , '$Gender' , '$Class' , '0' , '$FriendSheet' , '$Articles')";
+        $Groups =  $account."_Groups";
+        $command = "Insert into account(Account, Password, Gender, Class, DaSaBi, FriendSheet, Articles, Groups)
+             VALUES('$account' , '$password' , '$Gender' , '$Class' , '0' , '$FriendSheet' , '$Articles', '$Groups')";
         $this->link->query($command);
         $last_id = mysqli_insert_id($this->link);
 
@@ -93,6 +94,11 @@ class  MySQL_Account extends BaseAccount {
         //Articles Table
        $command = "CREATE TABLE IF NOT EXISTS $Articles
             (id INTEGER not NULL) ";
+        $this->link->query($command);
+
+        //groups Table
+        $command = "CREATE TABLE IF NOT EXISTS $Groups
+            ( GroupName VARCHAR(30) not NULL , UNIQUE KEY ( GroupName ) ) ";
         $this->link->query($command);
 
         return $last_id;

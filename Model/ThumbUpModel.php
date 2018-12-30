@@ -37,4 +37,10 @@ while ($row = $result->fetch_assoc()) {
     {
         return $this->ThumbUp->GetAll($articleID);
     }
+
+    //回傳幾個讚 失敗-1
+    public function GetNumberOfThumbUp($articleID)
+    {
+        return $this->ThumbUp->GetNumberOfThumbUp($articleID);
+    }
 }

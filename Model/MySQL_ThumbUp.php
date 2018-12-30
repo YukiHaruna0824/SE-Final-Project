@@ -94,4 +94,17 @@ class MySQL_ThumbUp extends BaseThumbUp
             }
         }
     }
+
+    public function GetNumberOfThumbUp($articleID)
+    {
+        $command = "SELECT * FROM allArticles where id = '$articleID' ";
+        $result = $this->link->query($command);
+        if ($result && mysqli_num_rows($result) > 0) {
+            while ($row = $result->fetch_assoc()) {
+                return $row["ThumbUpNnumber"];
+            }
+        }
+        else
+            return -1;
+    }
 }
