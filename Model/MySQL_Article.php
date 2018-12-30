@@ -43,8 +43,8 @@ class MySQL_Article extends BaseArticle
         if ($result && mysqli_num_rows($result) > 0) {
             $comment = $title."_Comment";
             $thumbUp =  $title."_ThumbUp";
-            $command = "Insert into allArticles(Owner, Title, Content, Comment, ThumbUp)
-             VALUES('$account' , '$title' , '$content', '$comment', '$thumbUp')";
+            $command = "Insert into allArticles(Owner, Title, Content, Comment, ThumbUp, ThumbUpNnumber)
+             VALUES('$account' , '$title' , '$content', '$comment', '$thumbUp','0')";
             if($this->link->query($command))
             {
                 $last_id = mysqli_insert_id($this->link);
@@ -61,7 +61,7 @@ class MySQL_Article extends BaseArticle
 
                 //ThumbUp Table
                 $command = "CREATE TABLE IF NOT EXISTS $thumbUp
-            (Account VARCHAR(30) not NULL, DeliveryDate TIMESTAMP) ";
+            (Account VARCHAR(30) not NULL, UNIQUE KEY ( Account ) , DeliveryDate TIMESTAMP) ";
                 $this->link->query($command);
 
                 return $last_id;
