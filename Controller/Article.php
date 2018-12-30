@@ -76,8 +76,8 @@ class Article
     //add article
     public function addarticle($title,$content)
     {
-        //if($this->article_model->Add($this->thisaccount->get_account_name(),$title,$content)!=-1)
-        if($this->article_model->Add("test",$title,$content)!=-1)
+        if($this->article_model->Add($this->thisaccount->get_account_name(),$title,$content)!=-1)
+        //if($this->article_model->Add("test",$title,$content)!=-1)
         {
             return TRUE;
         }
