@@ -10,7 +10,7 @@ class Account
     //find this accountname has been used or not
     public function detect_name($inaccount_name)
     {
-        return -1;
+        return $this->account_model->CheckAccount($inaccount_name);
     }
     //add new account
     public function register($inaccountname,$password,$Gender,$Class)
