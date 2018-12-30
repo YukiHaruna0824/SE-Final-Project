@@ -54,6 +54,11 @@ echo "\n";
         return $this->article->Choose($id);
     }
 
+    public function ChooseByTitleDate($title,$date)
+    {
+        return $this->article->ChooseByTitleDate($title,$date);
+    }
+
     //取得這個帳號目前有多少文章 return int , 失敗 -1
     public function  GetTotalNumberAccountArticle($account)
     {
