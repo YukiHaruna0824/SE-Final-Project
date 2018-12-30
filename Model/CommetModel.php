@@ -2,6 +2,7 @@
 
 require_once('MySQL_comment.php');
 
+//***留言的model***
 class CommetModel
 {
     private $comment;
