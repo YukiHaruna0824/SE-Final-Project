@@ -14,6 +14,10 @@ abstract class  BaseAccount
 
     public abstract function find($account);
 
+    public abstract function GetID($account);
+
+    public abstract function GetAccount($id);
+
     public abstract function RandomChoose($account);
 
     public abstract function  StoreDaSaBi($account,$money);

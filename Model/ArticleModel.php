@@ -1,6 +1,6 @@
 <?php
 
-require_once('Article.php');
+require_once('MySQL_Article.php');
 
 class ArticleModel
 {
@@ -8,7 +8,7 @@ class ArticleModel
 
     function __construct()
     {
-        $this->article = new Article();
+        $this->article = new MySQL_Article();
     }
 
     //成功回傳ID 失敗-1
@@ -54,6 +54,12 @@ echo "\n";
         return $this->article->Choose($id);
     }
 
+    //取得這個帳號目前有多少文章 return int , 失敗 -1
+    public function  GetTotalNumberAccountArticle($account)
+    {
+        return $this->article->GetTotalNumberAccountArticle($account);
+    }
+
     /* useage example
   $m = new ArticleModel();
 $result = $m->choseAccountArticle("sd",0,10);
@@ -73,9 +79,22 @@ echo "\n";
     }
 
 
-//根上面一樣
+    //根上面一樣
     public function ChooseRange($Range,$Range2)
     {
         return $this->article->ChooseRange($Range,$Range2);
     }
+
+    //根上面一樣
+    public function AllArticle()
+    {
+        return $this->article->AllArticle();
+    }
+
+    //取得這個資料庫目前有多少文章 return int , 失敗 -1
+    public function GetTotalNumber()
+    {
+        return $this->article->GetTotalNumber();
+    }
+
 }

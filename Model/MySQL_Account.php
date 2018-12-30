@@ -150,6 +150,32 @@ class  MySQL_Account extends BaseAccount {
             return -1;
     }
 
+    public function GetID($account)
+    {
+        $command = "SELECT * FROM account where Account =  '$account' LIMIT 1";
+        $result = $this->link->query($command);
+        if ($result && mysqli_num_rows($result) > 0) {
+            while($row = $result->fetch_assoc()) {
+                return $row["id"];
+            }
+        }
+        else
+            return -1;
+    }
+
+    public function GetAccount($id)
+    {
+        $command = "SELECT * FROM account where id =  '$id' LIMIT 1";
+        $result = $this->link->query($command);
+        if ($result && mysqli_num_rows($result) > 0) {
+            while($row = $result->fetch_assoc()) {
+                return $row["Account"];
+            }
+        }
+        else
+            return -1;
+    }
+
 
     public function RandomChoose($account)//********************************
     {

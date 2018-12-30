@@ -15,5 +15,11 @@ abstract class BaseArticle
 
     public abstract function  choseAccountArticle($accont,$Range,$Range2);
 
+    public abstract function  GetTotalNumberAccountArticle($account);
+
     public abstract function ChooseRange($Range,$Range2);
+
+    public abstract function AllArticle();
+
+    public abstract function GetTotalNumber();
 }

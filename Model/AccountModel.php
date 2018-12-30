@@ -41,11 +41,30 @@ class AccountModel
         return $this->account->updatePassWord($account,$password);
     }
 
+    //跟下面一樣
     public function find($account)
     {
         return $this->account->find($account);
     }
 
+    //回傳ID, 失敗-1
+    public function GetID($account)
+    {
+        return $this->account->GetID($account);
+    }
+
+    //回傳該ID 對應的account 的 "name"而已 失敗-1
+    public function GetAccount($id)
+    {
+        return $this->account->GetAccount($id);
+    }
+
+    /* usage example
+      $m = new AccountModel();
+$result = $m->RandomChoose("1");
+while ($row = $result->fetch_assoc()) {
+    echo $row["Account"];
+} */
     public function RandomChoose($account)
     {
         return $this->account->RandomChoose($account);
