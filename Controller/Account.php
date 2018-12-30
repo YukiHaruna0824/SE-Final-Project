@@ -1,3 +1,4 @@
+<?php session_start();?>
 <?php
 require('../Model/AccountModel.php');
 
@@ -11,9 +12,9 @@ class Account
     {
         return -1;
     }
+    //add new account
     public function register($inaccountname,$password,$Gender,$Class)
     {
-        //add new account
         if($this->account_model->Add($inaccountname,$password,$Gender,$Class)!=-1)
         {
             return TRUE;
@@ -23,9 +24,9 @@ class Account
             return FALSE;
         }
     }
+    //find is this account exist
     public function login($inaccountname,$password)
     {
-        //find is this account exist
         $this->id=$this->account_model->LoginCheck($inaccountname,$password);
         if($this->id!=-1)
         {
@@ -51,6 +52,25 @@ class Account
     {
         $this->account_model=new AccountModel();
         $this->account_name="";
+    }
+    //add money元
+    public function add_DaSaBi($money)
+    {
+        if($this->account_name!="")
+        {
+            if($this->account_model->StoreDaSaBi($account_name,$money)!=-1)
+            {
+                return TRUE;
+            }
+            else
+            {
+                return FALSE;
+            }
+        }
+        else
+        {
+            return FALSE;
+        }
     }
 }
 //logout
@@ -100,4 +120,3 @@ elseif(isset($_POST['un']))
         echo "";
 }
 ?>
-<?php session_start();?>
