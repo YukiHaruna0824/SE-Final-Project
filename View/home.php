@@ -12,12 +12,38 @@
 </head>
 
 <script>
-	$(document).ready(function(data) {
-		$("a").click(function(){
-			var txt = $(this).attr("href");
-			console.log(txt);
-		});
+$(document).ready(function(data) {
+	$('#articles > tbody').html(getHTML());
+	$("a").click(function(){
+		var txt = $(this).attr("href");
+		console.log(txt);
 	});
+});
+	
+function getHTML(data){
+	var tmpHTML = 
+		"<tr class=\"b-list__head\">"
+			+"<td style=\"width: 135px;\">使用者名稱</td>"
+			+"<td style=\"max-width: 600px;\">文章</td>"
+		+"</tr>" ;
+	var i;
+	for(i=0;i<20;i++){
+		tmpHTML += 
+			"<tr class=\"b-list__row\">"
+				+"<td class=\"b-list__account\">"
+					+"<a href=\"test.php?id="+i+"\" class=\"b-list__account__user\"  id=\"name"+i+"\">"
+						+"名字"
+					+"</a>"
+				+"</td>"
+				+"<td class=\"b-list__main\">"
+					+"<a href=\"article.php?id="+i+"\" class=\"b-list__main__title\" id=\"article"+i+"\">"
+						+"文章名稱文章名稱文章名稱文章名稱"
+					+"</a>"
+				+"</td>"
+			+"</tr>";
+	}
+	return tmpHTML
+}
 	
 function nextPage() {
 	jQuery.post('forum_next',{},
@@ -28,6 +54,7 @@ function nextPage() {
 		$('.pagenow').each(function(){
 			$(this).html(Number($(this).text())+1);
 		});
+		$('#articles > tbody').html(getHTML());
 	}, "json");
 }
 
@@ -42,6 +69,7 @@ function prePage() {
 				return;
 			$(this).html(Number($(this).text())-1);
 		});
+		$('#articles > tbody').html(getHTML());
 	}, "json");
 }
 </script>
@@ -77,33 +105,8 @@ function prePage() {
 		</ul>
 		<!--文章區-->
 		<div class="b-list-wrap">
-			<table class="b-list">
-				<tbody>
-					<tr class="b-list__head">
-						<td style="width: 135px;">使用者名稱</td>
-						<td style="max-width: 600px;">文章</td>
-					</tr>
-					<form method="post" action>
-						<!--取得文章資料-->
-						<?php
-						for($i=0;$i<20;$i++){
-							echo "
-								<tr class=\"b-list__row\">
-									<td class=\"b-list__account\">
-										<a href=\"test.php?id=".$i."&id2=".$i."\" class=\"b-list__account__user\"  id=\"name".$i."\">
-											名字
-										</a>
-									</td>
-									<td class=\"b-list__main\">
-										<a href=\"article.php?id=".$i."\" class=\"b-list__main__title\" id=\"article".$i."\">
-											文章名稱文章名稱文章名稱文章名稱
-										</a>
-									</td>
-								</tr>";
-						}
-						?>
-					</form>
-				</tbody>
+			<table class="b-list" id="articles">
+				<tbody><!--dynamic--></tbody>
 			</table>
 		</div>
 		<!--換頁-->
@@ -119,13 +122,6 @@ function prePage() {
 		<div id="bh-banner" class="bh-banner"></div>
 	</div>
 </div>	
-
-<!--
-<form name = "form" method = "POST" action = "back.php">
-	<input type = "text" name = "front" /><br>
-	<input type = "submit" value = "123" />
-</form>
--->
 
 </body>
 </html>
