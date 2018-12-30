@@ -142,7 +142,7 @@
 			          un : $("#username").val(), //使用者帳號
 								pw : $("#password").val(), //使用者密碼
 								dm : $("#department").val(),
-								gd : $("#gender").val()
+								gd : $('input[name=gender]:checked').val()
 			        },
 			        dataType : 'html' //設定該網頁回應的會是 html 格式
 			      }).done(function(data) {

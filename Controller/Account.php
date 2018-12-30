@@ -72,6 +72,25 @@ class Account
             return FALSE;
         }
     }
+    //take money元
+    public function take_DaSaBi($money)
+    {
+        if($this->account_name!="")
+        {
+            if($this->account_model->StoreDaSaBi($account_name,$money)!=-1)
+            {
+                return TRUE;
+            }
+            else
+            {
+                return FALSE;
+            }
+        }
+        else
+        {
+            return FALSE;
+        }
+    }
 }
 //logout
 if((isset($_POST['dm'])&&isset($_POST['un'])&&(!isset($_POST['gd']))))
