@@ -74,9 +74,10 @@ class Article
         return json_encode($json);
     }
     //add article
-    public function addarticle($json)
+    public function addarticle($title,$content)
     {
-        if($this->article_model->Add($this->thisaccount->get_account_name(),$json['title'],$json['content'])!=-1)
+        //if($this->article_model->Add($this->thisaccount->get_account_name(),$title,$content)!=-1)
+        if($this->article_model->Add("test",$title,$content)!=-1)
         {
             return TRUE;
         }
@@ -153,26 +154,34 @@ class Article
     }
 }
 //add new article
-if(isset($_POST['un'])&&isset($_POST['data']))
+if(isset($_POST['un'])&&isset($_POST['title'])&&isset($_POST['content']))
 {
-    $username=$_POST['un'];
-    $datajson=$_POST['data'];//how much amount want to take
-    if(isset($_SESSION[$username]))
-    {
-        $newArticlelist=new Article($username);
-        if($newArticlelist->addarticle($datajson)==TRUE)
-        {
-            echo "AC";
-        }
-        else
-        {
-            echo "ER";//can't edit
-        }
-    }
-    else
-    {
-        echo "WN";//wrongname
-    }
+	$newArticlelist=new Article($username);
+	if($newArticlelist->addarticle($_POST['title'],$_POST['content'])==TRUE)
+	{
+		echo "AC";
+	}
+	else
+	{
+		echo "ER";//can't edit
+	}
+    // $username=$_POST['un'];
+    // if(isset($_SESSION[$username]))
+    // {
+        // $newArticlelist=new Article($username);
+        // if($newArticlelist->addarticle($_POST['title'],$_POST['content'])==TRUE)
+        // {
+            // echo "AC";
+        // }
+        // else
+        // {
+            // echo "ER";//can't edit
+        // }
+    // }
+    // else
+    // {
+        // echo "WN";//wrongname
+    // }
 }
 //commit
 elseif(isset($_POST['un'])&&isset($_POST['com']))

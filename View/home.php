@@ -14,12 +14,8 @@
 <script>
 $(document).ready(function(data) {
 	$('#articles > tbody').html(getHTML());
-	$("a").click(function(){
-		var txt = $(this).attr("href");
-		console.log(txt);
-	});
 });
-	
+
 function getHTML(data){
 	var tmpHTML = 
 		"<tr class=\"b-list__head\">"
@@ -44,9 +40,9 @@ function getHTML(data){
 	}
 	return tmpHTML
 }
-	
+
 function nextPage() {
-	jQuery.post('forum_next',{},
+	jQuery.post('../Controller/Article.php',{},
 	function(data) {
 		if(data == null){
 			return;
@@ -59,7 +55,7 @@ function nextPage() {
 }
 
 function prePage() {
-	jQuery.post('forum_pre',{},
+	jQuery.post('../Controller/Article.php',{},
 	function(data) {
 		if(data == null){
 			return;
@@ -101,6 +97,9 @@ function prePage() {
 		<ul class="b-tags">
 			<li class="b-tags__item">
 				<a href="#抽卡">抽卡</a>
+			</li>	
+			<li class="b-tags__item">
+				<a href="newArticle.php">新增文章</a>
 			</li>
 		</ul>
 		<!--文章區-->
