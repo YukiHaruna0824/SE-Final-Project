@@ -23,5 +23,8 @@ abstract class BaseArticle
 
     public abstract function AllArticle();
 
+    public abstract function choseAccountAllArticle($account);
+
+
     public abstract function GetTotalNumber();
 }

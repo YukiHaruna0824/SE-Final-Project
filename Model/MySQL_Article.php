@@ -185,6 +185,16 @@ class MySQL_Article extends BaseArticle
         return -1;
     }
 
+    public function choseAccountAllArticle($account)
+    {
+        $command = "SELECT * FROM allArticles where Owner = '$account' ORDER BY DeliveryDate ASC";
+        $result = $this->link->query($command);
+        if ($result && mysqli_num_rows($result) > 0) {
+            return $result;
+        }
+        return -1;
+    }
+
     public function GetTotalNumber()
     {
         $command = "SELECT * FROM allArticles ";
