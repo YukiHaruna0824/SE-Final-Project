@@ -54,6 +54,7 @@ echo "\n";
         return $this->article->Choose($id);
     }
 
+
     public function ChooseByTitleDate($title,$date)
     {
         return $this->article->ChooseByTitleDate($title,$date);
@@ -94,6 +95,12 @@ echo "\n";
     public function AllArticle()
     {
         return $this->article->AllArticle();
+    }
+
+    //根上面一樣
+    public function choseAccountAllArticle($account)
+    {
+        return $this->article->choseAccountAllArticle($account);
     }
 
     //取得這個資料庫目前有多少文章 return int , 失敗 -1
