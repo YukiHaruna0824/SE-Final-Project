@@ -1,19 +1,23 @@
 <?php session_start();?>
 <?php
 require_once('../Model/ArticleModel.php');
-require_once('./Account.php');
+require_once('../Model/AccountModel.php');
+require_once('./AccountModel.php');
+require_once('./CommetModel.php');
 
 class Article
 {
     private $article_model;
     private $thisaccount;
     private $level;
+    private $commet_model;
     //外面要確保這個ACCOUNT NAME有存在
     public function __construct($inaccountname)
     {
         $this->article_model=new ArticleModel();
         $this->thisaccount=$_SESSION[$inaccountname];
         $this->level=1;
+        $this->commet_model=new CommetModel();
     }
     public function get_friend_article($number)
     {
@@ -23,19 +27,40 @@ class Article
         $json;
         while(($count<$number)&&($oldlevel!=($this->level-1)))
         {
+            //me
             if($this->level==1)
             {
-                //me
-                $allartical=$this->article_model->allRange($this->thisaccount->get_account_name());
+                $allartical=$this->article_model->choseAccountAllArticle($this->thisaccount->get_account_name());
                 while(($count<$number)&&($row=$allartical->fetch_assoc()))
                 {
-                    $json[count]=$row;
+                    $tmp=array(
+                        'id'=> $row["id"],
+                        'Owner'=> $row["Owner"],
+                        'Title'=> $row["Title"],
+                    );
+                    $json[count]=json_encode($tmp);
                     $count+=1;
                 }
             }
+            //friend 等friendDB做完
             elseif($this->level==2)
             {
-                //friend 等friendDB做完
+                $allfriend = $friend->FindAllFriend($this->thisaccount->get_account_name());
+                while ($row = $allfriend->fetch_assoc()) 
+                {
+                    $tmpaccountmodel=new AccountModel(); 
+                    $allartical=$this->article_model->choseAccountAllArticle($tmpaccountmodel->GetAccount($row['id']));
+                    while(($count<$number)&&($row=$allartical->fetch_assoc()))
+                    {
+                        $tmp=array(
+                            'id'=> $row["id"],
+                            'Owner'=> $row["Owner"],
+                            'Title'=> $row["Title"],
+                        );
+                        $json[count]=json_encode($tmp);
+                        $count+=1;
+                    }
+                }
             }
             elseif($this->level==3)
             {
@@ -45,7 +70,7 @@ class Article
             $this->level=($this->level%4);
         }
         $json['count']=$count;
-        return $json;
+        return json_encode($json);
     }
     //add article
     public function addarticle($json)
@@ -81,25 +106,24 @@ class Article
         //對id文章退讚
         $this->thisaccount->add_DaSaBi(-20);
     }
-    public function get_article($date)
+    //取得文章
+    public function get_article($id)
     {
-        //取得文章
-        $allartical=$this->article_model->allRange($this->thisaccount->get_account_name());
-        $json;
-        while($row=$allartical->fetch_assoc())
-        {
-            if($row['DeliveryDate']==$date)
-            {
-                $json=$row;
-                break;
-            }
-        }
-        return $json;
+        $allartical=$this->article_model->Choose($id);
+        $row=$allartical->fetch_assoc();
+        $json=array(
+            'id'=> $row["id"],
+            'Owner'=> $row["Owner"],
+            'Title'=> $row["Title"],
+            'Content'=> $row["Content"],
+            'commit'=>$this->commet_model->GetAllComment($id)
+        );
+        return json_encode($json);
     }
     //評論文章
     public function comment_article($json)
     {
-        if($this->article_model->UpdateContent($json['id'],$json['content'])==1)
+        if($this->commet_model->CommetModel($json['id'],$json['content'],$this->thisaccount->get_account_name())==1)
         {
             return TRUE;
         }
@@ -109,8 +133,29 @@ class Article
         }
     }
 }
-/*//get friend and group and me aticle
-if(isset($_POST['un']))
+if(isset($_POST['un'])&&isset($_POST['data']))
+{
+    $username=$_POST['un'];
+    $datajson=$_POST['data'];//how much amount want to take
+    if(isset($_SESSION[$username]))
+    {
+        $newArticlelist=new Article($username);
+        if($newArticlelist->addarticle($datajson)==TRUE)
+        {
+            echo "AC";
+        }
+        else
+        {
+            echo "ER";//can't edit
+        }
+    }
+    else
+    {
+        echo "WN";//wrongname
+    }
+}
+//get friend and group and me aticle
+elseif(isset($_POST['un']))
 {
     $username=$_POST['un'];
     $number=$_POST['am'];//how much amount want to take
@@ -118,10 +163,12 @@ if(isset($_POST['un']))
     {
         $newArticlelist=new Article($username);
         $json=$newArticlelist->get_friend_article($number);
+        return $json;
     }
     else
     {
-        //return false
+        $json['count']=0;
+        return json_encode($json);
     }
-}*/
+}
 ?>
