@@ -98,7 +98,7 @@ function prePage() {
 										</a>
 									</td>
 									<td class=\"b-list__main\">
-										<a href=\"#文章".$i."\" class=\"b-list__main__title\" id=\"article".$i."\">
+										<a href=\"article.php\" class=\"b-list__main__title\" id=\"article".$i."\">
 											文章名稱文章名稱文章名稱文章名稱
 										</a>
 									</td>
