@@ -12,12 +12,41 @@
 </head>
 
 <script>
-	$(document).ready(function() {
+	$(document).ready(function(data) {
+		
+		console.log(data.length);
+		console.log(data);
 		$("a").click(function(){
 			var txt = $(this).attr("href");
 			console.log(txt);
 		});
 	});
+	
+function nextPage() {
+	jQuery.post('forum_next',{},
+	function(data) {
+		if(data == null){
+			return;
+		}
+		$('.pagenow').each(function(){
+			$(this).html(Number($(this).text())+1);
+		});
+	}, "json");
+}
+ 
+function prePage() {
+	jQuery.post('forum_pre',{},
+	function(data) {
+		if(data == null){
+			return;
+		}
+		$('.pagenow').each(function(){
+			if(Number($(this).text())==1)
+				return;
+			$(this).html(Number($(this).text())-1);
+		});
+	}, "json");
+}
 </script>
 	
 <body>
@@ -32,17 +61,17 @@
 <div class="container"> 
 	<div id="main">
 		<p></p>
+		<!--換頁-->
 		<div class="b-pager pager">
 			<div id="BH-pagebtn">
 				<p class="BH-pagebtnA">
-					<a href="?page=1&amp">1</a>
-					<a href="?page=2&amp">2</a>
-					<a class="pagenow">3</a>
-					<a href="?page=4&amp">4</a>
-					<a href="?page=5&amp">5</a>
+					<a href="javascript:void(0);" onclick="prePage();">上一页</a>
+					<a class="pagenow">1</a>
+					<a href="javascript:void(0);" onclick="nextPage();">下一页</a>
 				</p>
 			</div>
 		</div>
+		
 		<!--btn-->
 		<ul class="b-tags">
 			<li class="b-tags__item">
@@ -80,6 +109,17 @@
 				</tbody>
 			</table>
 		</div>
+		<!--換頁-->
+		<div class="b-pager pager">
+			<div id="BH-pagebtn">
+				<p class="BH-pagebtnA">
+					<a href="javascript:void(0);" onclick="prePage();">上一页</a>
+					<a class="pagenow">1</a>
+					<a href="javascript:void(0);" onclick="nextPage();">下一页</a>
+				</p>
+			</div>
+		</div>
+		<div id="bh-banner" class="bh-banner"></div>
 	</div>
 </div>	
 
