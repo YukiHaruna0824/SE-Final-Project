@@ -29,7 +29,7 @@ class MySQL_Article extends BaseArticle
 
         $command = "CREATE TABLE IF NOT EXISTS allArticles 
                 (id INTEGER not NULL AUTO_INCREMENT , PRIMARY KEY ( id ) , Owner VARCHAR(30) not NULL
-                , Title VARCHAR(30) not NULL, Content TEXT, DeliveryDate TIMESTAMP)" ;
+                , Title VARCHAR(30) not NULL, Content TEXT, Comment TEXT , ThumbUpNnumber INT, ThumbUp TEXT, DeliveryDate TIMESTAMP)" ;
         $this->link->query($command);
         //if()
          //   echo "create table su";
@@ -41,9 +41,10 @@ class MySQL_Article extends BaseArticle
         $command = "SELECT * FROM account where Account = '$account'";
         $result = $this->link->query($command);
         if ($result && mysqli_num_rows($result) > 0) {
-
-            $command = "Insert into allArticles(Owner, Title, Content)
-             VALUES('$account' , '$title' , '$content')";
+            $comment = $title."_Comment";
+            $thumbUp =  $title."_ThumbUp";
+            $command = "Insert into allArticles(Owner, Title, Content, Comment, ThumbUp)
+             VALUES('$account' , '$title' , '$content', '$comment', '$thumbUp')";
             if($this->link->query($command))
             {
                 $last_id = mysqli_insert_id($this->link);
@@ -52,6 +53,17 @@ class MySQL_Article extends BaseArticle
                 }
                 $command = "Insert into $tableName (id) values('$last_id')";
                 $this->link->query($command);
+
+                //Comment Table
+                $command = "CREATE TABLE IF NOT EXISTS $comment
+            ( id INTEGER not NULL AUTO_INCREMENT , PRIMARY KEY ( id ) , Owner VARCHAR(30) not NULL,  Content TEXT, DeliveryDate TIMESTAMP) ";
+                $this->link->query($command);
+
+                //ThumbUp Table
+                $command = "CREATE TABLE IF NOT EXISTS $thumbUp
+            (Account VARCHAR(30) not NULL, DeliveryDate TIMESTAMP) ";
+                $this->link->query($command);
+
                 return $last_id;
             }
         }
@@ -120,6 +132,16 @@ class MySQL_Article extends BaseArticle
         return -1;
     }
 
+    public function ChooseByTitleDate($title,$date)
+    {
+        $command = "SELECT * FROM allArticles where Title = '$title' AND DeliveryDate = '$date'";//AND  YEAR(DeliveryDate) = '$date'  $endDate='2018';
+        $result = $this->link->query($command);
+        if ($result && mysqli_num_rows($result) > 0) {
+            return $result;
+        }
+        return -1;
+    }
+
     public function  choseAccountArticle($account,$Range,$Range2)
     {
         $command = "SELECT * FROM allArticles where Owner = '$account' ORDER BY DeliveryDate ASC LIMIT $Range, $Range2";
@@ -172,4 +194,6 @@ class MySQL_Article extends BaseArticle
         }
         return -1;
     }
+
+
 }

@@ -13,6 +13,8 @@ abstract class BaseArticle
 
     public abstract function Choose($id);
 
+    public abstract function ChooseByTitleDate($title,$date);
+
     public abstract function  choseAccountArticle($accont,$Range,$Range2);
 
     public abstract function  GetTotalNumberAccountArticle($account);
