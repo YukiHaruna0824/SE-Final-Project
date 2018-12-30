@@ -11,7 +11,7 @@ class GroupModel
         return $this->group = new MySQL_Group();
     }
 
-    public function CreateGroup($account, $groupName)
+    public function CreateGroup($groupName, $account)
     {
         return $this->group->CreateGroup($account, $groupName);
     }

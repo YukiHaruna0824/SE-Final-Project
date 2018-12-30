@@ -31,13 +31,12 @@ class MySQL_Group extends BaseGroup
         return 1;
     }
 
-    public function CreateGroup($account, $groupName)
+    public function CreateGroup($groupName, $account)
     {
         //總table
         $command = "Insert into Groups(GroupName)
              VALUES('$groupName')";
-        if(!$this->link->query($command))
-            return -1;
+        $this->link->query($command);
         $last_id = mysqli_insert_id($this->link);
 
         //account
@@ -49,6 +48,7 @@ class MySQL_Group extends BaseGroup
             }
             $command = "Insert into $tableName (GroupName)
              VALUES('$groupName')";
+            $this->link->query($command);
         }
 
         $command = "CREATE TABLE IF NOT EXISTS $groupName
@@ -66,7 +66,7 @@ class MySQL_Group extends BaseGroup
 
         $command = "DELETE FROM Groups WHERE GroupName =  '$groupName' ";
         $this->link->query($command);
-
+echo "13";
         //account
         $command = "SELECT * FROM $groupName ";
         $result = $this->link->query($command);

@@ -3,7 +3,7 @@
 
 abstract class BaseGroup
 {
-    public abstract function CreateGroup($account, $groupName);
+    public abstract function CreateGroup($groupName, $account);
 
     public abstract function KillGroup($groupName);
 
