@@ -41,7 +41,6 @@
               <a href="register.php">
                 註冊帳號
               </a>
-            
             </form>
           </div>
         </div>
@@ -68,7 +67,7 @@
             if(data == "AC")
             {
               alert("登入成功，請按確認後登入");
-              window.location.href = ""; //跳到文章頁面
+              window.location.href = "home.php"; //跳到文章頁面
             }
             else
             {
