@@ -2,6 +2,7 @@
 <?php
 require_once('../Model/ArticleModel.php');
 require_once('../Model/AccountModel.php');
+require_once('../Model/ThumbupModel.php');
 require_once('./AccountModel.php');
 require_once('./CommetModel.php');
 
@@ -42,7 +43,7 @@ class Article
                     $count+=1;
                 }
             }
-            //friend 等friendDB做完
+            //friend
             elseif($this->level==2)
             {
                 $allfriend = $friend->FindAllFriend($this->thisaccount->get_account_name());
@@ -84,7 +85,7 @@ class Article
             return FALSE;
         }
     }
-    //delete article
+    //delete article id
     public function deletearticle($id)
     {
         if($this->article_model->DeleteAritcle($id)!=-1)
@@ -96,17 +97,35 @@ class Article
             return FALSE;
         }
     }
+    //對id文章按讚 article id
     public function support_ones_article($id)
     {
-        //對id文章按讚
-        $this->thisaccount->add_DaSaBi(20);
+        $tmp=new ThumbUpModel();
+        if($tmp->Add($id,$this->thisaccount->get_account_name())!=-1)
+        {
+            $this->thisaccount->add_DaSaBi(20);
+            return TRUE;
+        }
+        else
+        {
+            return FALSE;
+        }
     }
+    //對id文章退讚 acricle id
     public function unsupport_ones_article($id)
     {
-        //對id文章退讚
-        $this->thisaccount->add_DaSaBi(-20);
+        $$tmp=new ThumbUpModel();
+        if($tmp->Delete($id,$this->thisaccount->get_account_name())==1)
+        {
+            $this->thisaccount->take_DaSaBi(20);
+            return TRUE;
+        }
+        else
+        {
+            return FALSE;
+        }
     }
-    //取得文章
+    //取得文章 article id
     public function get_article($id)
     {
         $allartical=$this->article_model->Choose($id);
@@ -133,6 +152,7 @@ class Article
         }
     }
 }
+//add new article
 if(isset($_POST['un'])&&isset($_POST['data']))
 {
     $username=$_POST['un'];
@@ -141,6 +161,111 @@ if(isset($_POST['un'])&&isset($_POST['data']))
     {
         $newArticlelist=new Article($username);
         if($newArticlelist->addarticle($datajson)==TRUE)
+        {
+            echo "AC";
+        }
+        else
+        {
+            echo "ER";//can't edit
+        }
+    }
+    else
+    {
+        echo "WN";//wrongname
+    }
+}
+//commit
+elseif(isset($_POST['un'])&&isset($_POST['com']))
+{
+    $username=$_POST['un'];
+    $commitjson=$_POST['com'];//commit json
+    if(isset($_SESSION[$username]))
+    {
+        $newArticlelist=new Article($username);
+        if($newArticlelist->comment_article($commitjson)==TRUE)
+        {
+            echo "AC";
+        }
+        else
+        {
+            echo "ER";//can't edit
+        }
+    }
+    else
+    {
+        echo "WN";//wrongname
+    }
+}
+//get article
+elseif(isset($_POST['un'])&&isset($_POST['id'])&&isset($_POST['get']))//get 亂給直
+{
+    $username=$_POST['un'];
+    $id=$_POST['id'];//article id
+    if(isset($_SESSION[$username]))
+    {
+        $newArticlelist=new Article($username);
+        $json=$newArticlelist->get_article($id);
+        return $json;
+    }
+    else
+    {
+        $json['id']=-1;
+        return json_encode($json);
+    }
+}
+//delete thumb
+elseif(isset($_POST['un'])&&isset($_POST['us'])&&isset($_POST['id']))//us 亂給直
+{
+    $username=$_POST['un'];
+    $id=$_POST['id'];//article id
+    if(isset($_SESSION[$username]))
+    {
+        $newArticlelist=new Article($username);
+        if($newArticlelist->unsupport_ones_article($id)==TRUE)
+        {
+            echo "AC";
+        }
+        else
+        {
+            echo "ER";//can't edit
+        }
+    }
+    else
+    {
+        echo "WN";//wrongname
+    }
+}
+//make thumb
+elseif(isset($_POST['un'])&&isset($_POST['su'])&&isset($_POST['id']))//su 亂給直
+{
+    $username=$_POST['un'];
+    $id=$_POST['id'];//article id
+    if(isset($_SESSION[$username]))
+    {
+        $newArticlelist=new Article($username);
+        if($newArticlelist->support_ones_article($id)==TRUE)
+        {
+            echo "AC";
+        }
+        else
+        {
+            echo "ER";//can't edit
+        }
+    }
+    else
+    {
+        echo "WN";//wrongname
+    }
+}
+//delete article
+elseif(isset($_POST['un'])&&isset($_POST['id']))
+{
+    $username=$_POST['un'];
+    $id=$_POST['id'];//article id
+    if(isset($_SESSION[$username]))
+    {
+        $newArticlelist=new Article($username);
+        if($newArticlelist->deletearticle($id)==TRUE)
         {
             echo "AC";
         }
