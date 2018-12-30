@@ -13,9 +13,6 @@
 
 <script>
 	$(document).ready(function(data) {
-		
-		console.log(data.length);
-		console.log(data);
 		$("a").click(function(){
 			var txt = $(this).attr("href");
 			console.log(txt);
@@ -33,7 +30,7 @@ function nextPage() {
 		});
 	}, "json");
 }
- 
+
 function prePage() {
 	jQuery.post('forum_pre',{},
 	function(data) {
@@ -98,7 +95,7 @@ function prePage() {
 										</a>
 									</td>
 									<td class=\"b-list__main\">
-										<a href=\"#文章".$i."\" class=\"b-list__main__title\" id=\"article".$i."\">
+										<a href=\"article.php?id=".$i."\" class=\"b-list__main__title\" id=\"article".$i."\">
 											文章名稱文章名稱文章名稱文章名稱
 										</a>
 									</td>

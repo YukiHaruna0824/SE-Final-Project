@@ -13,10 +13,15 @@
 
 <script>
 	$(document).ready(function() {
-		$("a").click(function(){
-			var txt = $(this).attr("href");
-			console.log(txt);
-		});
+		var urlVar = window.location.search.substring(1).split("&");
+		var i,tmpVal;
+		for(i=0;i<urlVar.length;i++){
+			tmpVal = urlVar[i].split("=");
+			if(tmpVal[0]=="id"){
+				console.log(tmpVal[1]);
+				//tmpVal[1] getarticle
+			}
+		}
 	});
 </script>
 	
