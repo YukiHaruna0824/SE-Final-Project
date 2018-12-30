@@ -17,6 +17,39 @@
 			var txt = $(this).attr("href");
 			console.log(txt);
 		});
+
+		//抽卡按鈕註冊
+		$("#drawcard").click(function(){
+			$.ajax({
+				type : "POST",
+				url : "../Controller/Card.php",
+				data : {
+					
+				},
+				dataType : 'json'
+				}).done(function(data) {
+					if(data != null)
+					{
+						var otherUserName = document.getElementById("otherUserName");
+						var otherGender = document.getElementById("otherGender");
+						var otherClass = document.getElementById("otherClass");
+
+						otherUserName.innerHTML = data['Account'];
+						otherUserName.innerHTML = data['Gender'];
+						otherUserName.innerHTML = data['Class'];
+
+						/*把新增好友的按鈕動態加入到後面
+						if(document.getElementById("AddFriend"))
+						{
+							$("#otherClass").after("<button id="."AddFriend".">新增好友</button>");
+						}*/
+					}
+				}).fail(function(jqXHR, textStatus, errorThrown) {
+				//失敗的時候
+				alert("有錯誤產生，請看 console log");
+				console.log(jqXHR.responseText);
+			});
+		});
 	});
 	
 function nextPage() {
@@ -69,12 +102,16 @@ function prePage() {
 			</div>
 		</div>
 		
-		<!--btn-->
+		<!--抽卡介面-->
 		<ul class="b-tags">
-			<li class="b-tags__item">
-				<a href="#抽卡">抽卡</a>
-			</li>
+			<div id="otherUserName"></div>
+			<div id="otherGender"></div>
+			<div id="otherClass"></div>
 		</ul>
+		<button type="button" id="drawcard" class="btn--sm btn--normal">抽卡</button>
+
+
+
 		<!--文章區-->
 		<div class="b-list-wrap">
 			<table class="b-list">
@@ -120,12 +157,6 @@ function prePage() {
 	</div>
 </div>	
 
-<!--
-<form name = "form" method = "POST" action = "back.php">
-	<input type = "text" name = "front" /><br>
-	<input type = "submit" value = "123" />
-</form>
--->
 
 </body>
 </html>
