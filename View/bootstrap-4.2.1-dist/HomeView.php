@@ -60,29 +60,6 @@ $(document).ready(function(data) {
 			console.log(jqXHR.responseText);
 		});
 	});
-	
-	//logout按鈕註冊
-	$("#logout").click(function(){
-		$.ajax({
-			type : "POST",
-			url : "../Controller/Account.php",
-			data : {
-              apple : "asd"
-            },
-			dataType : 'html'
-			}).done(function(data) {
-				console.log(data);
-			if(data=="bye")
-			{
-				alert("登出成功，請按確認後登出");
-              	window.location.href = "LoginView.php"; //跳到文章頁面
-			}
-			}).fail(function(jqXHR, textStatus, errorThrown) {
-			//失敗的時候
-			alert("有錯誤產生，請看 console log");
-			console.log(jqXHR.responseText);
-		});
-	});
 });
 
 function getHTML(data){
@@ -160,7 +137,7 @@ function prePage() {
 
 <!--不會被覆蓋-->
 <div class="TOP-bh">
-	<input type="button" id="logout" value="我想登出" style="float:right;width:10%">
+	<input type="button" value="我想登出" style="float:right;width:10%">
 </div>
 <!--將頁面往下挪以免btn被蓋住-->
 <div id="bh-banner" class="bh-banner"></div>

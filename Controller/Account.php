@@ -117,9 +117,9 @@ class Account
     }
 }
 //logout
-if((isset($_POST['dm'])&&isset($_POST['un'])&&(!isset($_POST['gd']))))
+if(isset($_POST['apple']))
 {
-    $name=$_POST['un'];
+    $name=$_SESSION['$inaccountname'];
     if(isset($_SESSION[$name]))
     {
         $_SESSION[$name]->logout();
