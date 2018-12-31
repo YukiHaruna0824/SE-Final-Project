@@ -43,9 +43,6 @@ class Article
                 'Title'=> $row["Title"],
             }
         }
-        .
-        .
-        .
     }
     */
     //取得上一頁

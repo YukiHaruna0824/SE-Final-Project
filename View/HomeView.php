@@ -24,11 +24,11 @@ function getHTML(data){
 			+"<td style=\"max-width: 600px;\">文章</td>"
 		+"</tr>" ;
 	var i;
-	for(i=0;i<20;i++){
+	for(i=0;i<data[2].length;i+=3){
 		tmpHTML += 
 			"<tr class=\"b-list__row\">"
 				+"<td class=\"b-list__account\">"
-					+"<a href=\"test.php?id="+i+"\" class=\"b-list__account__user\"  id=\"name"+i+"\">"
+					+"<a href=\"test.php?id="+data[i]['id']+"\" class=\"b-list__account__user\"  id=\"name"+data[2][i]['id']+"\">"
 						+"名字"
 					+"</a>"
 				+"</td>"
@@ -44,20 +44,19 @@ function getHTML(data){
 
 $(document).ready(function(data) {
 	//拿資料
-	/*$.ajax({
+	$.ajax({
 		type : "POST",
 		url : "../Controller/Article.php",
 		data : {
-			title : $(this).html() //文章標題
+			mp : "文章"
 		},
 		dataType : 'json',
 	}).done(function(data){
-		$(this).attr("href","ArticleView.php?id=" + data['id']);//決定文章id，前往下層article拆解id內容
-
+		$('#articles > tbody').html(getHTML(data));
 	}).fail(function(jqXHR, textStatus, errorThrown){
 		alert("有錯誤產生，請看 console log");
 		console.log(jqXHR.responseText);
-	});*/
+	});
 	
 	$("a").click(function(){
 		$.ajax({
@@ -108,7 +107,7 @@ $(document).ready(function(data) {
 });
 	
 function nextPage() {
-	jQuery.post('../Controller/Article.php',{},
+	jQuery.post('../Controller/Article.php',{np : "下一頁文章"},
 	function(data) {
 		if(data == null){
 			return;
@@ -116,12 +115,12 @@ function nextPage() {
 		$('.pagenow').each(function(){
 			$(this).html(Number($(this).text())+1);
 		});
-		$('#articles > tbody').html(getHTML());
+		$('#articles > tbody').html(getHTML(data));
 	}, "json");
 }
 
 function prePage() {
-	jQuery.post('../Controller/Article.php',{},
+	jQuery.post('../Controller/Article.php',{bp : "上一頁文章"},
 	function(data) {
 		if(data == null){
 			return;
@@ -131,7 +130,7 @@ function prePage() {
 				return;
 			$(this).html(Number($(this).text())-1);
 		});
-		$('#articles > tbody').html(getHTML());
+		$('#articles > tbody').html(getHTML(data));
 	}, "json");
 }
 </script>

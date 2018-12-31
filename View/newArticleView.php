@@ -28,7 +28,7 @@
 				  title : $("#title").val(),
 				  content : $("#content").val()
 				},
-				dataType : 'json'
+				dataType : 'html'
 			}).done(function(data){
 				if(data == "AC")
 				{
