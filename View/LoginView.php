@@ -15,7 +15,7 @@
   <body>
     <!-- 頁首 -->
     <?php
-      include_once 'menu.php';
+      include_once 'MenuView.php';
     ?>
     <!-- 網站內容 -->
     <div class="content">
@@ -38,7 +38,7 @@
                 登入
               </button>
 
-              <a href="register.php">
+              <a href="RegisterView.php">
                 註冊帳號
               </a>
             </form>
@@ -67,7 +67,7 @@
             if(data == "AC")
             {
               alert("登入成功，請按確認後登入");
-              window.location.href = "home.php"; //跳到文章頁面
+              window.location.href = "HomeView.php"; //跳到文章頁面
             }
             else
             {

@@ -28,6 +28,7 @@
 				  title : $("#title").val(),
 				  content : $("#content").val()
 				},
+				dataType : 'json'
 			}).done(function(data){
 				if(data == "AC")
 				{
@@ -37,7 +38,7 @@
 				{
 				  alert("新增失敗");
 				}
-				window.location.href = "home.php"; //跳到文章頁面
+				window.location.href = "HomeView.php"; //跳到文章頁面
 			}).fail(function(jqXHR, textStatus, errorThrown) {
 				//失敗的時候
 				alert("有錯誤產生，請看 console log");

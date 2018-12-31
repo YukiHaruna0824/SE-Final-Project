@@ -43,6 +43,22 @@ function getHTML(data){
 }
 
 $(document).ready(function(data) {
+	//拿資料
+	$.ajax({
+		type : "POST",
+		url : "../Controller/Article.php",
+		data : {
+			title : $(this).html() //文章標題
+		},
+		dataType : 'json',
+	}).done(function(data){
+		$(this).attr("href","ArticleView.php?id=" + data['id']);//決定文章id，前往下層article拆解id內容
+
+	}).fail(function(jqXHR, textStatus, errorThrown){
+		alert("有錯誤產生，請看 console log");
+		console.log(jqXHR.responseText);
+	});
+	
 	$("a").click(function(){
 		$.ajax({
 			type : "POST",
@@ -52,7 +68,7 @@ $(document).ready(function(data) {
 			},
 			dataType : 'json',
 		}).done(function(data){
-			$(this).attr("href","article.php?id=" + data['id']);//決定文章id，前往下層article拆解id內容
+			$(this).attr("href","ArticleView.php?id=" + data['id']);//決定文章id，前往下層article拆解id內容
 
 		}).fail(function(jqXHR, textStatus, errorThrown){
 			alert("有錯誤產生，請看 console log");
@@ -146,7 +162,7 @@ function prePage() {
 		<!--抽卡介面-->
 		<ul class="b-tags">
 			<li class="b-tags__item">
-				<a href="newArticle.php">新增文章</a>
+				<a href="newArticleView.php">新增文章</a>
 			</li>
 		</ul>
 

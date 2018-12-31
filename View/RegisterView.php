@@ -15,7 +15,7 @@
   <body>
     <!-- 頁首 -->
     <?php
-      include_once 'menu.php';
+      include_once 'MenuView.php';
     ?>
     <!-- 網站內容 -->
     <div class="content">
@@ -151,7 +151,7 @@
 			        {
 			          alert("註冊成功，將自動前往登入頁。");
 			        	//註冊新增成功，轉跳到登入頁面。
-			        	window.location.href="login.php";
+			        	window.location.href="LoginView.php";
 			        }
 			        else
 			        {
