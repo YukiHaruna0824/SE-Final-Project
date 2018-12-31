@@ -249,7 +249,7 @@ class Article
                     'Title'=> $rowll["Content"],
                     'DeliveryDate'=>$rowll["DeliveryDate"]
                 );
-                $commitjson[$count]=json_encode($tmp);
+                $commitjson[$count]=$tmp;
                 $count+=1;
             }
         }
