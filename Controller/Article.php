@@ -220,6 +220,7 @@ if(isset($_POST['data']))
 {
     $username=$_SESSION['$inaccountname'];
     $datajson=$_POST['data'];//how much amount want to take
+	console.log($_POST['data']);
     if(isset($_SESSION[$username]))
     {
         $newArticlelist=new Article($username);

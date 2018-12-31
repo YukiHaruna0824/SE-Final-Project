@@ -25,7 +25,6 @@
 				type : "POST",
 				url : "../Controller/Article.php",
 				data : {
-				  un : tmpName, 
 				  title : $("#title").val(),
 				  content : $("#content").val()
 				},
