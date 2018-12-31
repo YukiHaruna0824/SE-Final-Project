@@ -8,8 +8,8 @@
 require_once('../Model/ArticleModel.php');
 require_once('../Model/AccountModel.php');
 require_once('../Model/ThumbupModel.php');
-require_once('./AccountModel.php');
-require_once('./CommetModel.php');
+require_once('../Model/CommetModel.php');
+require_once('./Account.php');
 
 class Article
 {
@@ -90,7 +90,6 @@ class Article
         while($row=$allartical->fetch_assoc())
         {
             $tmp=array(
-                'id'=> $row["id"],
                 'Owner'=> $row["Owner"],
                 'Title'=> $row["Title"],
             );
@@ -113,7 +112,6 @@ class Article
             while(($count<$number)&&($row=$allartical->fetch_assoc()))
             {
                 $tmp=array(
-                    'id'=> $row["id"],
                     'Owner'=> $row["Owner"],
                     'Title'=> $row["Title"],
                 );
@@ -193,7 +191,6 @@ class Article
         $row=$allartical->fetch_assoc();
         $thumbtmp=new ThumbUpModel();
         $json=array(
-            'id'=> $row["id"],
             'Owner'=> $row["Owner"],
             'Title'=> $row["Title"],
             'Content'=> $row["Content"],
@@ -205,9 +202,11 @@ class Article
     //取得文章id
     public function get_article_id($title)
     {
-        $allartical=$this->article_model->ChooseByTitle($title);
-        $row=$allartical->fetch_assoc();
-        return $row["id"];
+        $id=$this->article_model->ChooseByTitleid($title);
+        if($id!=-1)
+            return $id;
+        else
+            return -1;
     }
     //評論文章
     public function comment_article($json)
@@ -227,7 +226,6 @@ if(isset($_POST['data']))
 {
     $username=$_SESSION['$inaccountname'];
     $datajson=$_POST['data'];//how much amount want to take
-	console.log($_POST['data']);
     if(isset($_SESSION[$username]))
     {
         $newArticlelist=new Article($username);
