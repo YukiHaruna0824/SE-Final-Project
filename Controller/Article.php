@@ -88,10 +88,12 @@ class Article
         $storage['count']=0;
         $count=0;
         $json;
+        $havething=0;
         //me
         $allartical=$this->article_model->choseAccountAllArticle($_SESSION['$inaccountname']);
         if(!is_null($allartical))
         {
+            $havething=1;
             while($row=$allartical->fetch_assoc())
             {
                 $accounttmp=new AccountModel();
@@ -118,6 +120,7 @@ class Article
         $allfriend = $friend->FindAllFriend($_SESSION['$inaccountname']);
         if(!is_null($allfriend))
         {
+            $havething=1;
             while (($allfriend!=-1)&&($row = $allfriend->fetch_assoc()))
             {
                 $tmpaccountmodel=new AccountModel(); 
@@ -147,6 +150,8 @@ class Article
                 }
             }
         }
+        if($havething==0)
+            return null;
         if($json!=null)
         {
             $storage[$storage['count']]=json_encode($json);
