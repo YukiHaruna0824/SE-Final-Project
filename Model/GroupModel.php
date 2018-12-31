@@ -13,7 +13,7 @@ class GroupModel
 
     public function CreateGroup($groupName, $account)
     {
-        return $this->group->CreateGroup($account, $groupName);
+        return $this->group->CreateGroup($groupName, $account);
     }
 
     public function KillGroup($groupName)
@@ -53,5 +53,31 @@ while ($row = $result->fetch_assoc()) {
     public function ListAllGroups()
     {
         return $this->group->ListAllGroups();
+    }
+
+    //成功回傳ID 失敗-1
+    public function AddGroupArticle($group, $owner, $title, $content)
+    {
+        return $this->group->AddGroupArticle($group, $owner, $title, $content);
+    }
+
+    //成功回傳1 失敗-1
+    public function DeleteGroupArticle($group,$articleID)
+    {
+        return $this->group->DeleteGroupArticle($group,$articleID);
+    }
+/* usage example
+  $result = $m->ListAllGroupArticle("kkd");
+while ($row = $result->fetch_assoc()) {
+echo $row["Owner"];
+echo "\n";
+echo $row["Title"];
+echo "\n";
+echo $row["Content"];
+echo "\n";
+}*/
+    public function ListAllGroupArticle($group)
+    {
+        return $this->group->ListAllGroupArticle($group);
     }
 }

@@ -28,13 +28,14 @@ class MySQL_Group extends BaseGroup
         $command = "CREATE TABLE IF NOT EXISTS Groups 
                 (id INTEGER not NULL AUTO_INCREMENT , PRIMARY KEY ( id ) , GroupName VARCHAR(30) not NULL , UNIQUE KEY ( GroupName ) )" ;
         $this->link->query($command);
+
         return 1;
     }
 
     public function CreateGroup($groupName, $account)
     {
         //總table
-        $command = "Insert into Groups(GroupName)
+        $command = "Insert into Groups (GroupName)
              VALUES('$groupName')";
         $this->link->query($command);
         $last_id = mysqli_insert_id($this->link);
@@ -58,6 +59,12 @@ class MySQL_Group extends BaseGroup
              VALUES('$account')";
         $this->link->query($command);
 
+        $GroupArticle = $groupName."_GroupArticle";
+        $command = "CREATE TABLE IF NOT EXISTS $GroupArticle 
+                (id INTEGER not NULL AUTO_INCREMENT , PRIMARY KEY ( id ) , Owner VARCHAR(30) not NULL
+                , Title VARCHAR(30) not NULL, Content TEXT, DeliveryDate TIMESTAMP )" ;
+        $this->link->query($command);
+
         return $last_id;
     }
 
@@ -66,7 +73,7 @@ class MySQL_Group extends BaseGroup
 
         $command = "DELETE FROM Groups WHERE GroupName =  '$groupName' ";
         $this->link->query($command);
-echo "13";
+
         //account
         $command = "SELECT * FROM $groupName ";
         $result = $this->link->query($command);
@@ -150,5 +157,44 @@ echo "13";
         else
             return -1;
     }
+
+    public function AddGroupArticle($group, $owner, $title, $content)
+    {
+        $tableName = $group."_GroupArticle";
+        $command = "Insert into $tableName (Owner, Title, Content)
+             VALUES('$owner', '$title', '$content')";
+        $result = $this->link->query($command);
+        $last_id = mysqli_insert_id($this->link);
+        if ($result && mysqli_num_rows($result) > 0) {
+            return $last_id;
+        }
+        else
+            return -1;
+    }
+
+    public function DeleteGroupArticle($group,$articleID)
+    {
+        $tableName = $group."_GroupArticle";
+        $command = "DELETE FROM $tableName WHERE id =  '$articleID' ";
+        $result = $this->link->query($command);
+        if ($result && mysqli_num_rows($result) > 0) {
+            return 1;
+        }
+        else
+            return -1;
+    }
+
+    public function ListAllGroupArticle($group)
+    {
+        $tableName = $group."_GroupArticle";
+        $command = "SELECT * FROM $tableName";
+        $result = $this->link->query($command);
+        if ($result && mysqli_num_rows($result) > 0) {
+            return $result;
+        }
+        else
+            return -1;
+    }
+
 
 }

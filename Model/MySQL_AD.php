@@ -24,33 +24,62 @@ class MySQL_AD
             return -1;
         }
         $command = "CREATE TABLE IF NOT EXISTS AllAD 
-                (id INTEGER not NULL AUTO_INCREMENT , PRIMARY KEY ( id ) , Title VARCHAR(30) not NULL , UNIQUE KEY ( Title ), Content TEXT, , Owner VARCHAR(30) not NULL )" ;
+                (id INTEGER not NULL AUTO_INCREMENT , PRIMARY KEY ( id ) , Title VARCHAR(30) not NULL , UNIQUE KEY ( Title ), Content TEXT, Owner VARCHAR(30) not NULL )" ;
         $this->link->query($command);
         return 1;
     }
 
     public function Add($Title, $Content, $owner)
     {
-
+        $command = "Insert into AllAD(Title, Content, Owner)
+             VALUES('$Title' , '$Content' , '$owner')";
+        $result = $this->link->query($command);
+        if ($result && mysqli_num_rows($result) > 0) {
+           return mysqli_insert_id($this->link);
+        }
+        else
+            return -1;
     }
 
     public function Delete($ADID)
     {
-
+        $command = "DELETE FROM AllAD WHERE id =  '$ADID' ";
+        $result = $this->link->query($command);
+        if ($result && mysqli_num_rows($result) > 0) {
+            return 1;
+        }
+        else
+            return -1;
     }
 
-    public function UpDateContent($id, $tontent)
+    public function UpDateContent($ADID, $content)
     {
-
+        $command = "UPDATE AllAD 
+                SET Content =  '$content' WHERE id = '$ADID' ";
+        $result = $this->link->query($command);
+        if ($result && mysqli_num_rows($result) > 0)
+            return 1;
+        else
+            return -1;
     }
 
     public function ListAllAccountAD($owner)
     {
-
+        $command = "SELECT * FROM AllAD WHERE Owner = '$owner'";
+        $result = $this->link->query($command);
+        if ($result && mysqli_num_rows($result) > 0) {
+            return $result;
+        }
+        return -1;
     }
 
     public function ListAllAD()
     {
-
+        $command = "SELECT * FROM AllAD ";
+        $result = $this->link->query($command);
+        if ($result && mysqli_num_rows($result) > 0) {
+            return $result;
+        }
+        return -1;
     }
 }
