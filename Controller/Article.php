@@ -53,25 +53,27 @@ class Article
     public function get_back_page()
     {
         $storage=$_SESSION['mainpage'];
+        $storage=json_decode($storage,true);
         if($storage['current']==0)
         {
             return null;
         }
         $storage['current']-=1;
         $data=$storage[$storage['current']];
-        $_SESSION['mainpage']=$storage;
+        $_SESSION['mainpage']=json_encode($storage);
         return $data;
     }
     //取得下一頁
     public function get_next_page()
     {
-        $storage=$_SESSION['mainpage'];
+        $storage=($_SESSION['mainpage']);
+        $storage=json_decode($storage,TRUE);
         //getthing
         if($storage['count']>$storage['current'])
         {
             $storage['current']+=1;
             $data=$storage[$storage['current']];
-            $_SESSION['mainpage']=$storage;
+            $_SESSION['mainpage']=json_encode($storage);
             return $data;
         }
         if($storage['count'] == $storage['current'])
@@ -204,9 +206,6 @@ class Article
     //取得文章 article id
     public function get_article($id)
     {
-        $allartical=$this->article_model->Choose($id);
-        $row=$allartical->fetch_assoc();
-        $thumbtmp=new ThumbUpModel();
         $allcommet=$this->commet_model->GetAllComment($id);
         $commitjson;
         $count=0;
@@ -220,6 +219,9 @@ class Article
             $commitjson[$count]=json_encode($tmp);
             $count+=1;
         }
+        $allartical=$this->article_model->Choose($id);
+        $row=$allartical->fetch_assoc();
+        $thumbtmp=new ThumbUpModel();
         $json=array(
             'Owner'=> $row["Owner"],
             'Title'=> $row["Title"],
