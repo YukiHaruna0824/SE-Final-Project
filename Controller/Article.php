@@ -90,34 +90,9 @@ class Article
         $json;
         //me
         $allartical=$this->article_model->choseAccountAllArticle($_SESSION['$inaccountname']);
-        while($row=$allartical->fetch_assoc())
+        if(!is_null($allartical))
         {
-            $accounttmp=new AccountModel();
-            $ownerid=$accounttmp->GetID($row["Owner"]);
-            $tmp=array(
-                'id'=>$row["id"],
-                'Ownerid'=>$ownerid,
-                'Owner'=> $row["Owner"],
-                'Title'=> $row["Title"],
-            );
-            $json[$count]=json_encode($tmp);
-            $count+=1;
-            if($count==20)
-            {
-                $storage[$storage['count']]=json_encode($json);
-                $count=0;
-                $storage['count']+=1;
-                $json=null;
-            }
-        }
-        //friend
-        $friend=new FriendModel();
-        $allfriend = $friend->FindAllFriend($_SESSION['$inaccountname']);
-        while (($allfriend!=-1)&&($row = $allfriend->fetch_assoc())!=-1)
-        {
-            $tmpaccountmodel=new AccountModel(); 
-            $allartical=$this->article_model->choseAccountAllArticle($tmpaccountmodel->GetAccount($row['id']));
-            while(($count<$number)&&($row=$allartical->fetch_assoc()))
+            while($row=$allartical->fetch_assoc())
             {
                 $accounttmp=new AccountModel();
                 $ownerid=$accounttmp->GetID($row["Owner"]);
@@ -135,6 +110,40 @@ class Article
                     $count=0;
                     $storage['count']+=1;
                     $json=null;
+                }
+            }
+        }
+        //friend
+        $friend=new FriendModel();
+        $allfriend = $friend->FindAllFriend($_SESSION['$inaccountname']);
+        if(!is_null($allfriend))
+        {
+            while (($allfriend!=-1)&&($row = $allfriend->fetch_assoc()))
+            {
+                $tmpaccountmodel=new AccountModel(); 
+                $allartical=$this->article_model->choseAccountAllArticle($tmpaccountmodel->GetAccount($row['id']));
+                if(!is_null($allartical))
+                {
+                    while(($count<$number)&&($row=$allartical->fetch_assoc()))
+                    {
+                        $accounttmp=new AccountModel();
+                        $ownerid=$accounttmp->GetID($row["Owner"]);
+                        $tmp=array(
+                            'id'=>$row["id"],
+                            'Ownerid'=>$ownerid,
+                            'Owner'=> $row["Owner"],
+                            'Title'=> $row["Title"],
+                        );
+                        $json[$count]=json_encode($tmp);
+                        $count+=1;
+                        if($count==20)
+                        {
+                            $storage[$storage['count']]=json_encode($json);
+                            $count=0;
+                            $storage['count']+=1;
+                            $json=null;
+                        }
+                    }
                 }
             }
         }
@@ -210,9 +219,9 @@ class Article
         $allcommet=$commettmp->GetAllComment($id);
         $commitjson=null;
         $count=0;
-        if($allcommet!=-1)
+        if(!is_null($allcommet))
         {
-            while(($rowll=$allcommet->fetch_assoc())!=null)
+            while(($rowll=$allcommet->fetch_assoc()))
             {
                 $tmp=array(
                     'Owner'=> $rowll["Owner"],
@@ -224,17 +233,20 @@ class Article
             }
         }
         $allartical=$this->article_model->Choose($id);
-        $row=$allartical->fetch_assoc();
-        $thumbtmp=new ThumbUpModel();
-        $json=array(
-            'Owner'=> $row["Owner"],
-            'Title'=> $row["Title"],
-            'Content'=> $row["Content"],
-            'commit'=>json_encode($commitjson),
-            'thumb'=>$thumbtmp->GetNumberOfThumbUp($id),
-            'DeliveryDate'=>$row["DeliveryDate"]
-        );
-        return json_encode($json);
+        if(!is_null($allartical))
+        {
+            $row=$allartical->fetch_assoc();
+            $thumbtmp=new ThumbUpModel();
+            $json=array(
+                'Owner'=> $row["Owner"],
+                'Title'=> $row["Title"],
+                'Content'=> $row["Content"],
+                'commit'=>json_encode($commitjson),
+                'thumb'=>$thumbtmp->GetNumberOfThumbUp($id),
+                'DeliveryDate'=>$row["DeliveryDate"]
+            );
+            return json_encode($json);
+        }
     }
     //取得文章id
     public function get_article_id($title)
