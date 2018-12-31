@@ -210,12 +210,12 @@ class Article
         $allcommet=$this->commet_model->GetAllComment($id);
         $commitjson;
         $count=0;
-        while($row=$allcommet->fetch_assoc())
+        while($rowll=$allcommet->fetch_assoc())
         {
             $tmp=array(
-                'Owner'=> $row["Owner"],
-                'Title'=> $row["content"],
-                'DeliveryDate'=>$row["DeliveryDate"]
+                'Owner'=> $rowll["Owner"],
+                'Title'=> $rowll["content"],
+                'DeliveryDate'=>$rowll["DeliveryDate"]
             );
             $commitjson[$count]=json_encode($tmp);
             $count+=1;
