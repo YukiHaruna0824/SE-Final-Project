@@ -99,6 +99,7 @@ class Account
             return FALSE;
         }
     }
+    //add new friend
     public function add_friend($id)
     {
         if($this->account_name!="")

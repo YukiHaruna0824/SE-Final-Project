@@ -191,12 +191,14 @@ class Article
     {
         $allartical=$this->article_model->Choose($id);
         $row=$allartical->fetch_assoc();
+        $thumbtmp=new ThumbUpModel();
         $json=array(
             'id'=> $row["id"],
             'Owner'=> $row["Owner"],
             'Title'=> $row["Title"],
             'Content'=> $row["Content"],
-            'commit'=>$this->commet_model->GetAllComment($id)
+            'commit'=>$this->commet_model->GetAllComment($id),
+            'thumb'=>$thumbtmp->GetNumberOfThumbUp($id)
         );
         return json_encode($json);
     }
@@ -341,7 +343,7 @@ elseif(isset($_POST['id']))
     }
 }
 //first main page
-elseif(isset($_POST['un']))
+elseif(isset($_POST['mp']))//mp 亂給直
 {
     $username=$_SESSION['$inaccountname'];
     if(isset($_SESSION[$username]))
@@ -357,7 +359,7 @@ elseif(isset($_POST['un']))
     }
 }
 //next page
-elseif(isset($_POST['un']))
+elseif(isset($_POST['np']))//np 亂給直
 {
     $username=$_SESSION['$inaccountname'];
     if(isset($_SESSION[$username]))
@@ -373,7 +375,7 @@ elseif(isset($_POST['un']))
     }
 }
 //back page
-elseif(isset($_POST['un']))
+elseif(isset($_POST['bp']))//bp 亂給直
 {
     $username=$_SESSION['$inaccountname'];
     if(isset($_SESSION[$username]))
