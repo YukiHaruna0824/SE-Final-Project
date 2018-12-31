@@ -25,13 +25,17 @@ class Card
     {
         if($this->account_name!=""/*&&($this->account_model->UseDaSaBi($this->account_name,10)!=-1)*/)
         {
-            $card=($this->account_model->RandomChoose($this->account_name))->fetch_assoc();
-            $json=array(
-                'Account'=>$card["Account"],
-                'Gender'=>$card["Gender"],
-                'Class'=>$card["Class"]
-            );
-            return json_encode($json);
+            $cardtmp=$this->account_model->RandomChoose($this->account_name);
+            if(!is_null($cardtmp))
+            {
+                $card=$cardtmp->fetch_assoc();
+                $json=array(
+                    'Account'=>$card["Account"],
+                    'Gender'=>$card["Gender"],
+                    'Class'=>$card["Class"]
+                );
+                return json_encode($json);
+            }
         }
         else
         {
