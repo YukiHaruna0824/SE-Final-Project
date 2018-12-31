@@ -53,7 +53,7 @@
       //當文件準備好時，
       $(document).on("ready", function() {
 				//當表單 sumbit 出去的時候
-				$("form.login").on("submit", function(){
+			$("form.login").on("submit", function(){
 					$.ajax({
             type : "POST",
             url : "../Controller/Account.php",
