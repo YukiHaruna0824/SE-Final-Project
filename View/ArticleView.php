@@ -37,17 +37,21 @@
 					Title.innerHTML = data['Title'];
 					Content.innerHTML = data['Content'];
 					Thumb.innerHTML = data['thumb'];
+					if(data['commit']!="null"){
+						var comment = data['commit'];//獲取留言資訊
+						for(var i = 0; i < Object.keys(comment).length; i++)
+						{
+							var postman = data[i.toString()]['Owner'];//每筆資料的留言者
+							var content = data[i.toString()]['Content'];//每筆資料留言的留言內容
 
-					var comment = data['commit'];//獲取留言資訊
-					for(var i = 0; i < Object.keys(comment).length; i++)
-					{
-						var postman = data[i.toString()]['Owner'];//每筆資料的留言者
-						var content = data[i.toString()]['content'];//每筆資料留言的留言內容
-
-						$("#comment").html() += 
-						'<div class="reply-content"><h2 class="reply-content__user">' + postman +
-						'</h2><article class="reply-content__article c-article ">' + content +
-						'</article><div class="reply-content__footer"><div class="edittime" data-tooltipped="" aria-describedby="tippy-tooltip-272" data-original-title="留言時間 2018-06-30 03:07:05">2018-06-30 03:07:05</div></div></div><br>';
+							$("#comment").html() += 
+							'<div class="reply-content"><h2 class="reply-content__user">' + postman +
+							'</h2><article class="reply-content__article c-article ">' + content +
+							'</article><div class="reply-content__footer"><div class="edittime" data-tooltipped="" aria-describedby="tippy-tooltip-272" data-original-title="留言時間 2018-06-30 03:07:05">2018-06-30 03:07:05</div></div></div><br>';
+						}
+					}
+					else{
+						$("#comment").html("");
 					}
 				}
 			}).fail(function(jqXHR, textStatus, errorThrown) {
@@ -99,7 +103,7 @@
 
 								<!--他人留言開始-->
 								<div class="c-reply__item" id="comment">
-
+									<!--
 									<div class="reply-content">
 										<h2 class="reply-content__user">邱暐盛</h2>
 										<article class="reply-content__article c-article ">
@@ -138,7 +142,7 @@
 										</div>
 									</div>
 									<br>
-
+									-->
 								</div>
 								<!--他人留言結束-->
 

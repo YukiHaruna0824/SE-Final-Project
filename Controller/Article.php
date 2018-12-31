@@ -210,7 +210,7 @@ class Article
         $allcommet=$commettmp->GetAllComment($id);
         $commitjson=null;
         $count=0;
-        if($allcommet!=-1)
+        if($allcommet!=null)
         {
             while(($rowll=$allcommet->fetch_assoc())!=null)
             {
