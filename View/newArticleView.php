@@ -57,6 +57,8 @@
           <!-- 在 xs 尺寸，佔12格，可參考 http://getbootstrap.com/css/#grid 說明-->
           <div class="col-xs-12 col-sm-4 col-sm-offset-4">
           	<h1>新增文章</h1>
+			<br>
+			<br>
             <form class="login">
               <div class="form-group">
                 <label for="title">標題</label>
