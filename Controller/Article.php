@@ -199,11 +199,23 @@ class Article
         $allartical=$this->article_model->Choose($id);
         $row=$allartical->fetch_assoc();
         $thumbtmp=new ThumbUpModel();
+        $allcommet=$this->commet_model->GetAllComment($id);
+        $commitjson;
+        $count=0;
+        while($row=$allcommet->fetch_assoc())
+        {
+            $tmp=array(
+                'Owner'=> $row["Owner"],
+                'Title'=> $row["content"],
+            );
+            $commitjson[$count]=json_encode($tmp);
+            $count+=1;
+        }
         $json=array(
             'Owner'=> $row["Owner"],
             'Title'=> $row["Title"],
             'Content'=> $row["Content"],
-            'commit'=>json_encode(($this->commet_model->GetAllComment($id))->fetch_assoc()),
+            'commit'=>json_encode($commitjson),
             'thumb'=>$thumbtmp->GetNumberOfThumbUp($id)
         );
         return json_encode($json);
