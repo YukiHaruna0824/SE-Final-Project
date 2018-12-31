@@ -56,7 +56,10 @@ class Article
         $storage=json_decode($storage,true);
         if($storage['current']==0)
         {
-            return null;
+            $tmp=array(
+                "null"=>1
+            );
+            return json_encode($tmp);
         }
         $storage['current']-=1;
         $data=$storage[$storage['current']];
@@ -78,7 +81,10 @@ class Article
         }
         else
         {
-            return null;
+            $tmp=array(
+                "null"=>1
+            );
+            return json_encode($tmp);
         }
     }
     public function first_get_into_main()
@@ -151,7 +157,12 @@ class Article
             }
         }
         if($havething==0)
-            return null;
+        {
+            $tmp=array(
+                "null"=>1
+            );
+            return json_encode($tmp);
+        }
         if($json!=null)
         {
             $storage[$storage['count']]=json_encode($json);
@@ -160,7 +171,12 @@ class Article
         }
         //group 等groupdb用好
         if($storage==null)
-            return null;
+        {
+            $tmp=array(
+                "null"=>1
+            );
+            return json_encode($tmp);
+        }
         $_SESSION['mainpage']=json_encode($storage);
         return $storage[0];
     }
