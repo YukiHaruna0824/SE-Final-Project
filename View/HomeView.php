@@ -44,7 +44,7 @@ function getHTML(data){
 
 $(document).ready(function(data) {
 	//拿資料
-	$.ajax({
+	/*$.ajax({
 		type : "POST",
 		url : "../Controller/Article.php",
 		data : {
@@ -57,7 +57,7 @@ $(document).ready(function(data) {
 	}).fail(function(jqXHR, textStatus, errorThrown){
 		alert("有錯誤產生，請看 console log");
 		console.log(jqXHR.responseText);
-	});
+	});*/
 	
 	$("a").click(function(){
 		$.ajax({

@@ -7,7 +7,7 @@ class MySQL_AD
 //以root管理者帳號進入資料庫
     public $dbuser = "root";
 //root的資料庫密碼
-    public $dbpw = "root";
+    public $dbpw = "";
 //登入後要使用的資料庫
     public $dbname = "ntust";
 
