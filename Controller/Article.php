@@ -9,6 +9,7 @@ require_once('../Model/ArticleModel.php');
 require_once('../Model/AccountModel.php');
 require_once('../Model/ThumbupModel.php');
 require_once('../Model/CommetModel.php');
+require_once('../Model/FriendModel.php');
 require_once('./Account.php');
 
 class Article
@@ -26,7 +27,7 @@ class Article
     }
     /*session的格式就是
     json{
-        'count':0//幾組，會停留在最上面那組
+        'count':0//幾組，會停留在最上面那組+1組
         'current':0//現在在第幾頁
         0:json{
             0:json{
@@ -43,6 +44,9 @@ class Article
                 'Title'=> $row["Title"],
             }
         }
+        .
+        .
+        .
     }
     */
     //取得上一頁
@@ -51,7 +55,7 @@ class Article
         $storage=$_SESSION['mainpage'];
         if($storage['current']==0)
         {
-            return json_encode(array('null'=>1));
+            return null;
         }
         $storage['current']-=1;
         $data=$storage[$storage['current']];
@@ -72,7 +76,7 @@ class Article
         }
         if($storage['count'] == $storage['current'])
         {
-            return json_encode(array('null'=>1));
+            return null;
         }
     }
     public function first_get_into_main()
@@ -83,7 +87,7 @@ class Article
         $count=0;
         $json;
         //me
-        $allartical=$this->article_model->choseAccountAllArticle($this->thisaccount->get_account_name());
+        $allartical=$this->article_model->choseAccountAllArticle($_SESSION['$inaccountname']);
         while($row=$allartical->fetch_assoc())
         {
             $tmp=array(
@@ -101,8 +105,9 @@ class Article
             }
         }
         //friend
-        $allfriend = $friend->FindAllFriend($this->thisaccount->get_account_name());
-        while ($row = $allfriend->fetch_assoc()) 
+        $friend=new FriendModel();
+        $allfriend = $friend->FindAllFriend($_SESSION['$inaccountname']);
+        while (($allfriend!=-1)&&($row = $allfriend->fetch_assoc())!=-1)
         {
             $tmpaccountmodel=new AccountModel(); 
             $allartical=$this->article_model->choseAccountAllArticle($tmpaccountmodel->GetAccount($row['id']));
@@ -123,9 +128,15 @@ class Article
                 }
             }
         }
+        if($json!=null)
+        {
+            $storage[$storage['count']]=json_encode($json);
+            $count=0;
+            $storage['count']+=1;
+        }
         //group 等groupdb用好
         if($storage==null)
-            return json_encode(array('null'=>1));
+            return null;
         $_SESSION['mainpage']=json_encode($storage);
         return $storage[0];
     }
@@ -158,7 +169,7 @@ class Article
     public function support_ones_article($id)
     {
         $tmp=new ThumbUpModel();
-        if($tmp->Add($id,$this->thisaccount->get_account_name())!=-1)
+        if($tmp->Add($id,$_SESSION['$inaccountname'])!=-1)
         {
             $this->thisaccount->add_DaSaBi(20);
             return TRUE;
@@ -172,7 +183,7 @@ class Article
     public function unsupport_ones_article($id)
     {
         $$tmp=new ThumbUpModel();
-        if($tmp->Delete($id,$this->thisaccount->get_account_name())==1)
+        if($tmp->Delete($id,$_SESSION['$inaccountname'])==1)
         {
             $this->thisaccount->take_DaSaBi(20);
             return TRUE;
@@ -192,7 +203,7 @@ class Article
             'Owner'=> $row["Owner"],
             'Title'=> $row["Title"],
             'Content'=> $row["Content"],
-            'commit'=>$this->commet_model->GetAllComment($id),
+            'commit'=>json_encode(($this->commet_model->GetAllComment($id))->fetch_assoc()),
             'thumb'=>$thumbtmp->GetNumberOfThumbUp($id)
         );
         return json_encode($json);
@@ -209,7 +220,7 @@ class Article
     //評論文章
     public function comment_article($json)
     {
-        if($this->commet_model->CommetModel($json['id'],$json['content'],$this->thisaccount->get_account_name())==1)
+        if($this->commet_model->CommetModel($json['id'],$json['content'],$_SESSION['$inaccountname'])==1)
         {
             return TRUE;
         }
@@ -276,8 +287,7 @@ elseif(isset($_POST['id'])&&isset($_POST['get']))//get 亂給直
     }
     else
     {
-        $json['id']=-1;
-        return json_encode($json);
+        echo null;
     }
 }
 //delete thumb
@@ -358,8 +368,7 @@ elseif(isset($_POST['mp']))//mp 亂給直
     }
     else
     {
-        $json['null']=0;
-        echo json_encode($json);
+        echo null;
     }
 }
 //next page
@@ -374,8 +383,7 @@ elseif(isset($_POST['np']))//np 亂給直
     }
     else
     {
-        $json['null']=0;
-        echo json_encode($json);
+        echo null;
     }
 }
 //back page
@@ -390,8 +398,7 @@ elseif(isset($_POST['bp']))//bp 亂給直
     }
     else
     {
-        $json['null']=0;
-        echo json_encode($json);
+        echo null;
     }
 }
 elseif(isset($_POST['title']))
@@ -408,8 +415,7 @@ elseif(isset($_POST['title']))
     }
     else
     {
-        $json['null']=0;
-        echo json_encode($json);
+        echo null;
     }
 }
 ?>
