@@ -258,9 +258,9 @@ class Article
             return -1;
     }
     //評論文章
-    public function comment_article($json)
+    public function comment_article($id,$content,$inaccountname)
     {
-        if($this->commet_model->CommetModel($json['id'],$json['content'],$_SESSION['$inaccountname'])==1)
+        if($this->commet_model->CommetModel($id,$content,$inaccountname)==1)
         {
             return TRUE;
         }
@@ -293,14 +293,14 @@ if(isset($_POST['title']))
     }
 }
 //commit
-elseif(isset($_POST['com']))
+elseif(isset($_POST['content'])&&isset($_POST['id']))
 {
     $username=$_SESSION['$inaccountname'];
     $commitjson=$_POST['com'];//commit json
     if(isset($_SESSION[$username]))
     {
         $newArticlelist=new Article($username);
-        if($newArticlelist->comment_article($commitjson)==TRUE)
+        if($newArticlelist->comment_article($_POST['id'],$_POST['content'],$username)==TRUE)
         {
             echo "AC";
         }
