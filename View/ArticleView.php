@@ -37,6 +37,7 @@
 					Title.innerHTML = data['Title'];
 					Content.innerHTML = data['Content'];
 					Thumb.innerHTML = data['thumb'];
+					//console.log(data['commit']);
 					if(data['commit']!="null"){
 						var comment = data['commit'];//獲取留言資訊
 						for(var i = 0; i < Object.keys(comment).length; i++)
