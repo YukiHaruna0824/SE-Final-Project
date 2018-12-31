@@ -222,7 +222,7 @@ class Article
     {
         $commettmp=new CommetModel();
         $allcommet=$commettmp->GetAllComment($id);
-        $commitjson=null;
+        $commitjson = null;
         $count=0;
         if(!is_null($allcommet))
         {
@@ -230,10 +230,10 @@ class Article
             {
                 $tmp=array(
                     'Owner'=> $rowll["Owner"],
-                    'Title'=> $rowll["Content"],
+                    'Content'=> $rowll["Content"],
                     'DeliveryDate'=>$rowll["DeliveryDate"]
                 );
-                $commitjson[$count]=json_encode($tmp);
+                $commitjson[$count]= $tmp;
                 $count+=1;
             }
         }
@@ -246,10 +246,11 @@ class Article
                 'Owner'=> $row["Owner"],
                 'Title'=> $row["Title"],
                 'Content'=> $row["Content"],
-                'commit'=>json_encode($commitjson),
-                'thumb'=>$thumbtmp->GetNumberOfThumbUp($id),
-                'DeliveryDate'=>$row["DeliveryDate"]
+                'commit'=> $commitjson,
+                'thumb'=> $thumbtmp->GetNumberOfThumbUp($id),
+                'DeliveryDate'=> $row["DeliveryDate"]
             );
+
             return json_encode($json);
         }
     }

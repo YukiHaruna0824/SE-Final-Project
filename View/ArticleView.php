@@ -37,19 +37,22 @@
 					Title.innerHTML = data['Title'];
 					Content.innerHTML = data['Content'];
 					Thumb.innerHTML = data['thumb'];
-					//console.log(data['commit']);
-					if(data['commit']!="null"){
+
+					if(data['commit'] != "null"){
 						var comment = data['commit'];//獲取留言資訊
+						var message = "";
+
 						for(var i = 0; i < Object.keys(comment).length; i++)
 						{
-							var postman = data[i.toString()]['Owner'];//每筆資料的留言者
-							var content = data[i.toString()]['Content'];//每筆資料留言的留言內容
+							var json = comment[i];
+							var postman = json['Owner'];//每筆資料的留言者
+							var content = json['Content'];//每筆資料留言的留言內容
 
-							$("#comment").html() += 
-							'<div class="reply-content"><h2 class="reply-content__user">' + postman +
+							message += '<div class="reply-content"><h2 class="reply-content__user">' + postman +
 							'</h2><article class="reply-content__article c-article ">' + content +
 							'</article><div class="reply-content__footer"><div class="edittime" data-tooltipped="" aria-describedby="tippy-tooltip-272" data-original-title="留言時間 2018-06-30 03:07:05">2018-06-30 03:07:05</div></div></div><br>';
 						}
+						$("#comment").html(message);
 					}
 					else{
 						$("#comment").html("");
@@ -61,28 +64,52 @@
 			console.log(jqXHR.responseText);
 		});
 		
-	//logout按鈕註冊
-	$("#logout").click(function(){
-		$.ajax({
-			type : "POST",
-			url : "../Controller/Account.php",
-			data : {
-              apple : "asd"
-            },
-			dataType : 'html'
-			}).done(function(data) {
-				console.log(data);
-			if(data=="bye")
-			{
-				alert("登出成功，請按確認後登出");
-              	window.location.href = "LoginView.php"; //跳到文章頁面
-			}
-			}).fail(function(jqXHR, textStatus, errorThrown) {
-			//失敗的時候
-			alert("有錯誤產生，請看 console log");
-			console.log(jqXHR.responseText);
-		});
-	});		
+		//送出留言
+		$("#submitmessage").click(function(){
+			$.ajax({
+				type : "POST",
+				url : "../Controller/Article.php",
+				data : {
+					id : articleid,
+					content : $("#message").text()
+				},
+				dataType : 'html'
+				}).done(function(data) {
+					console.log($("#message").text());
+					window.location.href = "ArticleView.php?id=" + articleid; 
+				}).fail(function(jqXHR, textStatus, errorThrown) {
+				//失敗的時候
+				alert("有錯誤產生，請看 console log");
+				console.log(jqXHR.responseText);
+			});
+		});	
+
+		//logout按鈕註冊
+		$("#logout").click(function(){
+			$.ajax({
+				type : "POST",
+				url : "../Controller/Account.php",
+				data : {
+				apple : "asd"
+				},
+				dataType : 'html'
+				}).done(function(data) {
+					console.log(data);
+				if(data=="bye")
+				{
+					alert("登出成功，請按確認後登出");
+					window.location.href = "LoginView.php"; //跳到登入頁面
+				}
+				}).fail(function(jqXHR, textStatus, errorThrown) {
+				//失敗的時候
+				alert("有錯誤產生，請看 console log");
+				console.log(jqXHR.responseText);
+			});
+		});	
+
+
+
+
 	});
 </script>
 	
@@ -103,9 +130,9 @@
 				<table class="b-list">
 					<tbody>
 						<div class="c-post__header">
-							<h1 class="c-post__header__title" id="title">台科最爛交友網站上線了</h1>
+							<h1 class="c-post__header__title" id="title"></h1>
 							<div class="c-post__header__author">
-								<h2 id="name">名字</h2>
+								<h2 id="name"></h2>
 							</div>
 							<div class="c-post__header__info">
 								<h5>2017-01-21 23:37:05 編輯</h5>
@@ -115,12 +142,12 @@
 						<div class="c-post__body">
 							<!--內文-->
 							<article class="c-article FM-P2">
-								<p id="content">茗翔垃圾資料庫</p>
+								<p id="content"></p>
 							</article>
 							<!--按讚-->
 							<div class="c-post__body__buttonbar">
-								<button type="button">真香</button>
-								<span id="thumb">12</span>
+								<button type="button">讚</button>
+								<span id="thumb"></span>
 							</div>
 
 							<div class="c-post__footer c-reply">
@@ -172,9 +199,10 @@
 
 								<!--你自己的留言區-->
 								<div class="c-reply__editor">
-									<div class="reply-input" data-tooltipped="" aria-describedby="tippy-tooltip-216" data-original-title="超過80個字了喔～">
-										<textarea data-bsn="60076" data-snb="40985403" class="content-edit" placeholder="留言⋯"></textarea>
+									<div class="reply-input">
+										<textarea class="content-edit" id="message" placeholder="留言⋯"></textarea>
 									</div>
+									<button type="button" id="submitmessage" class="btn--sm btn--normal">留言</button>
 								</div>
 								
 							</div>
