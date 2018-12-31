@@ -210,11 +210,12 @@ class Article
         $allcommet=$this->commet_model->GetAllComment($id);
         $commitjson;
         $count=0;
-        while($row=$allcommet->fetch_assoc())
+        while($rowll=$allcommet->fetch_assoc())
         {
             $tmp=array(
-                'Owner'=> $row["Owner"],
-                'Title'=> $row["content"],
+                'Owner'=> $rowll["Owner"],
+                'Title'=> $rowll["content"],
+                'DeliveryDate'=>$rowll["DeliveryDate"]
             );
             $commitjson[$count]=json_encode($tmp);
             $count+=1;
@@ -224,7 +225,8 @@ class Article
             'Title'=> $row["Title"],
             'Content'=> $row["Content"],
             'commit'=>json_encode($commitjson),
-            'thumb'=>$thumbtmp->GetNumberOfThumbUp($id)
+            'thumb'=>$thumbtmp->GetNumberOfThumbUp($id),
+            'DeliveryDate'=>$row["DeliveryDate"]
         );
         return json_encode($json);
     }
