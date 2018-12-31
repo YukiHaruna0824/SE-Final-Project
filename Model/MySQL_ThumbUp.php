@@ -9,7 +9,7 @@ class MySQL_ThumbUp extends BaseThumbUp
 //以root管理者帳號進入資料庫
     public $dbuser = "root";
 //root的資料庫密碼
-    public $dbpw = "";
+    public $dbpw = "root";
 //登入後要使用的資料庫
     public $dbname = "ntust";
 

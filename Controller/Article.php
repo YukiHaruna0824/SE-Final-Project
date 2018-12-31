@@ -8,8 +8,8 @@
 require_once('../Model/ArticleModel.php');
 require_once('../Model/AccountModel.php');
 require_once('../Model/ThumbupModel.php');
-require_once('../Model/AccountModel.php');
 require_once('../Model/CommetModel.php');
+require_once('./Account.php');
 
 class Article
 {
@@ -90,7 +90,6 @@ class Article
         while($row=$allartical->fetch_assoc())
         {
             $tmp=array(
-                'id'=> $row["id"],
                 'Owner'=> $row["Owner"],
                 'Title'=> $row["Title"],
             );
@@ -113,7 +112,6 @@ class Article
             while(($count<$number)&&($row=$allartical->fetch_assoc()))
             {
                 $tmp=array(
-                    'id'=> $row["id"],
                     'Owner'=> $row["Owner"],
                     'Title'=> $row["Title"],
                 );
@@ -135,9 +133,9 @@ class Article
         return $storage[0];
     }
     //add article
-    public function addarticle($title,$content)
+    public function addarticle($json)
     {
-        if($this->article_model->Add($this->thisaccount->get_account_name(),$title,$content)!=-1)
+        if($this->article_model->Add($this->thisaccount->get_account_name(),$json['title'],$json['content'])!=-1)
         {
             return TRUE;
         }
@@ -193,7 +191,6 @@ class Article
         $row=$allartical->fetch_assoc();
         $thumbtmp=new ThumbUpModel();
         $json=array(
-            'id'=> $row["id"],
             'Owner'=> $row["Owner"],
             'Title'=> $row["Title"],
             'Content'=> $row["Content"],
@@ -205,9 +202,11 @@ class Article
     //取得文章id
     public function get_article_id($title)
     {
-        $allartical=$this->article_model->ChooseByTitle($title);
-        $row=$allartical->fetch_assoc();
-        return $row["id"];
+        $id=$this->article_model->ChooseByTitleid($title);
+        if($id!=-1)
+            return $id;
+        else
+            return -1;
     }
     //評論文章
     public function comment_article($json)
@@ -222,17 +221,15 @@ class Article
         }
     }
 }
-
 //add new article
-if(isset($_POST['title'])&&isset($_POST['content']))
+if(isset($_POST['data']))
 {
     $username=$_SESSION['$inaccountname'];
-	console.log($_POST['title']);
-	console.log($_POST['content']);
+    $datajson=$_POST['data'];//how much amount want to take
     if(isset($_SESSION[$username]))
     {
         $newArticlelist=new Article($username);
-        if($newArticlelist->addarticle($_POST['title'],$_POST['content'])==TRUE)
+        if($newArticlelist->addarticle($datajson)==TRUE)
         {
             echo "AC";
         }
