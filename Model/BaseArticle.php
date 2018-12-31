@@ -13,7 +13,7 @@ abstract class BaseArticle
 
     public abstract function Choose($id);
 
-    public abstract function ChooseByTitle($title);
+    public abstract function ChooseByTitleid($title);
 
     public abstract function  choseAccountArticle($accont,$Range,$Range2);
 

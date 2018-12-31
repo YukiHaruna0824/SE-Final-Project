@@ -55,9 +55,9 @@ echo "\n";
     }
 
 
-    public function ChooseByTitle($title)
+    public function ChooseByTitleid($title)
     {
-        return $this->article->ChooseByTitle($title);
+        return $this->article->ChooseByTitleid($title);
     }
 
     //取得這個帳號目前有多少文章 return int , 失敗 -1
