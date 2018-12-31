@@ -135,7 +135,8 @@ class Article
     //add article
     public function addarticle($title,$content)
     {
-        if($this->article_model->Add($this->thisaccount->get_account_name(),$title,$content)!=-1)
+        $name=$_SESSION['$inaccountname'];
+        if($this->article_model->Add($name,$title,$content)!=-1)
         {
             return TRUE;
         }
@@ -222,10 +223,10 @@ class Article
     }
 }
 //add new article
-if(isset($_POST['title'])&&isset($_POST['content']))
+if(isset($_POST['title']))
 {
     $username=$_SESSION['$inaccountname'];
-    //$datajson=$_POST['data'];//how much amount want to take
+    //echo $datajson;
     if(isset($_SESSION[$username]))
     {
         $newArticlelist=new Article($username);
