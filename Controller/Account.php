@@ -153,10 +153,12 @@ elseif(isset($_POST['un'])&&isset($_POST['pw']))
         echo "";
 }
 //add friend
-elseif(isset($_POST['un'])&&isset($_POST['id']))
+elseif(isset($_POST['addfriend']))
 {
-    $name=$_POST['un'];
-    $id=$_POST['id'];
+    $name=$_SESSION['$inaccountname'];
+    $friendname=$_POST['addfriend'];
+    $tmpaccountmodel=new AccountModel();
+    $id=$tmpaccountmodel->GetID($friendname);
     if(isset($_SESSION[$name]))
     {
         if($_SESSION[$name]->add_friend($id)==TRUE)
