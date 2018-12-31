@@ -29,13 +29,13 @@ function getHTML(data){
 		tmpHTML += 
 			"<tr class=\"b-list__row\">"
 				+"<td class=\"b-list__account\">"
-					+"<a href=\"ProfileView.php?id="+i+"\" class=\"b-list__account__user\">"
-						+tmpData[3]
+					+"<a href=\"ProfileView.php?id="+tmpData[7]+"\" class=\"b-list__account__user\">"
+						+tmpData[11]
 					+"</a>"
 				+"</td>"
 				+"<td class=\"b-list__main\">"
-					+"<a href=\"ArticleView.php?id="+i+"\" class=\"b-list__main__title\">"
-						+tmpData[7]
+					+"<a href=\"ArticleView.php?id="+tmpData[3]+"\" class=\"b-list__main__title\">"
+						+tmpData[15]
 					+"</a>"
 				+"</td>"
 			+"</tr>";
