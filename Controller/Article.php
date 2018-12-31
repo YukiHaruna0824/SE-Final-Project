@@ -296,7 +296,6 @@ if(isset($_POST['title']))
 elseif(isset($_POST['content'])&&isset($_POST['id']))
 {
     $username=$_SESSION['$inaccountname'];
-    $commitjson=$_POST['com'];//commit json
     if(isset($_SESSION[$username]))
     {
         $newArticlelist=new Article($username);
