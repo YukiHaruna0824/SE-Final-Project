@@ -222,9 +222,7 @@ class Article
         }
     }
 }
-console.log(123);
-	console.log($_POST['title']);
-	console.log($_POST['content']);
+
 //add new article
 if(isset($_POST['title'])&&isset($_POST['content']))
 {
