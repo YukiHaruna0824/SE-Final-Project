@@ -24,21 +24,22 @@ function getHTML(data){
 			+"<td style=\"max-width: 600px;\">文章</td>"
 		+"</tr>" ;
 	var i;
-	// for(i=0;i<data.length;i++){
-		// tmpHTML += 
-			// "<tr class=\"b-list__row\">"
-				// +"<td class=\"b-list__account\">"
-					// +"<a href=\"test.php?id="+data[i]['id']+"\" class=\"b-list__account__user\"  id=\"name"+data[i]['id']+"\">"
-						// +"名字"
-					// +"</a>"
-				// +"</td>"
-				// +"<td class=\"b-list__main\">"
-					// +'<a class="b-list__main__title">'
-						// +"文章名稱文章名稱文章名稱文章名稱"
-					// +"</a>"
-				// +"</td>"
-			// +"</tr>";
-	// }
+	for(i=0;i<Object.keys(data).length;i++){
+		var tmpData = data[i].split("\"");
+		tmpHTML += 
+			"<tr class=\"b-list__row\">"
+				+"<td class=\"b-list__account\">"
+					+"<a href=\"ProfileView.php?id="+i+"\" class=\"b-list__account__user\">"
+						+tmpData[3]
+					+"</a>"
+				+"</td>"
+				+"<td class=\"b-list__main\">"
+					+"<a href=\"ArticleView.php?id="+i+"\" class=\"b-list__main__title\">"
+						+tmpData[7]
+					+"</a>"
+				+"</td>"
+			+"</tr>";
+	}
 	return tmpHTML
 }
 
@@ -59,23 +60,6 @@ $(document).ready(function(data) {
 		console.log(jqXHR.responseText);
 	});
 	
-	$("a").click(function(){
-		$.ajax({
-			type : "POST",
-			url : "../Controller/Article.php",
-			data : {
-				title : $(this).html() //文章標題
-			},
-			dataType : 'json',
-		}).done(function(data){
-			$(this).attr("href","ArticleView.php?id=" + data['id']);//決定文章id，前往下層article拆解id內容
-
-		}).fail(function(jqXHR, textStatus, errorThrown){
-			alert("有錯誤產生，請看 console log");
-            console.log(jqXHR.responseText);
-		});
-	});
-
 	//抽卡按鈕註冊
 	$("#drawcard").click(function(){
 		$.ajax({

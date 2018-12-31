@@ -15,33 +15,27 @@
 	$(document).ready(function() {
 		//name id
 		var urlVar = window.location.search.substring(1).split("&");
-		var i,tmpVal,tmpID,tmpName;
+		var i,tmpVal,tmpID;
 		for(i=0;i<urlVar.length;i++){
 			tmpVal = urlVar[i].split("=");
 			if(tmpVal[0]=="id"){
 				tmpID = tmpVal[1];
 			}
-			else if(tmpVal[0]=="name"){
-				tmpName = tmpVal[1];
-			}
 		}
-		
-		jQuery.post('../Controller/Article.php',{un:tmpName,id:tmpID,get:"123"},
+		console.log(tmpID);
+		jQuery.post('../Controller/Article.php',{id:tmpID,get:"拿文章"},
 			function(data) {
 				if(data == null){
 					return;
 				}
-				$('.pagenow').each(function(){
-					$(this).html(Number($(this).text())+1);
-				});
 				$('#name').text(data["Owner"]);
 				$('#content').text(data["Content"]);
 				$('#title').text(data["Title"]);
 		}, "json").fail(function(){
-				$('#name').text("test");
-				$('#content').text("test");
-				$('#title').text("test");
-			console.log("error");
+				$('#name').text("fail");
+				$('#content').text("fail");
+				$('#title').text("fail");
+				console.log("error");
 			});
 	});
 </script>
