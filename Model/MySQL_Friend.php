@@ -112,9 +112,11 @@ class MySQL_Friend extends BaseFriend
             $result = $this->link->query($command);
             if($result && mysqli_num_rows($result) > 0)
                 return $result;
-            else return -1;
+            else
+                return null;
         }
-        else return -1;
+        else
+            return null;
     }
 
     public function  IsFriend($account,$account2)
@@ -135,7 +137,6 @@ class MySQL_Friend extends BaseFriend
                 $result = $this->link->query($command);
                 if($result && mysqli_num_rows($result) > 0)
                 {
-                    echo "6";
                     return 1;
                 }
                 else

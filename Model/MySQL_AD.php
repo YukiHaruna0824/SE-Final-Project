@@ -70,7 +70,7 @@ class MySQL_AD
         if ($result && mysqli_num_rows($result) > 0) {
             return $result;
         }
-        return -1;
+        return null;
     }
 
     public function ListAllAD()
@@ -80,6 +80,6 @@ class MySQL_AD
         if ($result && mysqli_num_rows($result) > 0) {
             return $result;
         }
-        return -1;
+        return null;
     }
 }

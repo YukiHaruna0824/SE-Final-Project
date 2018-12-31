@@ -153,7 +153,7 @@ class  MySQL_Account extends BaseAccount {
             return $result;
         }
         else
-            return -1;
+            return null;
     }
 
     public function GetID($account)
@@ -193,8 +193,7 @@ class  MySQL_Account extends BaseAccount {
         }
         else
         {
-            echo  "456";
-            return -1;
+            return null;
         }
 
     }

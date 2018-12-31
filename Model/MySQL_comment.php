@@ -81,10 +81,11 @@ class MySQL_comment extends BaseComment
                 return $result;
             }
             else
-                return -1;
+                return
+                    null;
         }
         else
             return
-                -1;
+                null;
     }
 }
