@@ -24,7 +24,7 @@ function getHTML(data){
 			+"<td style=\"max-width: 600px;\">文章</td>"
 		+"</tr>" ;
 	var i;
-	for(i=0;i<data[2].length;i+=3){
+	for(i=0;i<data.length;i+=3){
 		tmpHTML += 
 			"<tr class=\"b-list__row\">"
 				+"<td class=\"b-list__account\">"
