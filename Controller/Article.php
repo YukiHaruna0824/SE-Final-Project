@@ -246,7 +246,7 @@ class Article
             {
                 $tmp=array(
                     'Owner'=> $rowll["Owner"],
-                    'Title'=> $rowll["Content"],
+                    'Content'=> $rowll["Content"],
                     'DeliveryDate'=>$rowll["DeliveryDate"]
                 );
                 $commitjson[$count]=$tmp;
@@ -262,7 +262,7 @@ class Article
                 'Owner'=> $row["Owner"],
                 'Title'=> $row["Title"],
                 'Content'=> $row["Content"],
-                'commit'=>json_encode($commitjson),
+                'commit'=>($commitjson),
                 'thumb'=>$thumbtmp->GetNumberOfThumbUp($id),
                 'DeliveryDate'=>$row["DeliveryDate"]
             );
