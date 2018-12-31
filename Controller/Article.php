@@ -90,8 +90,11 @@ class Article
         $allartical=$this->article_model->choseAccountAllArticle($_SESSION['$inaccountname']);
         while($row=$allartical->fetch_assoc())
         {
+            $accounttmp=new AccountModel();
+            $ownerid=$accounttmp->GetID($row["Owner"]);
             $tmp=array(
                 'id'=>$row["id"],
+                'Ownerid'=>$ownerid,
                 'Owner'=> $row["Owner"],
                 'Title'=> $row["Title"],
             );
@@ -114,8 +117,11 @@ class Article
             $allartical=$this->article_model->choseAccountAllArticle($tmpaccountmodel->GetAccount($row['id']));
             while(($count<$number)&&($row=$allartical->fetch_assoc()))
             {
+                $accounttmp=new AccountModel();
+                $ownerid=$accounttmp->GetID($row["Owner"]);
                 $tmp=array(
                     'id'=>$row["id"],
+                    'Ownerid'=>$ownerid,
                     'Owner'=> $row["Owner"],
                     'Title'=> $row["Title"],
                 );
