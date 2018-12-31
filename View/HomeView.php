@@ -13,35 +13,6 @@
 
 <script>
 
-$(document).ready(function(data) {
-	$('#articles > tbody').html(getHTML());
-});
-
-function getHTML(data){
-	var tmpHTML = 
-		"<tr class=\"b-list__head\">"
-			+"<td style=\"width: 135px;\">使用者名稱</td>"
-			+"<td style=\"max-width: 600px;\">文章</td>"
-		+"</tr>" ;
-	var i;
-	for(i=0;i<Object.keys(data).length;i++){
-		var tmpData = data[i].split("\"");
-		tmpHTML += 
-			"<tr class=\"b-list__row\">"
-				+"<td class=\"b-list__account\">"
-					+"<a href=\"ProfileView.php?id="+tmpData[7]+"\" class=\"b-list__account__user\">"
-						+tmpData[11]
-					+"</a>"
-				+"</td>"
-				+"<td class=\"b-list__main\">"
-					+"<a href=\"ArticleView.php?id="+tmpData[3]+"\" class=\"b-list__main__title\">"
-						+tmpData[15]
-					+"</a>"
-				+"</td>"
-			+"</tr>";
-	}
-	return tmpHTML
-}
 
 $(document).ready(function(data) {
 	//拿資料
@@ -90,10 +61,42 @@ $(document).ready(function(data) {
 		});
 	});
 });
-	
+
+function getHTML(data){
+	var tmpHTML = 
+		"<tr class=\"b-list__head\">"
+			+"<td style=\"width: 135px;\">使用者名稱</td>"
+			+"<td style=\"max-width: 600px;\">文章</td>"
+		+"</tr>" ;
+	var i;
+	for(i=0;i<Object.keys(data).length;i++){
+		var tmpData = data[i].split("\"");
+		tmpHTML += 
+			"<tr class=\"b-list__row\">"
+				+"<td class=\"b-list__account\">"
+					+"<a href=\"ProfileView.php?id="+tmpData[7]+"\" class=\"b-list__account__user\">"
+						+tmpData[11]
+					+"</a>"
+				+"</td>"
+				+"<td class=\"b-list__main\">"
+					+"<a href=\"ArticleView.php?id="+tmpData[3]+"\" class=\"b-list__main__title\">"
+						+tmpData[15]
+					+"</a>"
+				+"</td>"
+			+"</tr>";
+	}
+	return tmpHTML
+}
+
 function nextPage() {
-	jQuery.post('../Controller/Article.php',{np : "下一頁文章"},
-	function(data) {
+	$.ajax({
+		type : "POST",
+		url : "../Controller/Article.php",
+		data : {
+			np : "下一頁文章"
+		},
+		dataType : 'json',
+	}).done(function(data){
 		if(data == null){
 			return;
 		}
@@ -101,22 +104,32 @@ function nextPage() {
 			$(this).html(Number($(this).text())+1);
 		});
 		$('#articles > tbody').html(getHTML(data));
-	}, "json");
+	}).fail(function(jqXHR, textStatus, errorThrown){
+		alert("有錯誤產生，請看 console log");
+		console.log(jqXHR.responseText);
+	});
 }
 
 function prePage() {
-	jQuery.post('../Controller/Article.php',{bp : "上一頁文章"},
-	function(data) {
+	$.ajax({
+		type : "POST",
+		url : "../Controller/Article.php",
+		data : {
+			bp : "上一頁文章"
+		},
+		dataType : 'json',
+	}).done(function(data){
 		if(data == null){
 			return;
 		}
 		$('.pagenow').each(function(){
-			if(Number($(this).text())==1)
-				return;
 			$(this).html(Number($(this).text())-1);
 		});
 		$('#articles > tbody').html(getHTML(data));
-	}, "json");
+	}).fail(function(jqXHR, textStatus, errorThrown){
+		alert("有錯誤產生，請看 console log");
+		console.log(jqXHR.responseText);
+	});
 }
 </script>
 	

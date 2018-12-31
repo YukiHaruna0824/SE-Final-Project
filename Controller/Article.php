@@ -214,7 +214,7 @@ class Article
         {
             $tmp=array(
                 'Owner'=> $rowll["Owner"],
-                'Title'=> $rowll["content"],
+                'Title'=> $rowll["Content"],
                 'DeliveryDate'=>$rowll["DeliveryDate"]
             );
             $commitjson[$count]=json_encode($tmp);

@@ -20,7 +20,7 @@
 		$.ajax({
 			type : "POST",
 			url : "../Controller/Article.php",
-			dataType : 'json'
+			dataType : 'json',
 			data : {
 				id : articleid,
 				get : "123"
