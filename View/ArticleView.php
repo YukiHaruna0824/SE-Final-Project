@@ -32,13 +32,15 @@
 					var Title = document.getElementById("title");//標題
 					var Content = document.getElementById("content");//內容
 					var Thumb = document.getElementById("thumb");//按讚數
-
-					PostUser.innerHTML = data['Owner'];
-					Title.innerHTML = data['Title'];
+					var PostTime = document.getElementById("posttime");//發文時間
+					
+					PostUser.innerHTML = "PostMan : " + data['Owner'];
+					Title.innerHTML = "Title : " + data['Title'];
 					Content.innerHTML = data['Content'];
 					Thumb.innerHTML = data['thumb'];
+					PostTime.innerHTML = "PostTime : " + data['DeliveryDate'];
 
-					if(data['commit'] != "null"){
+					if(data['commit'] != null){
 						var comment = data['commit'];//獲取留言資訊
 						var message = "";
 
@@ -47,10 +49,12 @@
 							var json = comment[i];
 							var postman = json['Owner'];//每筆資料的留言者
 							var content = json['Content'];//每筆資料留言的留言內容
+							var time = json['DeliveryDate'];//取得時間
 
 							message += '<div class="reply-content"><h2 class="reply-content__user">' + postman +
-							'</h2><article class="reply-content__article c-article ">' + content +
-							'</article><div class="reply-content__footer"><div class="edittime" data-tooltipped="" aria-describedby="tippy-tooltip-272" data-original-title="留言時間 2018-06-30 03:07:05">2018-06-30 03:07:05</div></div></div><br>';
+							'</h2><article class="reply-content__article c-article ">&nbsp' + content +
+							'</article><div class="reply-content__footer"><div class="edittime" data-tooltipped="" aria-describedby="tippy-tooltip-272">' + 
+							time + '</div></div></div><br>';
 						}
 						$("#comment").html(message);
 					}
@@ -71,11 +75,10 @@
 				url : "../Controller/Article.php",
 				data : {
 					id : articleid,
-					content : $("#message").text()
+					content : $("#message").val()
 				},
 				dataType : 'html'
 				}).done(function(data) {
-					console.log($("#message").text());
 					window.location.href = "ArticleView.php?id=" + articleid; 
 				}).fail(function(jqXHR, textStatus, errorThrown) {
 				//失敗的時候
@@ -135,7 +138,7 @@
 								<h2 id="name"></h2>
 							</div>
 							<div class="c-post__header__info">
-								<h5>2017-01-21 23:37:05 編輯</h5>
+								<h5 id="posttime"></h5>
 							</div>
 						</div>
 				
@@ -158,7 +161,7 @@
 									<div class="reply-content">
 										<h2 class="reply-content__user">邱暐盛</h2>
 										<article class="reply-content__article c-article ">
-											跟狗一樣
+											<span>跟狗一樣</span>
 										</article>
 										<div class="reply-content__footer">
 											<div class="edittime" data-tooltipped="" aria-describedby="tippy-tooltip-272" data-original-title="留言時間 2018-06-30 03:07:05">
