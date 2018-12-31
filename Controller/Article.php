@@ -206,18 +206,22 @@ class Article
     //取得文章 article id
     public function get_article($id)
     {
-        $allcommet=$this->commet_model->GetAllComment($id);
-        $commitjson;
+        $commettmp=new CommetModel();
+        $allcommet=$commettmp->GetAllComment($id);
+        $commitjson=null;
         $count=0;
-        while($rowll=$allcommet->fetch_assoc())
+        if($allcommet!=-1)
         {
-            $tmp=array(
-                'Owner'=> $rowll["Owner"],
-                'Title'=> $rowll["Content"],
-                'DeliveryDate'=>$rowll["DeliveryDate"]
-            );
-            $commitjson[$count]=json_encode($tmp);
-            $count+=1;
+            while(($rowll=$allcommet->fetch_assoc())!=null)
+            {
+                $tmp=array(
+                    'Owner'=> $rowll["Owner"],
+                    'Title'=> $rowll["Content"],
+                    'DeliveryDate'=>$rowll["DeliveryDate"]
+                );
+                $commitjson[$count]=json_encode($tmp);
+                $count+=1;
+            }
         }
         $allartical=$this->article_model->Choose($id);
         $row=$allartical->fetch_assoc();
@@ -306,11 +310,12 @@ elseif(isset($_POST['id'])&&isset($_POST['get']))//get 亂給直
     if(isset($_SESSION[$username]))
     {
         $newArticlelist=new Article($username);
-        $json=$newArticlelist->get_article($id);
-        return $json;
+        $json=$newArticlelist->get_article((int)$id);
+        echo $json;
     }
     else
     {
+        
         echo null;
     }
 }
