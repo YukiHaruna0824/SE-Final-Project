@@ -2,7 +2,7 @@
 
 require_once('BaseArticle.php');
 
-class MySQL_Article extends BaseArticle
+class Article
 {
     //先設定資料庫資訊，主機通常都用本機
     public $host = "localhost";
@@ -29,7 +29,7 @@ class MySQL_Article extends BaseArticle
 
         $command = "CREATE TABLE IF NOT EXISTS allArticles 
                 (id INTEGER not NULL AUTO_INCREMENT , PRIMARY KEY ( id ) , Owner VARCHAR(30) not NULL
-                , Title VARCHAR(30) not NULL, Content TEXT, Comment TEXT , ThumbUpNnumber INT, ThumbUp TEXT, DeliveryDate TIMESTAMP)" ;
+                , Title VARCHAR(30) not NULL, Content TEXT, DeliveryDate TIMESTAMP)" ;
         $this->link->query($command);
         //if()
          //   echo "create table su";
@@ -41,11 +41,10 @@ class MySQL_Article extends BaseArticle
         $command = "SELECT * FROM account where Account = '$account'";
         $result = $this->link->query($command);
         if ($result && mysqli_num_rows($result) > 0) {
-            $comment = $title."_Comment";
-            $thumbUp =  $title."_ThumbUp";
-            $command = "Insert into allArticles(Owner, Title, Content, Comment, ThumbUp, ThumbUpNnumber)
-             VALUES('$account' , '$title' , '$content', '$comment', '$thumbUp','0')";
-            if($this->link->query($command))
+
+            $command = "Insert into allArticles(Owner, Title, Content)
+             VALUES('$account' , '$title' , '$content')";
+            if($this->link->query($command)==true)
             {
                 $last_id = mysqli_insert_id($this->link);
                 while($row = $result->fetch_assoc()) {
@@ -53,17 +52,6 @@ class MySQL_Article extends BaseArticle
                 }
                 $command = "Insert into $tableName (id) values('$last_id')";
                 $this->link->query($command);
-
-                //Comment Table
-                $command = "CREATE TABLE IF NOT EXISTS $comment
-            ( id INTEGER not NULL AUTO_INCREMENT , PRIMARY KEY ( id ) , Owner VARCHAR(30) not NULL,  Content TEXT, DeliveryDate TIMESTAMP) ";
-                $this->link->query($command);
-
-                //ThumbUp Table
-                $command = "CREATE TABLE IF NOT EXISTS $thumbUp
-            (Account VARCHAR(30) not NULL, UNIQUE KEY ( Account ) , DeliveryDate TIMESTAMP) ";
-                $this->link->query($command);
-
                 return $last_id;
             }
         }
@@ -103,8 +91,7 @@ class MySQL_Article extends BaseArticle
     {
         $command = "UPDATE allArticles 
                 SET Title =  '$Title' WHERE id = '$id' ";
-        $result = $this->link->query($command);
-        if ($result && mysqli_num_rows($result) > 0)
+        if($this->link->query($command)==true)
             return 1;
         else
             return -1;
@@ -115,8 +102,7 @@ class MySQL_Article extends BaseArticle
     {
         $command = "UPDATE allArticles 
                 SET Content =  '$Content' WHERE id = '$id' ";
-        $result = $this->link->query($command);
-        if ($result && mysqli_num_rows($result) > 0)
+        if($this->link->query($command)==true)
             return 1;
         else
             return -1;
@@ -125,16 +111,6 @@ class MySQL_Article extends BaseArticle
     public function Choose($id)
     {
         $command = "SELECT * FROM allArticles where id = '$id'";
-        $result = $this->link->query($command);
-        if ($result && mysqli_num_rows($result) > 0) {
-            return $result;
-        }
-        return -1;
-    }
-
-    public function ChooseByTitle($title)
-    {
-        $command = "SELECT * FROM allArticles where Title = '$title'";//AND  YEAR(DeliveryDate) = '$date'  $endDate='2018';
         $result = $this->link->query($command);
         if ($result && mysqli_num_rows($result) > 0) {
             return $result;
@@ -152,16 +128,6 @@ class MySQL_Article extends BaseArticle
         return -1;
     }
 
-    public function  GetTotalNumberAccountArticle($account)
-    {
-        $command = "SELECT * FROM allArticles where Owner = '$account'";
-        $result = $this->link->query($command);
-        if ($result && mysqli_num_rows($result) > 0) {
-            return mysqli_num_rows($result);
-        }
-        return -1;
-    }
-
     public function ChooseRange($Range,$Range2)
     {
         $command = "SELECT * FROM allArticles ORDER BY DeliveryDate ASC LIMIT $Range, $Range2";
@@ -169,41 +135,15 @@ class MySQL_Article extends BaseArticle
         $result = $this->link->query($command);
 
         if ($result && mysqli_num_rows($result) > 0) {
+            /*while ($row = $result->fetch_assoc()) {
+                echo $row["id"];
+                echo $row["Owner"];
+                echo $row["Title"];
+                echo $row["Content"];
+                echo $row["DeliveryDate"];
+            }*/
            return $result;
         }
         return -1;
     }
-
-    public function AllArticle()
-    {
-        $command = "SELECT * FROM allArticles ORDER BY DeliveryDate ASC ";
-        $result = $this->link->query($command);
-
-        if ($result && mysqli_num_rows($result) > 0) {
-            return $result;
-        }
-        return -1;
-    }
-
-    public function choseAccountAllArticle($account)
-    {
-        $command = "SELECT * FROM allArticles where Owner = '$account' ORDER BY DeliveryDate ASC";
-        $result = $this->link->query($command);
-        if ($result && mysqli_num_rows($result) > 0) {
-            return $result;
-        }
-        return -1;
-    }
-
-    public function GetTotalNumber()
-    {
-        $command = "SELECT * FROM allArticles ";
-        $result = $this->link->query($command);
-        if ($result && mysqli_num_rows($result) > 0) {
-            return mysqli_num_rows($result);
-        }
-        return -1;
-    }
-
-
 }

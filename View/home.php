@@ -33,7 +33,7 @@ function getHTML(data){
 					+"</a>"
 				+"</td>"
 				+"<td class=\"b-list__main\">"
-					+"<a href=\"article.php?id="+i+"\" class=\"b-list__main__title\" id=\"article"+i+"\">"
+					+'<a class="b-list__main__title">'
 						+"文章名稱文章名稱文章名稱文章名稱"
 					+"</a>"
 				+"</td>"
@@ -44,8 +44,20 @@ function getHTML(data){
 
 $(document).ready(function(data) {
 	$("a").click(function(){
-		var txt = $(this).attr("href");
-		console.log(txt);
+		$.ajax({
+			type : "POST",
+			url : "../Controller/Article.php",
+			data : {
+				title : $(this).html() //文章標題
+			},
+			dataType : 'json',
+		}).done(function(data){
+			$(this).attr("href","article.php?id=" + data['id']);//決定文章id，前往下層article拆解id內容
+
+		}).fail(function(jqXHR, textStatus, errorThrown){
+			alert("有錯誤產生，請看 console log");
+            console.log(jqXHR.responseText);
+		});
 	});
 
 	//抽卡按鈕註冊
@@ -53,9 +65,6 @@ $(document).ready(function(data) {
 		$.ajax({
 			type : "POST",
 			url : "../Controller/Card.php",
-			data : {
-				
-			},
 			dataType : 'json'
 			}).done(function(data) {
 				if(data != null)
@@ -64,15 +73,15 @@ $(document).ready(function(data) {
 					var otherGender = document.getElementById("otherGender");
 					var otherClass = document.getElementById("otherClass");
 
-					otherUserName.innerHTML = data['Account'];
-					otherUserName.innerHTML = data['Gender'];
-					otherUserName.innerHTML = data['Class'];
+					otherUserName.innerHTML = "使用者名稱 : " + data['Account'];
+					otherGender.innerHTML = "使用者性別 : " + ((data['Gender'] == 0) ? "男" : "女");
+					otherClass.innerHTML = "使用者系所 : " + data['Class'];
 
-					/*把新增好友的按鈕動態加入到後面
-					if(document.getElementById("AddFriend"))
+					//把新增好友的按鈕動態加入到後面
+					if(!document.getElementById("AddFriend"))
 					{
-						$("#otherClass").after("<button id="."AddFriend".">新增好友</button>");
-					}*/
+						$("#otherClass").after('<div><button id="AddFriend">新增好友</button></div>');
+					}
 				}
 			}).fail(function(jqXHR, textStatus, errorThrown) {
 			//失敗的時候
@@ -137,15 +146,13 @@ function prePage() {
 		<!--抽卡介面-->
 		<ul class="b-tags">
 			<li class="b-tags__item">
-				<a href="#抽卡">抽卡</a>
-			</li>	
-			<li class="b-tags__item">
 				<a href="newArticle.php">新增文章</a>
 			</li>
-			<div id="otherUserName"></div>
-			<div id="otherGender"></div>
-			<div id="otherClass"></div>
 		</ul>
+
+		<div id="otherUserName"></div>
+		<div id="otherGender"></div>
+		<div id="otherClass"></div>
 		<button type="button" id="drawcard" class="btn--sm btn--normal">抽卡</button>
 
 		<!--文章區-->

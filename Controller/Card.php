@@ -27,7 +27,7 @@ class Card
         {
             $card=($this->account_model->RandomChoose($this->account_name))->fetch_assoc();
             $json=array(
-                'Accoount'=>$card["Account"],
+                'Account'=>$card["Account"],
                 'Gender'=>$card["Gender"],
                 'Class'=>$card["Class"]
             );

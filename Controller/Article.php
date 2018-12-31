@@ -202,6 +202,13 @@ class Article
         );
         return json_encode($json);
     }
+    //取得文章id
+    public function get_article_id($title)
+    {
+        $allartical=$this->article_model->ChooseByTitle($title);
+        $row=$allartical->fetch_assoc();
+        return $row["id"];
+    }
     //評論文章
     public function comment_article($json)
     {
@@ -384,6 +391,24 @@ elseif(isset($_POST['bp']))//bp 亂給直
         $newArticlelist=new Article($username);
         $json=$newArticlelist->get_back_page();
         echo $json;
+    }
+    else
+    {
+        $json['null']=0;
+        echo json_encode($json);
+    }
+}
+elseif(isset($_POST['title']))
+{
+    $title=$_POST['title'];
+    $username=$_SESSION['$inaccountname'];
+    if(isset($_SESSION[$username]))
+    {
+        $newArticlelist=new Article($username);
+        $tmp=array(
+            'id'=>$newArticlelist->get_article_id($title)
+        );
+        echo json_encode($tmp);
     }
     else
     {

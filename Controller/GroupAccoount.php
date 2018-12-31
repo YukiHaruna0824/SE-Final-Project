@@ -9,12 +9,12 @@ require_once('../Model/GroupModel.php');
 
 class GroupAccount
 {
-    private $account_name;
+    private $group_name;
     private $id;
-    private $account_model;
-    //find this accountname has been used or not
+    private $group_model;
     public function detect_name($inaccount_name)
     {
+        //find this groupname has been used or not
         return $this->account_model->CheckAccount($inaccount_name);
     }
     public function register($inaccountname,$password,$Gender,$Class)
