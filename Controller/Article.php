@@ -91,6 +91,7 @@ class Article
         while($row=$allartical->fetch_assoc())
         {
             $tmp=array(
+                'id'=>$row["id"],
                 'Owner'=> $row["Owner"],
                 'Title'=> $row["Title"],
             );
@@ -114,6 +115,7 @@ class Article
             while(($count<$number)&&($row=$allartical->fetch_assoc()))
             {
                 $tmp=array(
+                    'id'=>$row["id"],
                     'Owner'=> $row["Owner"],
                     'Title'=> $row["Title"],
                 );
