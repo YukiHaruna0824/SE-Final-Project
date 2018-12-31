@@ -129,7 +129,7 @@ class MySQL_Article extends BaseArticle
         if ($result && mysqli_num_rows($result) > 0) {
             return $result;
         }
-        return -1;
+        return null;
     }
 
     public function ChooseByTitleid($title)
@@ -149,7 +149,7 @@ class MySQL_Article extends BaseArticle
         if ($result && mysqli_num_rows($result) > 0) {
             return $result;
         }
-        return -1;
+        return null;
     }
 
     public function  GetTotalNumberAccountArticle($account)
@@ -171,7 +171,7 @@ class MySQL_Article extends BaseArticle
         if ($result && mysqli_num_rows($result) > 0) {
            return $result;
         }
-        return -1;
+        return null;
     }
 
     public function AllArticle()
@@ -182,7 +182,7 @@ class MySQL_Article extends BaseArticle
         if ($result && mysqli_num_rows($result) > 0) {
             return $result;
         }
-        return -1;
+        return null;
     }
 
     public function choseAccountAllArticle($account)
@@ -192,7 +192,7 @@ class MySQL_Article extends BaseArticle
         if ($result && mysqli_num_rows($result) > 0) {
             return $result;
         }
-        return -1;
+        return null;
     }
 
     public function GetTotalNumber()

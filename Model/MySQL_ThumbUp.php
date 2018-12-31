@@ -92,7 +92,11 @@ class MySQL_ThumbUp extends BaseThumbUp
             if ($result && mysqli_num_rows($result) > 0) {
                 return $result;
             }
+            else
+                return null;
         }
+        else
+            return null;
     }
 
     public function GetNumberOfThumbUp($articleID)

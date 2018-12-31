@@ -144,7 +144,7 @@ class MySQL_Group extends BaseGroup
             return $result;
         }
         else
-            return -1;
+            return null;
     }
 
     public function ListAllGroups()
@@ -155,7 +155,7 @@ class MySQL_Group extends BaseGroup
             return $result;
         }
         else
-            return -1;
+            return null;
     }
 
     public function AddGroupArticle($group, $owner, $title, $content)
@@ -193,7 +193,7 @@ class MySQL_Group extends BaseGroup
             return $result;
         }
         else
-            return -1;
+            return null;
     }
 
 
