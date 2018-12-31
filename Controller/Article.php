@@ -69,14 +69,14 @@ class Article
         $storage=($_SESSION['mainpage']);
         $storage=json_decode($storage,TRUE);
         //getthing
-        if($storage['count']>$storage['current'])
+        if(isset($storage[$storage['current']+1]))
         {
             $storage['current']+=1;
             $data=$storage[$storage['current']];
             $_SESSION['mainpage']=json_encode($storage);
             return $data;
         }
-        if($storage['count'] == $storage['current'])
+        else
         {
             return null;
         }
@@ -265,7 +265,7 @@ class Article
     //評論文章
     public function comment_article($id,$content,$inaccountname)
     {
-        if($this->commet_model->CommetModel($id,$content,$inaccountname)==1)
+        if($this->commet_model->Add($id,$content,$inaccountname)==1)
         {
             return TRUE;
         }
