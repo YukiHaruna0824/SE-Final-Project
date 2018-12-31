@@ -53,25 +53,27 @@ class Article
     public function get_back_page()
     {
         $storage=$_SESSION['mainpage'];
+        $storage=json_decode($storage,true);
         if($storage['current']==0)
         {
             return null;
         }
         $storage['current']-=1;
         $data=$storage[$storage['current']];
-        $_SESSION['mainpage']=$storage;
+        $_SESSION['mainpage']=json_encode($storage);
         return $data;
     }
     //取得下一頁
     public function get_next_page()
     {
-        $storage=$_SESSION['mainpage'];
+        $storage=($_SESSION['mainpage']);
+        $storage=json_decode($storage,TRUE);
         //getthing
         if($storage['count']>$storage['current'])
         {
             $storage['current']+=1;
             $data=$storage[$storage['current']];
-            $_SESSION['mainpage']=$storage;
+            $_SESSION['mainpage']=json_encode($storage);
             return $data;
         }
         if($storage['count'] == $storage['current'])
@@ -204,22 +206,26 @@ class Article
     //取得文章 article id
     public function get_article($id)
     {
+        $commettmp=new CommetModel();
+        $allcommet=$commettmp->GetAllComment($id);
+        $commitjson=null;
+        $count=0;
+        if($allcommet!=-1)
+        {
+            while(($rowll=$allcommet->fetch_assoc())!=null)
+            {
+                $tmp=array(
+                    'Owner'=> $rowll["Owner"],
+                    'Title'=> $rowll["Content"],
+                    'DeliveryDate'=>$rowll["DeliveryDate"]
+                );
+                $commitjson[$count]=json_encode($tmp);
+                $count+=1;
+            }
+        }
         $allartical=$this->article_model->Choose($id);
         $row=$allartical->fetch_assoc();
         $thumbtmp=new ThumbUpModel();
-        $allcommet=$this->commet_model->GetAllComment($id);
-        $commitjson;
-        $count=0;
-        while($rowll=$allcommet->fetch_assoc())
-        {
-            $tmp=array(
-                'Owner'=> $rowll["Owner"],
-                'Title'=> $rowll["Content"],
-                'DeliveryDate'=>$rowll["DeliveryDate"]
-            );
-            $commitjson[$count]=json_encode($tmp);
-            $count+=1;
-        }
         $json=array(
             'Owner'=> $row["Owner"],
             'Title'=> $row["Title"],
@@ -304,11 +310,12 @@ elseif(isset($_POST['id'])&&isset($_POST['get']))//get 亂給直
     if(isset($_SESSION[$username]))
     {
         $newArticlelist=new Article($username);
-        $json=$newArticlelist->get_article($id);
-        return $json;
+        $json=$newArticlelist->get_article((int)$id);
+        echo $json;
     }
     else
     {
+        
         echo null;
     }
 }
