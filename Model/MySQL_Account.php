@@ -185,15 +185,18 @@ class  MySQL_Account extends BaseAccount {
 
     public function RandomChoose($account)//********************************
     {
-        $tmpAccount=$account;
         $command = "SELECT * FROM account where Account !=  '$account' ORDER BY RAND() LIMIT 1";
         $result = $this->link->query($command);
-
         if ($result && mysqli_num_rows($result) > 0) {
+
            return $result;
         }
         else
+        {
+            echo  "456";
             return -1;
+        }
+
     }
 
     public  function  StoreDaSaBi($account,$money)

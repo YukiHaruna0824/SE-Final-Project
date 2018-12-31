@@ -80,6 +80,11 @@ class MySQL_comment extends BaseComment
             if ($result && mysqli_num_rows($result) > 0) {
                 return $result;
             }
+            else
+                return -1;
         }
+        else
+            return
+                -1;
     }
 }
