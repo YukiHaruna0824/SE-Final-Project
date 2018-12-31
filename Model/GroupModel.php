@@ -31,11 +31,25 @@ class GroupModel
         return $this->group->KickMember($groupName,$account);
     }
 
+    /* usage example
+     $result = $m->ListGroupAllMembers("dqw");
+while ($row = $result->fetch_assoc()) {
+    echo $row["Member"];
+    echo "\n";
+}
+     */
     public function ListGroupAllMembers($groupName)
     {
         return $this->group->ListGroupAllMembers($groupName);
     }
 
+    /* usage example
+     $result = $m->ListAllGroups();
+while ($row = $result->fetch_assoc()) {
+    echo $row["GroupName"];
+    echo "\n";
+}
+     */
     public function ListAllGroups()
     {
         return $this->group->ListAllGroups();
