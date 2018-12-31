@@ -22,21 +22,24 @@
 				tmpID = tmpVal[1];
 			}
 		}
-		console.log(tmpID);
-		jQuery.post('../Controller/Article.php',{id:tmpID,get:"拿文章"},
-			function(data) {
-				if(data == null){
-					return;
-				}
-				$('#name').text(data["Owner"]);
-				$('#content').text(data["Content"]);
-				$('#title').text(data["Title"]);
-		}, "json").fail(function(){
-				$('#name').text("fail");
-				$('#content').text("fail");
-				$('#title').text("fail");
-				console.log("error");
-			});
+		
+		$.ajax({
+			type : "POST",
+			url : "../Controller/Article.php",
+			data : {
+				id:tmpID,
+				get:"拿文章"
+			},
+			dataType : 'json',
+		}).done(function(data){
+			console.log(data);
+			$('#name').text(data["Owner"]);
+			$('#content').text(data["Content"]);
+			$('#title').text(data["Title"]);
+		}).fail(function(jqXHR, textStatus, errorThrown){
+			alert("有錯誤產生，請看 console log");
+			console.log(jqXHR.responseText);
+		});
 	});
 </script>
 	

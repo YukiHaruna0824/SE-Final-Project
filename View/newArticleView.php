@@ -56,7 +56,9 @@
         <div class="row">
           <!-- 在 xs 尺寸，佔12格，可參考 http://getbootstrap.com/css/#grid 說明-->
           <div class="col-xs-12 col-sm-4 col-sm-offset-4">
-          	<h1>新增文章</h1>
+			<div class="jumbotron">
+				<h1 class="text-center">新增文章</h1>
+			</div>
 			<br>
 			<br>
             <form class="login">
@@ -68,7 +70,7 @@
                 <label for="content">內容</label>
                 <input type="text" class="form-control" id="content" name="content" required>
               </div>
-              <button type="submit" class="btn btn-default">
+              <button type="submit" class="b-list__filter__expert">
                 新增
               </button>
             </form>

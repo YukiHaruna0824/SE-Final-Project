@@ -2,7 +2,7 @@
 <html lang="zh-TW">
 <head>
 	<title>台科交友網站</title>
-	<meta charset="utf-8">
+	<meta charset="UTF-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<link rel="stylesheet" href="bootstrap-4.2.1-dist/css/bootstrap.min.css">
 	<link rel="stylesheet" href="gamer/forum.css">
@@ -53,7 +53,7 @@ $(document).ready(function(data) {
 		},
 		dataType : 'json',
 	}).done(function(data){
-		console.log(data);
+		//console.log(data);
 		$('#articles > tbody').html(getHTML(data));
 	}).fail(function(jqXHR, textStatus, errorThrown){
 		alert("有錯誤產生，請看 console log");
