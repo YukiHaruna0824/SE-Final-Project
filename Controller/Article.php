@@ -11,6 +11,7 @@ require_once('../Model/ThumbupModel.php');
 require_once('../Model/CommetModel.php');
 require_once('../Model/FriendModel.php');
 require_once('./Account.php');
+
 class Article
 {
     private $article_model;
@@ -82,6 +83,7 @@ class Article
     }
     public function first_get_into_main()
     {
+        //擷取所有的貼文
         $storage=null;
         $storage['current']=0;
         $storage['count']=0;
@@ -149,6 +151,7 @@ class Article
                 }
             }
         }
+        //group 等groupdb用好
         if($havething==0)
         {
             return json_encode (null);
@@ -159,7 +162,6 @@ class Article
             $count=0;
             $storage['count']+=1;
         }
-        //group 等groupdb用好
         if(is_null($storage))
         {
             return json_encode (null);
@@ -198,7 +200,8 @@ class Article
         $tmp=new ThumbUpModel();
         if($tmp->Add($id,$_SESSION['$inaccountname'])!=-1)
         {
-            $this->thisaccount->add_DaSaBi(20);
+            $coin=new AccountModel();
+            $coin->StoreDaSaBi($_SESSION['$inaccountname'],20);
             return TRUE;
         }
         else
@@ -212,7 +215,8 @@ class Article
         $$tmp=new ThumbUpModel();
         if($tmp->Delete($id,$_SESSION['$inaccountname'])==1)
         {
-            $this->thisaccount->take_DaSaBi(20);
+            $coin=new AccountModel();
+            $coin->UseDaSaBi($_SESSION['$inaccountname'],20);
             return TRUE;
         }
         else
@@ -248,7 +252,7 @@ class Article
             $json=array(
                 'Owner'=> $row["Owner"],
                 'Title'=> $row["Title"],
-                'Content'=> $row["Content"],
+                'Content'=> urlencode($row["Content"]),
                 'commit'=>($commitjson),
                 'thumb'=>$thumbtmp->GetNumberOfThumbUp($id),
                 'DeliveryDate'=>$row["DeliveryDate"]

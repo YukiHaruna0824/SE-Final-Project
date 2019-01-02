@@ -36,11 +36,14 @@ class Card
                 );
                 return json_encode($json);
             }
+            else
+            {
+                return json_encode(null);
+            }
         }
         else
         {
-            $json['wrong']=1;
-            return json_encode($json);//something wrong
+            return json_encode(null);
         }
     }
 }
