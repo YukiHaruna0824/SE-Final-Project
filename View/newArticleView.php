@@ -20,7 +20,11 @@
 				tmpName = tmpVal[1];
 			}
 		}
-		$(".login").on("submit", function(){
+		var isRun = false;
+		
+		$(".login").submit(function(){
+			if(isRun) return false;
+			isRun = true;
 			$.ajax({
 				type : "POST",
 				url : "../Controller/Article.php",
@@ -40,8 +44,7 @@
 				}
 				window.location.href = "HomeView.php"; //跳到文章頁面
 			}).fail(function(jqXHR, textStatus, errorThrown) {
-				//失敗的時候
-				alert("有錯誤產生，請看 console log");
+				alert("有錯誤產生，請看 console log");//失敗的時候
 				console.log(jqXHR.responseText);
 			});
 			return false;
