@@ -195,13 +195,13 @@ class Article
         }
     }
     //對id文章按讚 article id
-    public function support_ones_article($id)
+    public function support_ones_article($id,$name)
     {
         $tmp=new ThumbUpModel();
         if($tmp->Add($id,$_SESSION['$inaccountname'])!=-1)
         {
             $coin=new AccountModel();
-            $coin->StoreDaSaBi($_SESSION['$inaccountname'],20);
+            $coin->StoreDaSaBi($name,20);
             return TRUE;
         }
         else
@@ -210,13 +210,13 @@ class Article
         }
     }
     //對id文章退讚 acricle id
-    public function unsupport_ones_article($id)
+    public function unsupport_ones_article($id,$name)
     {
-        $$tmp=new ThumbUpModel();
+        $tmp=new ThumbUpModel();
         if($tmp->Delete($id,$_SESSION['$inaccountname'])==1)
         {
             $coin=new AccountModel();
-            $coin->UseDaSaBi($_SESSION['$inaccountname'],20);
+            $coin->UseDaSaBi($name,20);
             return TRUE;
         }
         else
@@ -343,14 +343,14 @@ elseif(isset($_POST['id'])&&isset($_POST['get']))//get 亂給直
     }
 }
 //delete thumb
-elseif(isset($_POST['us'])&&isset($_POST['id']))//us 亂給直
+elseif(isset($_POST['na'])&&isset($_POST['id']))
 {
-    $username=$_SESSION['$inaccountname'];
+    $username=$_POST['na'];
     $id=$_POST['id'];//article id
-    if(isset($_SESSION[$username]))
+    if(isset($_SESSION['$inaccountname']))
     {
-        $newArticlelist=new Article($username);
-        if($newArticlelist->unsupport_ones_article($id)==TRUE)
+        $newArticlelist=new Article($_SESSION['$inaccountname']);
+        if($newArticlelist->unsupport_ones_article($id,$username)==TRUE)
         {
             echo "AC";
         }
@@ -365,14 +365,14 @@ elseif(isset($_POST['us'])&&isset($_POST['id']))//us 亂給直
     }
 }
 //make thumb
-elseif(isset($_POST['su'])&&isset($_POST['id']))//su 亂給直
+elseif(isset($_POST['na'])&&isset($_POST['id']))
 {
-    $username=$_SESSION['$inaccountname'];
+    $username=$_POST['na'];
     $id=$_POST['id'];//article id
-    if(isset($_SESSION[$username]))
+    if(isset($_SESSION['$inaccountname']))
     {
-        $newArticlelist=new Article($username);
-        if($newArticlelist->support_ones_article($id)==TRUE)
+        $newArticlelist=new Article($_SESSION['$inaccountname']);
+        if($newArticlelist->support_ones_article($id,$username)==TRUE)
         {
             echo "AC";
         }
