@@ -51,7 +51,29 @@ $(document).ready(function(data) {
 					//把新增好友的按鈕動態加入到後面
 					if(!document.getElementById("AddFriend"))
 					{
-						$("#otherClass").after('<div><button id="AddFriend">新增好友</button></div>');
+						$("#otherClass").after('<div><button id="AddFriend" class="btn--sm btn--normal">新增好友</button></div></br>');
+						//註冊新增按鈕
+						$("#AddFriend").click(function(){
+							var othername = $("#otherUserName").text().split(": ");
+
+							$.ajax({
+								type : "POST",
+								url : "../Controller/Account.php",
+								dataType : 'html',
+								data : {
+									addfriend : othername[1]
+								}
+							}).done(function(data) {
+								if(data == "AC")
+									alert("新增好友成功");
+								else if(data == "ER")
+									alert("已存在此好友");
+							}).fail(function(jqXHR, textStatus, errorThrown) {
+								//失敗的時候
+								alert("有錯誤產生，請看 console log");
+								console.log(jqXHR.responseText);
+							});
+						});
 					}
 				}
 			}).fail(function(jqXHR, textStatus, errorThrown) {
@@ -85,6 +107,7 @@ $(document).ready(function(data) {
 	});
 });
 
+
 function getHTML(data){
 	var tmpHTML = 
 		"<tr class=\"b-list__head\">"
@@ -92,21 +115,24 @@ function getHTML(data){
 			+"<td style=\"max-width: 600px;\">文章</td>"
 		+"</tr>" ;
 	var i;
-	for(i=0;i<Object.keys(data).length;i++){
-		var tmpData = data[i].split("\"");
-		tmpHTML += 
-			"<tr class=\"b-list__row\">"
-				+"<td class=\"b-list__account\">"
-					+"<a href=\"ProfileView.php?id="+tmpData[7]+"\" class=\"b-list__account__user\">"
-						+tmpData[11]
-					+"</a>"
-				+"</td>"
-				+"<td class=\"b-list__main\">"
-					+"<a href=\"ArticleView.php?id="+tmpData[3]+"\" class=\"b-list__main__title\">"
-						+tmpData[15]
-					+"</a>"
-				+"</td>"
-			+"</tr>";
+	if(data != null)
+	{
+		for(i=0;i<Object.keys(data).length;i++){
+			var tmpData = data[i].split("\"");
+			tmpHTML += 
+				"<tr class=\"b-list__row\">"
+					+"<td class=\"b-list__account\">"
+						+"<a href=\"ProfileView.php?id="+tmpData[7]+"\" class=\"b-list__account__user\">"
+							+tmpData[11]
+						+"</a>"
+					+"</td>"
+					+"<td class=\"b-list__main\">"
+						+"<a href=\"ArticleView.php?id="+tmpData[3]+"\" class=\"b-list__main__title\">"
+							+tmpData[15]
+						+"</a>"
+					+"</td>"
+				+"</tr>";
+		}		
 	}
 	return tmpHTML
 }
@@ -162,8 +188,11 @@ function prePage() {
 <div class="TOP-bh">
 	<input type="button" id="logout" value="我想登出" style="float:right;width:10%">
 </div>
+
 <!--將頁面往下挪以免btn被蓋住-->
 <div id="bh-banner" class="bh-banner"></div>
+
+
 <!--主畫面-->
 <div class="container"> 
 	<div id="main">

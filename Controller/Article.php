@@ -11,7 +11,6 @@ require_once('../Model/ThumbupModel.php');
 require_once('../Model/CommetModel.php');
 require_once('../Model/FriendModel.php');
 require_once('./Account.php');
-
 class Article
 {
     private $article_model;
@@ -56,7 +55,7 @@ class Article
         $storage=json_decode($storage,true);
         if($storage['current']==0)
         {
-            return null;
+            return json_encode (null);
         }
         $storage['current']-=1;
         $data=$storage[$storage['current']];
@@ -78,7 +77,7 @@ class Article
         }
         else
         {
-            return null;
+            return json_encode (null);
         }
     }
     public function first_get_into_main()
@@ -121,21 +120,21 @@ class Article
         if(!is_null($allfriend))
         {
             $havething=1;
-            while (($allfriend!=-1)&&($row = $allfriend->fetch_assoc()))
+            while ($row = $allfriend->fetch_assoc())
             {
                 $tmpaccountmodel=new AccountModel(); 
                 $allartical=$this->article_model->choseAccountAllArticle($tmpaccountmodel->GetAccount($row['id']));
                 if(!is_null($allartical))
                 {
-                    while(($count<$number)&&($row=$allartical->fetch_assoc()))
+                    while($rowall=$allartical->fetch_assoc())
                     {
                         $accounttmp=new AccountModel();
-                        $ownerid=$accounttmp->GetID($row["Owner"]);
+                        $ownerid=$accounttmp->GetID($rowall["Owner"]);
                         $tmp=array(
-                            'id'=>$row["id"],
+                            'id'=>$rowall["id"],
                             'Ownerid'=>$ownerid,
-                            'Owner'=> $row["Owner"],
-                            'Title'=> $row["Title"],
+                            'Owner'=> $rowall["Owner"],
+                            'Title'=> $rowall["Title"],
                         );
                         $json[$count]=json_encode($tmp);
                         $count+=1;
@@ -151,16 +150,20 @@ class Article
             }
         }
         if($havething==0)
-            return null;
-        if($json!=null)
+        {
+            return json_encode (null);
+        }
+        if(!is_null($json))
         {
             $storage[$storage['count']]=json_encode($json);
             $count=0;
             $storage['count']+=1;
         }
         //group 等groupdb用好
-        if($storage==null)
-            return null;
+        if(is_null($storage))
+        {
+            return json_encode (null);
+        }
         $_SESSION['mainpage']=json_encode($storage);
         return $storage[0];
     }
@@ -222,7 +225,7 @@ class Article
     {
         $commettmp=new CommetModel();
         $allcommet=$commettmp->GetAllComment($id);
-        $commitjson = null;
+        $commitjson=null;
         $count=0;
         if(!is_null($allcommet))
         {
@@ -233,7 +236,7 @@ class Article
                     'Content'=> $rowll["Content"],
                     'DeliveryDate'=>$rowll["DeliveryDate"]
                 );
-                $commitjson[$count]= $tmp;
+                $commitjson[$count]=$tmp;
                 $count+=1;
             }
         }
@@ -246,11 +249,10 @@ class Article
                 'Owner'=> $row["Owner"],
                 'Title'=> $row["Title"],
                 'Content'=> $row["Content"],
-                'commit'=> $commitjson,
-                'thumb'=> $thumbtmp->GetNumberOfThumbUp($id),
-                'DeliveryDate'=> $row["DeliveryDate"]
+                'commit'=>($commitjson),
+                'thumb'=>$thumbtmp->GetNumberOfThumbUp($id),
+                'DeliveryDate'=>$row["DeliveryDate"]
             );
-
             return json_encode($json);
         }
     }
@@ -333,7 +335,7 @@ elseif(isset($_POST['id'])&&isset($_POST['get']))//get 亂給直
     else
     {
         
-        echo null;
+        echo json_encode(null);
     }
 }
 //delete thumb
@@ -414,7 +416,7 @@ elseif(isset($_POST['mp']))//mp 亂給直
     }
     else
     {
-        echo null;
+        echo json_encode (null);
     }
 }
 //next page
@@ -429,7 +431,7 @@ elseif(isset($_POST['np']))//np 亂給直
     }
     else
     {
-        echo null;
+        echo json_encode (null);
     }
 }
 //back page
@@ -444,7 +446,7 @@ elseif(isset($_POST['bp']))//bp 亂給直
     }
     else
     {
-        echo null;
+        echo json_encode (null);
     }
 }
 elseif(isset($_POST['title']))
@@ -461,7 +463,7 @@ elseif(isset($_POST['title']))
     }
     else
     {
-        echo null;
+        echo json_encode (null);
     }
 }
 ?>

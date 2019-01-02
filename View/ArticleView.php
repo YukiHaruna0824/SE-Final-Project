@@ -34,11 +34,11 @@
 					var Thumb = document.getElementById("thumb");//按讚數
 					var PostTime = document.getElementById("posttime");//發文時間
 					
-					PostUser.innerHTML = "PostMan : " + data['Owner'];
-					Title.innerHTML = "Title : " + data['Title'];
-					Content.innerHTML = data['Content'];
-					Thumb.innerHTML = data['thumb'];
-					PostTime.innerHTML = "PostTime : " + data['DeliveryDate'];
+					PostUser.innerText = "PostMan : " + data['Owner'];
+					Title.innerText = "Title : " + data['Title'];
+					Content.innerText = data['Content'];
+					Thumb.innerText = data['thumb'];
+					PostTime.innerText = "PostTime : " + data['DeliveryDate'];
 
 					if(data['commit'] != null){
 						var comment = data['commit'];//獲取留言資訊
@@ -123,7 +123,8 @@
 	</div>
 
 	<!--將頁面往下挪以免btn被蓋住-->
-	<div id="bh-banner" class="bh-banner"></div>
+	<div id="bh-banner" class="bh-banner">
+	</div>
 
 	<!--主畫面-->
 	<div class="container"> 
@@ -157,46 +158,7 @@
 
 								<!--他人留言開始-->
 								<div class="c-reply__item" id="comment">
-									<!--
-									<div class="reply-content">
-										<h2 class="reply-content__user">邱暐盛</h2>
-										<article class="reply-content__article c-article ">
-											<span>跟狗一樣</span>
-										</article>
-										<div class="reply-content__footer">
-											<div class="edittime" data-tooltipped="" aria-describedby="tippy-tooltip-272" data-original-title="留言時間 2018-06-30 03:07:05">
-												2018-06-30 03:07:05
-											</div>
-										</div>
-									</div>
-									<br>
-
-									<div class="reply-content">
-										<h2 class="reply-content__user">范茗翔</h2>
-										<article class="reply-content__article c-article ">
-											資料庫有夠雷
-										</article>
-										<div class="reply-content__footer">
-											<div class="edittime" data-tooltipped="" aria-describedby="tippy-tooltip-272" data-original-title="留言時間 2018-06-30 03:07:05">
-												2018-06-30 03:07:05
-											</div>
-										</div>
-									</div>
-									<br>
-
-									<div class="reply-content">
-										<h2 class="reply-content__user">鄭鈺哲</h2>
-										<article class="reply-content__article c-article ">
-											我超強我超強我超強我超強我超強我超強我超強我超強我超強我超強我超強我超強我超強我超強我超強我超強我超強我超強我超強我超強我超強
-										</article>
-										<div class="reply-content__footer">
-											<div class="edittime" data-tooltipped="" aria-describedby="tippy-tooltip-272" data-original-title="留言時間 2018-06-30 03:07:05">
-												2018-06-30 03:07:05
-											</div>
-										</div>
-									</div>
-									<br>
-									-->
+									<!--dynamic-->
 								</div>
 								<!--他人留言結束-->
 
