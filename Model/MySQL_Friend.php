@@ -5,7 +5,8 @@ require_once('BaseFriend.php');
 
 class MySQL_Friend extends BaseFriend
 {
-    //先設定資料庫資訊，主機通常都用本機
+
+//先設定資料庫資訊，主機通常都用本機
     public $host = "localhost";
 //以root管理者帳號進入資料庫
     public $dbuser = "root";

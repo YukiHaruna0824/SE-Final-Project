@@ -4,7 +4,8 @@ require_once('BaseGroup.php');
 
 class MySQL_Group extends BaseGroup
 {
-    //先設定資料庫資訊，主機通常都用本機
+
+//先設定資料庫資訊，主機通常都用本機
     public $host = "localhost";
 //以root管理者帳號進入資料庫
     public $dbuser = "root";
@@ -96,6 +97,21 @@ class MySQL_Group extends BaseGroup
         $this->link->query($command);
 
         return 1;
+    }
+
+    public function CheckGroup($groupName)
+    {
+        $command = "SELECT * FROM Groups where GroupName =  '$groupName'  LIMIT 1";
+        $result = $this->link->query($command);
+        //已存在
+        if ($result && mysqli_num_rows($result) > 0) {
+            return 1;
+        }
+        else
+        {
+            return-1;
+        }
+
     }
 
     public function AddMember($groupName,$account)

@@ -16,6 +16,11 @@ class GroupModel
         return $this->group->CreateGroup($groupName, $account);
     }
 
+    public function CheckGroup($groupName)
+    {
+        return $this->group->CheckGroup($groupName);
+    }
+
     public function KillGroup($groupName)
     {
         return $this->group->KillGroup($groupName);

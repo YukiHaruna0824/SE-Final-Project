@@ -4,7 +4,8 @@ require_once('BaseThumbUp.php');
 
 class MySQL_ThumbUp extends BaseThumbUp
 {
-    //先設定資料庫資訊，主機通常都用本機
+
+//先設定資料庫資訊，主機通常都用本機
     public $host = "localhost";
 //以root管理者帳號進入資料庫
     public $dbuser = "root";
@@ -39,14 +40,20 @@ class MySQL_ThumbUp extends BaseThumbUp
                 $table = $row["ThumbUp"];
                 $number = $row["ThumbUpNnumber"];
                 $number+=1;
-                $command = "UPDATE allArticles 
-                SET ThumbUpNnumber =  '$number' WHERE id = '$articleID' ";
-                $this->link->query($command);
             }
             $command = "Insert into $table(Account)
              VALUES('$account')";
             if($this->link->query($command))
-                return  mysqli_insert_id($this->link);
+            {
+                echo "11";
+                $lastid = mysqli_insert_id($this->link);
+                $command = "UPDATE allArticles 
+                SET ThumbUpNnumber =  '$number' WHERE id = '$articleID' ";
+                $this->link->query($command);
+                return  $lastid;
+
+            }
+
             else
                 return -1;
         }
