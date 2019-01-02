@@ -3,6 +3,7 @@
 require_once('BaseAccount.php');
 class  MySQL_Account extends BaseAccount {
 
+
 //先設定資料庫資訊，主機通常都用本機
     public $host = "localhost";
 //以root管理者帳號進入資料庫

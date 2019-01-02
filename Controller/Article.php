@@ -11,6 +11,7 @@ require_once('../Model/ThumbupModel.php');
 require_once('../Model/CommetModel.php');
 require_once('../Model/FriendModel.php');
 require_once('./Account.php');
+
 class Article
 {
     private $article_model;
@@ -82,6 +83,7 @@ class Article
     }
     public function first_get_into_main()
     {
+        //擷取所有的貼文
         $storage=null;
         $storage['current']=0;
         $storage['count']=0;
@@ -149,6 +151,7 @@ class Article
                 }
             }
         }
+        //group 等groupdb用好
         if($havething==0)
         {
             return json_encode (null);
@@ -159,7 +162,6 @@ class Article
             $count=0;
             $storage['count']+=1;
         }
-        //group 等groupdb用好
         if(is_null($storage))
         {
             return json_encode (null);
@@ -193,12 +195,13 @@ class Article
         }
     }
     //對id文章按讚 article id
-    public function support_ones_article($id)
+    public function support_ones_article($id,$name)
     {
         $tmp=new ThumbUpModel();
         if($tmp->Add($id,$_SESSION['$inaccountname'])!=-1)
         {
-            $this->thisaccount->add_DaSaBi(20);
+            $coin=new AccountModel();
+            $coin->StoreDaSaBi($name,20);
             return TRUE;
         }
         else
@@ -207,12 +210,13 @@ class Article
         }
     }
     //對id文章退讚 acricle id
-    public function unsupport_ones_article($id)
+    public function unsupport_ones_article($id,$name)
     {
-        $$tmp=new ThumbUpModel();
+        $tmp=new ThumbUpModel();
         if($tmp->Delete($id,$_SESSION['$inaccountname'])==1)
         {
-            $this->thisaccount->take_DaSaBi(20);
+            $coin=new AccountModel();
+            $coin->UseDaSaBi($name,20);
             return TRUE;
         }
         else
@@ -248,7 +252,7 @@ class Article
             $json=array(
                 'Owner'=> $row["Owner"],
                 'Title'=> $row["Title"],
-                'Content'=> $row["Content"],
+                'Content'=> urlencode($row["Content"]),
                 'commit'=>($commitjson),
                 'thumb'=>$thumbtmp->GetNumberOfThumbUp($id),
                 'DeliveryDate'=>$row["DeliveryDate"]
@@ -339,14 +343,14 @@ elseif(isset($_POST['id'])&&isset($_POST['get']))//get 亂給直
     }
 }
 //delete thumb
-elseif(isset($_POST['us'])&&isset($_POST['id']))//us 亂給直
+elseif(isset($_POST['na'])&&isset($_POST['id']))
 {
-    $username=$_SESSION['$inaccountname'];
+    $username=$_POST['na'];
     $id=$_POST['id'];//article id
-    if(isset($_SESSION[$username]))
+    if(isset($_SESSION['$inaccountname']))
     {
-        $newArticlelist=new Article($username);
-        if($newArticlelist->unsupport_ones_article($id)==TRUE)
+        $newArticlelist=new Article($_SESSION['$inaccountname']);
+        if($newArticlelist->unsupport_ones_article($id,$username)==TRUE)
         {
             echo "AC";
         }
@@ -361,14 +365,14 @@ elseif(isset($_POST['us'])&&isset($_POST['id']))//us 亂給直
     }
 }
 //make thumb
-elseif(isset($_POST['su'])&&isset($_POST['id']))//su 亂給直
+elseif(isset($_POST['na'])&&isset($_POST['id']))
 {
-    $username=$_SESSION['$inaccountname'];
+    $username=$_POST['na'];
     $id=$_POST['id'];//article id
-    if(isset($_SESSION[$username]))
+    if(isset($_SESSION['$inaccountname']))
     {
-        $newArticlelist=new Article($username);
-        if($newArticlelist->support_ones_article($id)==TRUE)
+        $newArticlelist=new Article($_SESSION['$inaccountname']);
+        if($newArticlelist->support_ones_article($id,$username)==TRUE)
         {
             echo "AC";
         }

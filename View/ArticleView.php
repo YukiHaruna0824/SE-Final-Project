@@ -68,6 +68,32 @@
 			console.log(jqXHR.responseText);
 		});
 		
+		//點讚
+		$("#sendthumb").click(function(){
+			var urlVar = window.location.search.split("="); // ?id=xx
+			var articleid = urlVar[1];//得到文章Id
+			$.ajax({
+				type : "POST",
+				url : "../Controller/Article.php",
+				data : {
+					id : articleid,
+					su : "123"
+				},
+				dataType : 'html'
+			}).done(function(data){
+				if(data == "AC"){
+					$("#thumb").html(Number($("#thumb").text()) + 1);
+				}else if(data == "ER"){
+					alert("你已點過讚了喔");
+				}
+			}).fail(function(jqXHR, textStatus, errorThrown) {
+				//失敗的時候
+				alert("有錯誤產生，請看 console log");
+				console.log(jqXHR.responseText);
+			});
+
+		});
+
 		//送出留言
 		$("#submitmessage").click(function(){
 			$.ajax({
@@ -87,6 +113,11 @@
 			});
 		});	
 
+		//back按鈕註冊
+		$("#back").click(function(){
+			window.location.href="HomeView.php";
+		});	
+
 		//logout按鈕註冊
 		$("#logout").click(function(){
 			$.ajax({
@@ -97,11 +128,11 @@
 				},
 				dataType : 'html'
 				}).done(function(data) {
-					console.log(data);
-				if(data=="bye")
+
+				if(data == "bye")
 				{
 					alert("登出成功，請按確認後登出");
-					window.location.href = "LoginView.php"; //跳到登入頁面
+					window.location.href="LoginView.php";
 				}
 				}).fail(function(jqXHR, textStatus, errorThrown) {
 				//失敗的時候
@@ -117,9 +148,17 @@
 </script>
 	
 <body>
+
 	<!--不會被覆蓋-->
-	<div class="TOP-bh">
-		<input type="button" id="logout"value="我想登出" style="float:right;width:10%">
+	<div class="TOP-bh"></div>
+	</div>
+
+	<div id="BH-menu-path" class="BH-menu">
+		<ul class="BH-menuE">
+			<li class="dropList"><a href="#">文章區</a></li>
+			<li class="dropList"><a id="back"><span style="color:orange;">返回</span></a></li>
+			<li><a id="logout"><span style="color:red;">登出</span></a></li>
+		<ul>
 	</div>
 
 	<!--將頁面往下挪以免btn被蓋住-->
@@ -150,7 +189,7 @@
 							</article>
 							<!--按讚-->
 							<div class="c-post__body__buttonbar">
-								<button type="button">讚</button>
+								<button type="button" class="btn--sm btn--normal" href="javascript:void(0);" id="sendthumb">讚</button>
 								<span id="thumb"></span>
 							</div>
 

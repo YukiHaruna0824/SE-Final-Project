@@ -8,7 +8,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <!-- 載入 bootstrap 的 css 方便我們快速設計網站-->
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap.min.css"/>
-    <link rel="stylesheet" href="../css/style.css"/>
+    <link rel="stylesheet" href="../View/css/style.css"/>
     <link rel="shortcut icon" href="images/favicon.ico">
   </head>
 

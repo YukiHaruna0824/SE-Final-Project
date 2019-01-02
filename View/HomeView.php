@@ -201,9 +201,9 @@ function prePage() {
 		<div class="b-pager pager">
 			<div id="BH-pagebtn">
 				<p class="BH-pagebtnA">
-					<a href="javascript:void(0);" onclick="prePage();">上一页</a>
+					<a href="javascript:void(0);" onclick="prePage();">上一頁</a>
 					<a class="pagenow">1</a>
-					<a href="javascript:void(0);" onclick="nextPage();">下一页</a>
+					<a href="javascript:void(0);" onclick="nextPage();">下一頁</a>
 				</p>
 			</div>
 		</div>
@@ -230,9 +230,9 @@ function prePage() {
 		<div class="b-pager pager">
 			<div id="BH-pagebtn">
 				<p class="BH-pagebtnA">
-					<a href="javascript:void(0);" onclick="prePage();">上一页</a>
+					<a href="javascript:void(0);" onclick="prePage();">上一頁</a>
 					<a class="pagenow">1</a>
-					<a href="javascript:void(0);" onclick="nextPage();">下一页</a>
+					<a href="javascript:void(0);" onclick="nextPage();">下一頁</a>
 				</p>
 			</div>
 		</div>

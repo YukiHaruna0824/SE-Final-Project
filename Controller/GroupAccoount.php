@@ -17,7 +17,7 @@ class GroupAccount
         //find this groupname has been used or not
         return $this->account_model->CheckAccount($inaccount_name);
     }
-    public function register($inaccountname,$password,$Gender,$Class)
+    public function addnewgroup($inaccountname,$password,$Gender,$Class)
     {
         //add new group
         if($this->account_model->Add($inaccountname,$password,$Gender,$Class)!=-1)
@@ -29,13 +29,30 @@ class GroupAccount
             return FALSE;
         }
     }
-    public function logout()
+    public function getin($inaccountname)
     {
-        //delete group
+        //click in group
+        $this->id=$this->account_model->LoginCheck($inaccountname,$password);
+        if($this->id!=-1)
+        {
+            $this->account_name=$inaccountname;
+            $_SESSION[$inaccountname]=$this;
+            $_SESSION['$inaccountname']=$inaccountname;
+            return TRUE;
+        }
+        else
+        {
+            $this->account_name="";
+            return FALSE;
+        }
+    }
+    public function getout()
+    {
+        //click out group
         unset($_SESSION[$this->account_name]);
         unset($_SESSION['$inaccountname']);
     }
-    public function get_account_name()
+    public function get_member_list()
     {
         //get member list
         return $this->account_name;
@@ -45,7 +62,7 @@ class GroupAccount
         $this->account_model=new AccountModel();
         $this->account_name="";
     }
-    public function add_friend($id)
+    public function add_member($id)
     {
         //add new member
         if($this->account_name!="")
