@@ -91,21 +91,23 @@ function getHTML(data){
 			+"<td style=\"max-width: 600px;\">文章</td>"
 		+"</tr>" ;
 	var i;
-	for(i=0;i<Object.keys(data).length;i++){
-		var tmpData = data[i].split("\"");
-		tmpHTML += 
-			"<tr class=\"b-list__row\">"
-				+"<td class=\"b-list__account\">"
-					+"<a href=\"ProfileView.php?id="+tmpData[7]+"\" class=\"b-list__account__user\">"
-						+tmpData[11]
-					+"</a>"
-				+"</td>"
-				+"<td class=\"b-list__main\">"
-					+"<a href=\"ArticleView.php?id="+tmpData[3]+"\" class=\"b-list__main__title\">"
-						+tmpData[15]
-					+"</a>"
-				+"</td>"
-			+"</tr>";
+	if(data!=null){
+		for(i=0;i<Object.keys(data).length;i++){
+			var tmpData = data[i].split("\"");
+			tmpHTML += 
+				"<tr class=\"b-list__row\">"
+					+"<td class=\"b-list__account\">"
+						+"<a href=\"ProfileView.php?id="+tmpData[7]+"\" class=\"b-list__account__user\">"
+							+tmpData[11]
+						+"</a>"
+					+"</td>"
+					+"<td class=\"b-list__main\">"
+						+"<a href=\"ArticleView.php?id="+tmpData[3]+"\" class=\"b-list__main__title\">"
+							+tmpData[15]
+						+"</a>"
+					+"</td>"
+				+"</tr>";
+		}
 	}
 	return tmpHTML
 }
