@@ -24,7 +24,6 @@ $(document).ready(function(data) {
 		},
 		dataType : 'json',
 	}).done(function(data){
-		//console.log(data);
 		$('#articles > tbody').html(getHTML(data));
 	}).fail(function(jqXHR, textStatus, errorThrown){
 		alert("有錯誤產生，請看 console log");

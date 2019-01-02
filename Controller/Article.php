@@ -410,11 +410,16 @@ elseif(isset($_POST['mp']))//mp 亂給直
     {
         $newArticlelist=new Article($username);
         $json=$newArticlelist->first_get_into_main();
-        echo $json;
+		if($json==null)
+			echo json_encode(null);
+		else{
+			echo $json;
+		}
     }
     else
     {
-        echo null;
+		echo json_encode(null);
+        //echo null;
     }
 }
 //next page
