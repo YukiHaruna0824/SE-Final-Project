@@ -12,43 +12,22 @@
 
 <script>
     $(document).ready(function(data){
-        /*$.ajax({
+        $.ajax({
             type : "POST",
             url : "../Controller/AD.php",
             data : {
-                
+                get:"321"
             },
             dataType : 'json'
         }).done(function(data){
-            let currentPrice = 123;//接收當前廣告標價
+            let currentPrice = data['coin'];//接收當前廣告標價
             $("#currentprice").text(currentPrice);
 
         }).fail(function(jqXHR, textStatus, errorThrown) {
 				//失敗的時候
 				alert("有錯誤產生，請看 console log");
 				console.log(jqXHR.responseText);
-		});*/
-
-        /*$(".Ad").submit(function(){
-			$.ajax({
-				type : "POST",
-				url : "../Controller/AD.php",
-				data : {
-                    p : $("#price").val(),
-                    f : $("#file").val()
-				},
-				dataType : 'html'
-			}).done(function(data){
-                console.log(data);
-				//window.location.href = "HomeView.php"; //跳到文章頁面
-			}).fail(function(jqXHR, textStatus, errorThrown) {
-				alert("有錯誤產生，請看 console log");//失敗的時候
-				console.log(jqXHR.responseText);
-			});
-			return false;
-		});*/
-        
-
+		});
     });
 
 </script>

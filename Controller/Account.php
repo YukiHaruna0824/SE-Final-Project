@@ -33,7 +33,7 @@ class Account
     //find is this account exist
     public function login($inaccountname,$password)
     {
-        $this->id=$this->account_model->LoginCheck($inaccountname,($password));
+        $this->id=$this->account_model->LoginCheck($inaccountname,md5($password));
         if($this->id!=-1)
         {
             $this->account_name=$inaccountname;
@@ -56,7 +56,7 @@ class Account
     //change password
     public function alter_password($password)
     {
-        if($this->account_model->updatePassWord($_SESSION['$inaccountname'],$password))
+        if($this->account_model->updatePassWord($_SESSION['$inaccountname'],md5($password)))
         {
             return TRUE;
         }
@@ -128,9 +128,9 @@ class Account
             return FALSE;
         }
     }
+    //get info name and coin
     public function get_info_naco()
     {
-        //get info
         $tmp=new AccountModel();
         $result = $tmp->find($_SESSION['$inaccountname']);
         $people=$result->fetch_assoc();
