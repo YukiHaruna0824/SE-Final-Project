@@ -70,20 +70,21 @@
 		
 		//點讚
 		$("#sendthumb").click(function(){
-			var urlVar = window.location.search.split("="); // ?id=xx
-			var articleid = urlVar[1];//得到文章Id
+			let urlVar = window.location.search.split("="); // ?id=xx
+			let articleid = urlVar[1];//得到文章Id
+			let PostUserName = document.getElementById("name").innerText.split(": "); //發文者名稱
+
 			$.ajax({
 				type : "POST",
 				url : "../Controller/Article.php",
 				data : {
 					id : articleid,
-					su : "123"
+					su : PostUserName[1]
 				},
 				dataType : 'html'
 			}).done(function(data){
-				console.log(data);
 				if(data == "AC"){
-
+					$("#thumb").text(Number($("#thumb").text()) + 1);
 				}else if(data == "ER"){
 					alert("你已點過讚了喔");
 				}
@@ -186,7 +187,7 @@
 							</article>
 							<!--按讚-->
 							<div class="c-post__body__buttonbar">
-								<button type="button" class="btn--sm btn--normal" href="javascript:void(0);" id="sendthumb">讚</button>
+								<button type="button" class="btn--sm btn--normal" id="sendthumb">讚</button>
 								<span id="thumb"></span>
 							</div>
 

@@ -45,13 +45,11 @@ class MySQL_ThumbUp extends BaseThumbUp
              VALUES('$account')";
             if($this->link->query($command))
             {
-                echo "11";
                 $lastid = mysqli_insert_id($this->link);
                 $command = "UPDATE allArticles 
                 SET ThumbUpNnumber =  '$number' WHERE id = '$articleID' ";
                 $this->link->query($command);
                 return  $lastid;
-
             }
 
             else

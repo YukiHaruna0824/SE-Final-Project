@@ -44,9 +44,9 @@ $(document).ready(function(data) {
 					var otherGender = document.getElementById("otherGender");
 					var otherClass = document.getElementById("otherClass");
 
-					otherUserName.innerHTML = "使用者名稱 : " + data['Account'];
-					otherGender.innerHTML = "使用者性別 : " + ((data['Gender'] == 0) ? "男" : "女");
-					otherClass.innerHTML = "使用者系所 : " + data['Class'];
+					otherUserName.innerText = "使用者名稱 : " + data['Account'];
+					otherGender.innerText = "使用者性別 : " + ((data['Gender'] == 0) ? "男" : "女");
+					otherClass.innerText = "使用者系所 : " + data['Class'];
 
 					//把新增好友的按鈕動態加入到後面
 					if(!document.getElementById("AddFriend"))

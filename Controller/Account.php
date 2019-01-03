@@ -21,7 +21,7 @@ class Account
     //add new account
     public function register($inaccountname,$password,$Gender,$Class)
     {
-        if($this->account_model->Add($inaccountname,$password,$Gender,$Class)!=-1)
+        if($this->account_model->Add($inaccountname,md5($password),$Gender,$Class)!=-1)
         {
             return TRUE;
         }
@@ -33,7 +33,7 @@ class Account
     //find is this account exist
     public function login($inaccountname,$password)
     {
-        $this->id=$this->account_model->LoginCheck($inaccountname,$password);
+        $this->id=$this->account_model->LoginCheck($inaccountname,md5($password));
         if($this->id!=-1)
         {
             $this->account_name=$inaccountname;

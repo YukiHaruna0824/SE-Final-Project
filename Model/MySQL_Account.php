@@ -199,7 +199,7 @@ class  MySQL_Account extends BaseAccount {
 
     }
 
-    public  function  StoreDaSaBi($account,$money)
+    public function StoreDaSaBi($account,$money)
     {
         $command = "SELECT * FROM account where Account =  '$account' LIMIT 1";
         $result = $this->link->query($command);
@@ -218,7 +218,7 @@ class  MySQL_Account extends BaseAccount {
             return -1;
     }
 
-    public  function  UseDaSaBi($account,$money)
+    public function UseDaSaBi($account,$money)
     {
         $command = "SELECT * FROM account where Account =  '$account' LIMIT 1";
         $result = $this->link->query($command);

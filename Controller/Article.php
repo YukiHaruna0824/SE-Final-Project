@@ -173,7 +173,7 @@ class Article
     public function addarticle($title,$content)
     {
         $name=$_SESSION['$inaccountname'];
-        if($this->article_model->Add($name,$title,$content)!=-1)
+        if($this->article_model->Add($name,htmlentities($title),htmlentities($content))!=-1)
         {
             return TRUE;
         }
@@ -272,7 +272,7 @@ class Article
     //評論文章
     public function comment_article($id,$content,$inaccountname)
     {
-        if($this->commet_model->Add($id,$content,$inaccountname)==1)
+        if($this->commet_model->Add($id,htmlentities($content),$inaccountname)==1)
         {
             return TRUE;
         }
