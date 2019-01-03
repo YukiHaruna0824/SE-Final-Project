@@ -33,7 +33,7 @@ class Account
     //find is this account exist
     public function login($inaccountname,$password)
     {
-        $this->id=$this->account_model->LoginCheck($inaccountname,($password));
+        $this->id=$this->account_model->LoginCheck($inaccountname,md5($password));
         if($this->id!=-1)
         {
             $this->account_name=$inaccountname;
@@ -69,7 +69,7 @@ class Account
     {
         return $this->account_name;
     }
-    public function __construct()
+    public function __construct() 
     {
         $this->account_model=new AccountModel();
         $this->account_name="";
