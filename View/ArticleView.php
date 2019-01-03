@@ -79,7 +79,7 @@
 				url : "../Controller/Article.php",
 				data : {
 					id : articleid,
-					na : PostUserName[1]
+					su : PostUserName[1]
 				},
 				dataType : 'html'
 			}).done(function(data){
