@@ -44,7 +44,11 @@ $(document).ready(function(data) {
 		console.log(jqXHR.responseText);
 	});
 
-
+    
+    $("#oilpicture").click(function(){
+        let random = Math.floor(Math.random()*2);
+        $("#bg").attr("src","../AD/" + random + ".jpg");
+    });
 
 	//抽卡按鈕註冊
 	$("#drawcard").click(function(){
@@ -198,6 +202,22 @@ function prePage() {
 }
 </script>
 	
+<style>
+        .bg {
+            position: fixed;
+            top: 0;
+            left: 0;
+            bottom: 0;
+            right: 0;
+            z-index: -999;
+        }
+        .bg img {
+            opacity: 0.5;
+            min-height: 100%;
+            min-width: 100%;
+        }
+</style>    
+
 <body>
 
 <!--不會被覆蓋-->
@@ -212,6 +232,8 @@ function prePage() {
 		<li><a id="friendarticle"><span style="color:black;">朋友貼文</span></a></li>
 		<li><a id="grouparticle"><span style="color:white;">群組列表</span></a></li>
 		
+        <li><a id="oilpicture"><span style="color:purple;">點我換油圖</span></a></li>
+        
 		<li><a><span id="currentUser" style="color:white;"></span></a></li>
 		<li><a><span id="DaSaBi" style="color:white;"></span></a></li>
 		<li><a id="logout"><span style="color:red;">登出</span></a></li>
@@ -221,10 +243,14 @@ function prePage() {
 <!--將頁面往下挪以免btn被蓋住-->
 <div id="bh-banner" class="bh-banner"></div>
 
+<div class="bg">
+    <img id="bg" src="../AD/output.jpg">
+</div>
 
 <!--主畫面-->
 <div class="container">
 	<div id="main">
+
 		<p></p>
 		<!--換頁-->
 		<div class="b-pager pager">
@@ -266,7 +292,7 @@ function prePage() {
 					<a class="pagenow">1</a>
 					<a href="javascript:void(0);" onclick="nextPage();">下一頁</a>
 					<br>
-					<img src="../AD/output.jpg" width="400" height="600">
+					<img src="../AD/output.jpg" width="600" height="600">
 				</p>
 			</div>
 		</div>
