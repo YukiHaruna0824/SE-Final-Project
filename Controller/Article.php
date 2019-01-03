@@ -105,11 +105,11 @@ class Article
                     'Owner'=> $row["Owner"],
                     'Title'=> $row["Title"],
                 );
-                $json[$count]=json_encode($tmp);
+                $json[$count]=json_encode($tmp,JSON_UNESCAPED_UNICODE);
                 $count+=1;
                 if($count==20)
                 {
-                    $storage[$storage['count']]=json_encode($json);
+                    $storage[$storage['count']]=json_encode($json,JSON_UNESCAPED_UNICODE);
                     $count=0;
                     $storage['count']+=1;
                     $json=null;
@@ -138,11 +138,11 @@ class Article
                             'Owner'=> $rowall["Owner"],
                             'Title'=> $rowall["Title"],
                         );
-                        $json[$count]=json_encode($tmp);
+                        $json[$count]=json_encode($tmp,JSON_UNESCAPED_UNICODE);
                         $count+=1;
                         if($count==20)
                         {
-                            $storage[$storage['count']]=json_encode($json);
+                            $storage[$storage['count']]=json_encode($json,JSON_UNESCAPED_UNICODE);
                             $count=0;
                             $storage['count']+=1;
                             $json=null;
@@ -158,7 +158,7 @@ class Article
         }
         if(!is_null($json))
         {
-            $storage[$storage['count']]=json_encode($json);
+            $storage[$storage['count']]=json_encode($json,JSON_UNESCAPED_UNICODE);
             $count=0;
             $storage['count']+=1;
         }
@@ -166,7 +166,7 @@ class Article
         {
             return json_encode (null);
         }
-        $_SESSION['mainpage']=json_encode($storage);
+        $_SESSION['mainpage']=json_encode($storage,JSON_UNESCAPED_UNICODE);
         return $storage[0];
     }
     //add article
