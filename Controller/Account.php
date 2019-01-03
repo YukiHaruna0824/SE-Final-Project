@@ -135,33 +135,78 @@ class Account
         $result = $tmp->find($_SESSION['$inaccountname']);
         $people=$result->fetch_assoc();
         $tmp=array(
-            "username"=>$_SESSION['$inaccountname'],
-            "gender"=>$people["Gender"],
-            "Class"=>$people["Class"],
-            "coin"=>$people["DaSaBi"],
-
-        );
-        return json_encode($tmp);
-    }
-    public function get_info_full()
-    {
-        $tmp=new AccountModel();
-        $result = $tmp->find($_SESSION['$inaccountname']);
-        $people=$result->fetch_assoc();
-        $tmp=array(
             "un"=>$_SESSION['$inaccountname'],
             "co"=>$people["DaSaBi"]
         );
         return json_encode($tmp);
     }
+    public function get_info_full()
+    {
+        $friend=new FriendModel();
+        $friendtmpjson;
+        $count=0;
+        $allfriend = $friend->FindAllFriend($_SESSION['$inaccountname']);
+        if(!is_null($allfriend))
+        {
+            while ($row = $allfriend->fetch_assoc())
+            {
+                $accounttmp=new AccountModel();
+                $allinfo=$accounttmp->find($accounttmp->GetAccount($row["id"]));
+                if(!is_null($allinfo))
+                {
+                    $tmp=array(
+                        "username"=>$allinfo["Account"],
+                        "gender"=>$allinfo["Gender"],
+                        "Class"=>$allinfo["Class"],
+                    );
+                    $friendtmpjson[$count]=$tmp;
+                    $count+=1;
+                }
+            }
+        }
+        $tmpmodel=new AccountModel();
+        $result = $tmpmodel->find($_SESSION['$inaccountname']);
+        $people=$result->fetch_assoc();
+        $json=array(
+            "username"=>$_SESSION['$inaccountname'],
+            "gender"=>$people["Gender"],
+            "Class"=>$people["Class"],
+            "coin"=>$people["DaSaBi"],
+            "friend"=>$friendtmpjson
+        );
+        return json_encode($json);
+    }
 }
-if(isset($_POST['getfullinfo']))
+//alter password
+if(isset($_POST['ps']))
+{
+    $name=$_SESSION['$inaccountname'];
+    $newpassword=$_POST['ps'];
+    if(isset($_SESSION[$name]))
+    {
+        $newAccount=new Account();
+        if($newAccount->alter_password($newpassword)==TRUE)
+        {
+            echo "AC";
+        }
+        else
+        {
+            echo "ER";
+        }
+    }
+    else
+    {
+        echo "WN";
+    }
+}
+//get all info
+elseif(isset($_POST['getfullinfo']))
 {
     $name=$_SESSION['$inaccountname'];
     if(isset($_SESSION[$name]))
     {
         $newAccount=new Account();
-        echo $newAccount->get_info_naco();
+        echo $newAccount->get_info_full();
     }
     else
     {

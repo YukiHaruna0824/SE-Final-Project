@@ -9,7 +9,7 @@ class  MySQL_Account extends BaseAccount {
 //以root管理者帳號進入資料庫
     public $dbuser = "root";
 //root的資料庫密碼
-    public $dbpw = "root";
+    public $dbpw = "doogg321";
 //登入後要使用的資料庫
     public $dbname = "ntust";
 

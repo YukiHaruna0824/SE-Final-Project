@@ -10,7 +10,7 @@ class MySQL_Article extends BaseArticle
 //以root管理者帳號進入資料庫
     public $dbuser = "root";
 //root的資料庫密碼
-    public $dbpw = "root";
+    public $dbpw = "doogg321";
 //登入後要使用的資料庫
     public $dbname = "ntust";
 
@@ -138,7 +138,9 @@ class MySQL_Article extends BaseArticle
         $command = "SELECT * FROM allArticles where Title = '$title'";//AND  YEAR(DeliveryDate) = '$date'  $endDate='2018';
         $result = $this->link->query($command);
         if ($result && mysqli_num_rows($result) > 0) {
-            return ($result->fetch_assoc())["id"];
+            while ($row = $result->fetch_assoc()) {
+                return $row["id"];
+            }
         }
         return -1;
     }
