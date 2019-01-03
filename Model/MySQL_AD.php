@@ -40,19 +40,12 @@ class MySQL_AD
             }
             if($DaSaBi<=$DaSaBi2)
                 return -1;
-            $command = "UPDATE AllAD
-                SET Path = '$path', SET DaSaBi =  '$DaSaBi', SET Owner = '$owner', SET Title = '$Title'";
-            $result3 = $this->link->query($command);
-            if ($result3 && mysqli_num_rows($result3) > 0)
-            {
-                echo "12";
-                return 1;
-            }
-            else
-            {
-                echo "13";
-                return -1;
-            }
+            $command = "DELETE FROM AllAD ";
+            $this->link->query($command);
+            $command = "Insert into AllAD (Title, Path, Owner, DaSaBi)
+             VALUES('$Title' , '$path' , '$owner', '$DaSaBi')";
+            $this->link->query($command);
+            return 1;
         }
         $command = "Insert into AllAD (Title, Path, Owner, DaSaBi)
              VALUES('$Title' , '$path' , '$owner', '$DaSaBi')";

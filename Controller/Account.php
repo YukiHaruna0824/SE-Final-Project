@@ -33,7 +33,7 @@ class Account
     //find is this account exist
     public function login($inaccountname,$password)
     {
-        $this->id=$this->account_model->LoginCheck($inaccountname,md5($password));
+        $this->id=$this->account_model->LoginCheck($inaccountname,($password));
         if($this->id!=-1)
         {
             $this->account_name=$inaccountname;
@@ -47,10 +47,23 @@ class Account
             return FALSE;
         }
     }
+    //logout
     public function logout()
     {
         unset($_SESSION[$this->account_name]);
         unset($_SESSION['$inaccountname']);
+    }
+    //change password
+    public function alter_password($password)
+    {
+        if($this->account_model->updatePassWord($_SESSION['$inaccountname'],$password))
+        {
+            return TRUE;
+        }
+        else
+        {
+            return FALSE;
+        }
     }
     public function get_account_name()
     {
@@ -115,9 +128,61 @@ class Account
             return FALSE;
         }
     }
+    public function get_info_naco()
+    {
+        //get info
+        $tmp=new AccountModel();
+        $result = $tmp->find($_SESSION['$inaccountname']);
+        $people=$result->fetch_assoc();
+        $tmp=array(
+            "username"=>$_SESSION['$inaccountname'],
+            "gender"=>$people["Gender"],
+            "Class"=>$people["Class"],
+            "coin"=>$people["DaSaBi"],
+
+        );
+        return json_encode($tmp);
+    }
+    public function get_info_full()
+    {
+        $tmp=new AccountModel();
+        $result = $tmp->find($_SESSION['$inaccountname']);
+        $people=$result->fetch_assoc();
+        $tmp=array(
+            "un"=>$_SESSION['$inaccountname'],
+            "co"=>$people["DaSaBi"]
+        );
+        return json_encode($tmp);
+    }
+}
+if(isset($_POST['getfullinfo']))
+{
+    $name=$_SESSION['$inaccountname'];
+    if(isset($_SESSION[$name]))
+    {
+        $newAccount=new Account();
+        echo $newAccount->get_info_naco();
+    }
+    else
+    {
+        echo json_encode(null);
+    }
+}
+elseif(isset($_POST['naco']))
+{
+    $name=$_SESSION['$inaccountname'];
+    if(isset($_SESSION[$name]))
+    {
+        $newAccount=new Account();
+        echo $newAccount->get_info_naco();
+    }
+    else
+    {
+        echo json_encode(null);
+    }
 }
 //logout
-if(isset($_POST['apple']))
+elseif(isset($_POST['apple']))
 {
     $name=$_SESSION['$inaccountname'];
     if(isset($_SESSION[$name]))

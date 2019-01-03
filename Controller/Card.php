@@ -23,7 +23,7 @@ class Card
     //get random people not yourself
     public function choose_a_people()
     {
-        if($this->account_name!=""/*&&($this->account_model->UseDaSaBi($this->account_name,10)!=-1)*/)
+        if($this->account_name!="")
         {
             $cardtmp=$this->account_model->RandomChoose($this->account_name);
             if(!is_null($cardtmp))

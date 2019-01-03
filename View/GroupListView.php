@@ -24,81 +24,13 @@ $(document).ready(function(data) {
 		},
 		dataType : 'json',
 	}).done(function(data){
+		//console.log(data);
 		$('#articles > tbody').html(getHTML(data));
 	}).fail(function(jqXHR, textStatus, errorThrown){
 		alert("有錯誤產生，請看 console log");
 		console.log(jqXHR.responseText);
 	});
 	
-	$.ajax({
-		type : "POST",
-		url : "../Controller/Account.php",
-		data : {
-			naco:"123"
-		},
-		dataType : 'json',
-	}).done(function(data){
-		$("#currentUser").text("使用者 : " + data['un']);
-		$("#DaSaBi").text("台科幣 : " + data['co']);
-	}).fail(function(jqXHR, textStatus, errorThrown){
-		alert("有錯誤產生，請看 console log");
-		console.log(jqXHR.responseText);
-	});
-
-
-
-	//抽卡按鈕註冊
-	$("#drawcard").click(function(){
-		$.ajax({
-			type : "POST",
-			url : "../Controller/Card.php",
-			dataType : 'json'
-			}).done(function(data) {
-				if(data != null)
-				{
-					var otherUserName = document.getElementById("otherUserName");
-					var otherGender = document.getElementById("otherGender");
-					var otherClass = document.getElementById("otherClass");
-
-					otherUserName.innerText = "使用者名稱 : " + data['Account'];
-					otherGender.innerText = "使用者性別 : " + ((data['Gender'] == 0) ? "男" : "女");
-					otherClass.innerText = "使用者系所 : " + data['Class'];
-
-					//把新增好友的按鈕動態加入到後面
-					if(!document.getElementById("AddFriend"))
-					{
-						$("#otherClass").after('<div><button id="AddFriend" class="btn--sm btn--normal">新增好友</button></div></br>');
-						//註冊新增按鈕
-						$("#AddFriend").click(function(){
-							var othername = $("#otherUserName").text().split(": ");
-
-							$.ajax({
-								type : "POST",
-								url : "../Controller/Account.php",
-								dataType : 'html',
-								data : {
-									addfriend : othername[1]
-								}
-							}).done(function(data) {
-								if(data == "AC")
-									alert("新增好友成功");
-								else if(data == "ER")
-									alert("已存在此好友");
-							}).fail(function(jqXHR, textStatus, errorThrown) {
-								//失敗的時候
-								alert("有錯誤產生，請看 console log");
-								console.log(jqXHR.responseText);
-							});
-						});
-					}
-				}
-			}).fail(function(jqXHR, textStatus, errorThrown) {
-			//失敗的時候
-			alert("有錯誤產生，請看 console log");
-			console.log(jqXHR.responseText);
-		});
-	});
-
 	//logout按鈕註冊
 	$("#logout").click(function(){
 		$.ajax({
@@ -109,6 +41,7 @@ $(document).ready(function(data) {
             },
 			dataType : 'html'
 			}).done(function(data) {
+				console.log(data);
 			if(data=="bye")
 			{
 				alert("登出成功，請按確認後登出");
@@ -120,16 +53,13 @@ $(document).ready(function(data) {
 			console.log(jqXHR.responseText);
 		});
 	});
-
-
 });
 
 
 function getHTML(data){
 	var tmpHTML = 
 		"<tr class=\"b-list__head\">"
-			+"<td style=\"width: 135px;\">發文者名稱</td>"
-			+"<td style=\"max-width: 600px;\">文章</td>"
+			+"<td style=\"max-width: 600px;\">群組</td>"
 		+"</tr>" ;
 	var i;
 	if(data != null)
@@ -138,11 +68,6 @@ function getHTML(data){
 			var tmpData = data[i].split("\"");
 			tmpHTML += 
 				"<tr class=\"b-list__row\">"
-					+"<td class=\"b-list__account\">"
-						+"<a href=\"ProfileView.php?id="+tmpData[7]+"\" class=\"b-list__account__user\">"
-							+tmpData[11]
-						+"</a>"
-					+"</td>"
 					+"<td class=\"b-list__main\">"
 						+"<a href=\"ArticleView.php?id="+tmpData[3]+"\" class=\"b-list__main__title\">"
 							+tmpData[15]
@@ -206,18 +131,11 @@ function prePage() {
 </div>
 
 <div id="BH-menu-path" class="BH-menu">
-	<ul class="BH-menuE">
-		<li class="dropList"><a href="#">文章列表</a></li>
-		<li><a id="allarticle"><span style="color:orange;">全部貼文</span></a></li>
-		<li><a id="myartile"><span style="color:blue;">我的貼文</span></a></li>
-		<li><a id="friendarticle"><span style="color:black;">朋友貼文</span></a></li>
-		<li><a id="grouparticle"><span style="color:white;">群組列表</span></a></li>
-		
-		<li><a><span id="currentUser" style="color:white;"></span></a></li>
-		<li><a><span id="DaSaBi" style="color:white;"></span></a></li>
-		<li><a id="logout"><span style="color:red;">登出</span></a></li>
-	<ul>
-</div>
+		<ul class="BH-menuE">
+			<li class="dropList"><a href="#">群組列表</a></li>
+			<li><a id="logout"><span style="color:red;">登出</span></a></li>
+		<ul>
+	</div>
 
 <!--將頁面往下挪以免btn被蓋住-->
 <div id="bh-banner" class="bh-banner"></div>
@@ -241,17 +159,9 @@ function prePage() {
 		<!--抽卡介面-->
 		<ul class="b-tags">
 			<li class="b-tags__item">
-				<a href="newArticleView.php">新增文章</a>
-			</li>
-			<li class="b-tags__item">
-				<a href="buyAdView.php">購買廣告</a>
+				<a href="addgroupview.php">新增群組</a>
 			</li>
 		</ul>
-
-		<div id="otherUserName"></div>
-		<div id="otherGender"></div>
-		<div id="otherClass"></div>
-		<button type="button" id="drawcard" class="btn--sm btn--normal">抽卡</button>
 
 		<!--文章區-->
 		<div class="b-list-wrap">
@@ -266,8 +176,6 @@ function prePage() {
 					<a href="javascript:void(0);" onclick="prePage();">上一頁</a>
 					<a class="pagenow">1</a>
 					<a href="javascript:void(0);" onclick="nextPage();">下一頁</a>
-					<br>
-					<img src="../AD/output.jpg" width="300" height="100">
 				</p>
 			</div>
 		</div>
