@@ -137,7 +137,7 @@ class  MySQL_Account extends BaseAccount {
             while($row = $result->fetch_assoc()) {
                 $id = $row["id"];
                 $command = "UPDATE account 
-                SET PassWord =  '$password' WHERE Account = '$account' ";
+                SET PassWord =  '$password' ";
                 $this->link->query($command);
                 return $id;
             }
@@ -199,7 +199,7 @@ class  MySQL_Account extends BaseAccount {
 
     }
 
-    public function StoreDaSaBi($account,$money)
+    public  function  StoreDaSaBi($account,$money)
     {
         $command = "SELECT * FROM account where Account =  '$account' LIMIT 1";
         $result = $this->link->query($command);
@@ -218,7 +218,7 @@ class  MySQL_Account extends BaseAccount {
             return -1;
     }
 
-    public function UseDaSaBi($account,$money)
+    public  function  UseDaSaBi($account,$money)
     {
         $command = "SELECT * FROM account where Account =  '$account' LIMIT 1";
         $result = $this->link->query($command);
@@ -239,6 +239,17 @@ class  MySQL_Account extends BaseAccount {
             return -1;
     }
 
+    public function ListAllGroup($account)
+    {
+        $Groups =  $account."_Groups";
+        $command = "SELECT * FROM $Groups ";
+        $result = $this->link->query($command);
+        if ($result && mysqli_num_rows($result) > 0) {
+            return $result;
+        }
+        else
+            return -1;
+    }
 
 }
 

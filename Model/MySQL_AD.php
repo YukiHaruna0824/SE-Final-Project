@@ -25,26 +25,44 @@ class MySQL_AD
             return -1;
         }
         $command = "CREATE TABLE IF NOT EXISTS AllAD 
-                (id INTEGER not NULL AUTO_INCREMENT , PRIMARY KEY ( id ) , Title VARCHAR(30) not NULL , UNIQUE KEY ( Title ), Content TEXT, Owner VARCHAR(30) not NULL )" ;
+                (Title VARCHAR(30) not NULL , UNIQUE KEY ( Title ), Path TEXT, Owner VARCHAR(30) not NULL, DaSaBi INT(32) )" ;
         $this->link->query($command);
         return 1;
     }
 
-    public function Add($Title, $Content, $owner)
+    public function Add($Title, $path, $owner, $DaSaBi)
     {
-        $command = "Insert into AllAD(Title, Content, Owner)
-             VALUES('$Title' , '$Content' , '$owner')";
+        $command = "SELECT * FROM AllAD ";
         $result = $this->link->query($command);
         if ($result && mysqli_num_rows($result) > 0) {
-           return mysqli_insert_id($this->link);
+            while($row = $result->fetch_assoc()) {
+                $DaSaBi2 = $row["DaSaBi"];
+            }
+            if($DaSaBi<=$DaSaBi2)
+                return -1;
+            $command = "UPDATE AllAD
+                SET Path = '$path', SET DaSaBi =  '$DaSaBi', SET Owner = '$owner', SET Title = '$Title'";
+            $result3 = $this->link->query($command);
+            if ($result3 && mysqli_num_rows($result3) > 0)
+            {
+                echo "12";
+                return 1;
+            }
+            else
+            {
+                echo "13";
+                return -1;
+            }
         }
-        else
-            return -1;
+        $command = "Insert into AllAD (Title, Path, Owner, DaSaBi)
+             VALUES('$Title' , '$path' , '$owner', '$DaSaBi')";
+        $this->link->query($command);
+        return 1;
     }
 
-    public function Delete($ADID)
+    public function Delete()
     {
-        $command = "DELETE FROM AllAD WHERE id =  '$ADID' ";
+        $command = "DELETE FROM AllAD ";
         $result = $this->link->query($command);
         if ($result && mysqli_num_rows($result) > 0) {
             return 1;
@@ -53,28 +71,9 @@ class MySQL_AD
             return -1;
     }
 
-    public function UpDateContent($ADID, $content)
-    {
-        $command = "UPDATE AllAD 
-                SET Content =  '$content' WHERE id = '$ADID' ";
-        $result = $this->link->query($command);
-        if ($result && mysqli_num_rows($result) > 0)
-            return 1;
-        else
-            return -1;
-    }
 
-    public function ListAllAccountAD($owner)
-    {
-        $command = "SELECT * FROM AllAD WHERE Owner = '$owner'";
-        $result = $this->link->query($command);
-        if ($result && mysqli_num_rows($result) > 0) {
-            return $result;
-        }
-        return null;
-    }
 
-    public function ListAllAD()
+    public function GetAD()
     {
         $command = "SELECT * FROM AllAD ";
         $result = $this->link->query($command);
@@ -83,4 +82,18 @@ class MySQL_AD
         }
         return null;
     }
+
+    public function GetCurrentDaSaBi()
+    {
+        $command = "SELECT * FROM AllAD ";
+        $result = $this->link->query($command);
+        if ($result && mysqli_num_rows($result) > 0) {
+            while($row = $result->fetch_assoc()) {
+                return $row["DaSaBi"];
+            }
+        }
+        else
+            return -1;
+    }
+
 }

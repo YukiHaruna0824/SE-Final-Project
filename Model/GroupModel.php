@@ -26,14 +26,19 @@ class GroupModel
         return $this->group->KillGroup($groupName);
     }
 
-    public function AddMember($groupName,$account)
+    public function CheckMember($groupName,$account)
     {
-        return $this->group->AddMember($groupName,$account);
+        return $this->group->CheckMember($groupName,$account);
     }
 
-    public function KickMember($groupName,$account)
+    public function AddMember($groupName, $ManagerAccount, $account)
     {
-        return $this->group->KickMember($groupName,$account);
+        return $this->group->AddMember($groupName, $ManagerAccount, $account);
+    }
+
+    public function KickMember($groupName, $ManagerAccount, $account)
+    {
+        return $this->group->KickMember($groupName, $ManagerAccount, $account);
     }
 
     /* usage example
@@ -84,5 +89,25 @@ echo "\n";
     public function ListAllGroupArticle($group)
     {
         return $this->group->ListAllGroupArticle($group);
+    }
+
+    public function AddComment($groupName, $groupArticleID, $content, $account)
+    {
+        return $this->group->AddComment($groupName, $groupArticleID, $content, $account);
+    }
+
+    public function GetAllComment($groupName, $groupArticleID)
+    {
+        return $this->group->GetAllComment($groupName, $groupArticleID);
+    }
+
+    public function AddThumbUp($groupName, $groupArticleID, $account)
+    {
+        return $this->group->AddThumbUp($groupName, $groupArticleID, $account);
+    }
+
+    public function GetNumberOfThumbUp($groupName, $groupArticleID)
+    {
+        return $this->group->AddThumbUp($groupName, $groupArticleID);
     }
 }

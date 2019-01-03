@@ -82,4 +82,16 @@ while ($row = $result->fetch_assoc()) {
         return $this->account->UseDaSaBi($account,$money);
     }
 
+    /* usage example
+  $m = new AccountModel();
+$result = $m->ListAllGroup("ss");
+while ($row = $result->fetch_assoc()) {
+echo $row["GroupName"];
+} */
+    public function ListAllGroup($account)
+    {
+        return $this->account->ListAllGroup($account);
+    }
+
+
 }

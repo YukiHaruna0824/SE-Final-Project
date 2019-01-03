@@ -50,6 +50,7 @@ class MySQL_ThumbUp extends BaseThumbUp
                 SET ThumbUpNnumber =  '$number' WHERE id = '$articleID' ";
                 $this->link->query($command);
                 return  $lastid;
+
             }
 
             else
