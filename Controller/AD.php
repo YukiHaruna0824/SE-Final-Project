@@ -18,6 +18,8 @@ class AD
     //add AD with title, content
     public function addAD($file, $price,$filesta)
     {
+        if($price==0)
+            return FALSE;
         $topmoney=$this->AD_Model->GetCurrentDaSaBi();
         $tmpaccount=new AccountModel();
         if(($this->AD_Model->Add("Title", "Content", "owner", $price)!=-1)&&($tmpaccount->UseDaSaBi($_SESSION['$inaccountname'],$price)!=-1))
@@ -31,7 +33,10 @@ class AD
     //get AD
     public function getcurrentcoin()
     {
-        return $this->AD_Model->GetCurrentDaSaBi();
+        if($this->AD_Model->GetCurrentDaSaBi()==-1)
+            return 0;
+        else
+            return $this->AD_Model->GetCurrentDaSaBi();
     }
 }
 
