@@ -13,7 +13,6 @@
 
 <script>
 
-
 $(document).ready(function(data) {
 	//拿資料
 	$.ajax({
@@ -224,7 +223,7 @@ function prePage() {
 
 
 <!--主畫面-->
-<div class="container"> 
+<div class="container">
 	<div id="main">
 		<p></p>
 		<!--換頁-->
@@ -267,7 +266,7 @@ function prePage() {
 					<a class="pagenow">1</a>
 					<a href="javascript:void(0);" onclick="nextPage();">下一頁</a>
 					<br>
-					<img src="../AD/output.jpg" width="300" height="100">
+					<img src="../AD/output.jpg" width="400" height="600">
 				</p>
 			</div>
 		</div>

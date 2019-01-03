@@ -216,7 +216,7 @@ class MySQL_Group extends BaseGroup
 
             //Comment Table
             $command = "CREATE TABLE IF NOT EXISTS $comment
-            ( id INTEGER not NULL AUTO_INCREMENT , PRIMARY KEY ( id ) , Owner VARCHAR(30) not NULL,  Content TEXT, DeliveryDate TIMESTAMP) ";
+            ( id INTEGER not NULL AUTO_INCREMENT , PRIMARY KEY ( id ) , Owner VARCHAR(30) not NULL,  Content TEXT, DeliveryDate TIMESTAMP DEFAULT CURRENT_TIMESTAMP) ";
             $this->link->query($command);
 
             //ThumbUp Table

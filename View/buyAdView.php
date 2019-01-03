@@ -22,12 +22,15 @@
         }).done(function(data){
             let currentPrice = data['coin'];//接收當前廣告標價
             $("#currentprice").text(currentPrice);
-
         }).fail(function(jqXHR, textStatus, errorThrown) {
 				//失敗的時候
 				alert("有錯誤產生，請看 console log");
 				console.log(jqXHR.responseText);
 		});
+        $('#back').click(function(){
+            window.location.href = "HomeView.php";
+        });
+        
     });
 
 </script>
@@ -63,7 +66,7 @@
             </form>
 
             <br>
-			<button onclick="history.back()" class="b-list__filter__expert">
+			<button class="b-list__filter__expert" id = "back">
                 返回文章頁面
             </button>
 

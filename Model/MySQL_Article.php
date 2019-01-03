@@ -30,7 +30,7 @@ class MySQL_Article extends BaseArticle
 
         $command = "CREATE TABLE IF NOT EXISTS allArticles 
                 (id INTEGER not NULL AUTO_INCREMENT , PRIMARY KEY ( id ) , Owner VARCHAR(30) not NULL
-                , Title VARCHAR(30) not NULL, Content TEXT, Comment TEXT , ThumbUpNnumber INT, ThumbUp TEXT, DeliveryDate TIMESTAMP)" ;
+                , Title VARCHAR(30) not NULL, Content TEXT, Comment TEXT , ThumbUpNnumber INT, ThumbUp TEXT, DeliveryDate TIMESTAMP DEFAULT CURRENT_TIMESTAMP)" ;
         $this->link->query($command);
         //if()
          //   echo "create table su";
@@ -57,12 +57,12 @@ class MySQL_Article extends BaseArticle
 
                 //Comment Table
                 $command = "CREATE TABLE IF NOT EXISTS $comment
-            ( id INTEGER not NULL AUTO_INCREMENT , PRIMARY KEY ( id ) , Owner VARCHAR(30) not NULL,  Content TEXT, DeliveryDate TIMESTAMP) ";
+            ( id INTEGER not NULL AUTO_INCREMENT , PRIMARY KEY ( id ) , Owner VARCHAR(30) not NULL,  Content TEXT, DeliveryDate TIMESTAMP DEFAULT CURRENT_TIMESTAMP) ";
                 $this->link->query($command);
 
                 //ThumbUp Table
                 $command = "CREATE TABLE IF NOT EXISTS $thumbUp
-            (Account VARCHAR(30) not NULL, UNIQUE KEY ( Account ) , DeliveryDate TIMESTAMP) ";
+            (Account VARCHAR(30) not NULL, UNIQUE KEY ( Account ) , DeliveryDate TIMESTAMP DEFAULT CURRENT_TIMESTAMP) ";
                 $this->link->query($command);
 
                 return $last_id;
