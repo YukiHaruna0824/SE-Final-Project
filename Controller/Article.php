@@ -365,9 +365,9 @@ elseif(isset($_POST['na'])&&isset($_POST['id']))
     }
 }
 //make thumb
-elseif(isset($_POST['na'])&&isset($_POST['id']))
+elseif(isset($_POST['su'])&&isset($_POST['id']))
 {
-    $username=$_POST['na'];
+    $username=$_POST['su'];
     $id=$_POST['id'];//article id
     if(isset($_SESSION['$inaccountname']))
     {

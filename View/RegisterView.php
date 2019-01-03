@@ -46,9 +46,9 @@
               </div>							
               <div class="form-check">
 								<b>性別</b>
-  							<input class="form-check-input" type="radio" name="gender" value="0">
+  							<input class="form-check-input" type="radio" name="gender" value="0" required>
   							<label class="form-check-label" for="male">男</label>
-								<input class="form-check-input" type="radio" name="gender" value="1">
+								<input class="form-check-input" type="radio" name="gender" value="1" required>
 								<label class="form-check-label" for="female">女</label>
 							</div>
               <button type="submit" class="btn btn-default">

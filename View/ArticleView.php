@@ -81,8 +81,9 @@
 				},
 				dataType : 'html'
 			}).done(function(data){
+				console.log(data);
 				if(data == "AC"){
-					$("#thumb").html(Number($("#thumb").text()) + 1);
+
 				}else if(data == "ER"){
 					alert("你已點過讚了喔");
 				}
@@ -140,10 +141,6 @@
 				console.log(jqXHR.responseText);
 			});
 		});	
-
-
-
-
 	});
 </script>
 	

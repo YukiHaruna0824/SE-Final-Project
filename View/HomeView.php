@@ -111,7 +111,7 @@ $(document).ready(function(data) {
 function getHTML(data){
 	var tmpHTML = 
 		"<tr class=\"b-list__head\">"
-			+"<td style=\"width: 135px;\">使用者名稱</td>"
+			+"<td style=\"width: 135px;\">發文者名稱</td>"
 			+"<td style=\"max-width: 600px;\">文章</td>"
 		+"</tr>" ;
 	var i;
@@ -186,8 +186,14 @@ function prePage() {
 
 <!--不會被覆蓋-->
 <div class="TOP-bh">
-	<input type="button" id="logout" value="我想登出" style="float:right;width:10%">
 </div>
+
+<div id="BH-menu-path" class="BH-menu">
+		<ul class="BH-menuE">
+			<li class="dropList"><a href="#">文章列表</a></li>
+			<li><a id="logout"><span style="color:red;">登出</span></a></li>
+		<ul>
+	</div>
 
 <!--將頁面往下挪以免btn被蓋住-->
 <div id="bh-banner" class="bh-banner"></div>
@@ -213,6 +219,9 @@ function prePage() {
 			<li class="b-tags__item">
 				<a href="newArticleView.php">新增文章</a>
 			</li>
+			<li class="b-tags__item">
+				<a href="buyAdView.php">購買廣告</a>
+			</li>
 		</ul>
 
 		<div id="otherUserName"></div>
@@ -233,11 +242,15 @@ function prePage() {
 					<a href="javascript:void(0);" onclick="prePage();">上一頁</a>
 					<a class="pagenow">1</a>
 					<a href="javascript:void(0);" onclick="nextPage();">下一頁</a>
+					<br>
+					<img src="../AD/123.jpg" width="300" height="100">
 				</p>
 			</div>
 		</div>
 		<div id="bh-banner" class="bh-banner"></div>
 	</div>
+
+
 </div>	
 
 </body>

@@ -77,6 +77,10 @@
                 新增
               </button>
             </form>
+						<br>
+						<button onclick="history.back()" class="b-list__filter__expert">
+                返回文章頁面
+            </button>
           </div>
         </div>
       </div>
