@@ -96,6 +96,14 @@ echo "\n";
         return $this->group->AddComment($groupName, $groupArticleID, $content, $account);
     }
 
+    /* usage example
+$result = $m->GetAllComment("suck","1");
+while ($row = $result->fetch_assoc()) {
+    echo $row["Owner"];
+    echo "\n";
+    echo $row["Content"];
+    echo "\n";
+}*/
     public function GetAllComment($groupName, $groupArticleID)
     {
         return $this->group->GetAllComment($groupName, $groupArticleID);
@@ -108,6 +116,6 @@ echo "\n";
 
     public function GetNumberOfThumbUp($groupName, $groupArticleID)
     {
-        return $this->group->AddThumbUp($groupName, $groupArticleID);
+        return $this->group->GetNumberOfThumbUp($groupName, $groupArticleID);
     }
 }

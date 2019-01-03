@@ -123,7 +123,8 @@ class MySQL_Group extends BaseGroup
                     return -1;
             }
         }
-
+        else
+            return -1;
         $command = "SELECT * FROM account where Account = '$account'";
         $result = $this->link->query($command);
         if ($result && mysqli_num_rows($result) > 0) {
@@ -204,14 +205,13 @@ class MySQL_Group extends BaseGroup
 
     public function AddGroupArticle($group, $owner, $title, $content)
     {
-        $tableName = $group."_GroupArticle";
+        $tableName = $group."_GroupArticle";//**********Title
         $comment = $group.$title."_Comment";
         $thumbUp = $group.$title."_ThumbUp";
         $command = "Insert into $tableName (Owner, Title, Content,Comment,ThumbUpNnumber,ThumbUp)
              VALUES('$owner', '$title', '$content', '$comment', '0', '$thumbUp')";
         $result = $this->link->query($command);
-        if ($result && mysqli_num_rows($result) > 0) {
-
+        if ($result) {
              $last_id = mysqli_insert_id($this->link);
 
             //Comment Table
