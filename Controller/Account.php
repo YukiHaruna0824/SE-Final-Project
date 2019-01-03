@@ -69,7 +69,7 @@ class Account
     {
         return $this->account_name;
     }
-    public function __construct() 
+    public function __construct()
     {
         $this->account_model=new AccountModel();
         $this->account_name="";

@@ -63,6 +63,7 @@
             },
             dataType : 'html' //設定該網頁回應的會是 html 格式
           }).done(function(data) {
+            console.log(data);
             //成功的時候
             if(data == "AC")
             {
