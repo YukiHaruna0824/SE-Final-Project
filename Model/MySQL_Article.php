@@ -42,7 +42,7 @@ class MySQL_Article extends BaseArticle
         $command = "SELECT * FROM account where Account = '$account'";
         $result = $this->link->query($command);
         if ($result && mysqli_num_rows($result) > 0) {
-            $comment = $title."_Comment";
+            $comment = $title."_Comment";//****************************************Title 可以重複
             $thumbUp =  $title."_ThumbUp";
             $command = "Insert into allArticles(Owner, Title, Content, Comment, ThumbUp, ThumbUpNnumber)
              VALUES('$account' , '$title' , '$content', '$comment', '$thumbUp','0')";

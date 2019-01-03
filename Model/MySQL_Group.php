@@ -54,16 +54,16 @@ class MySQL_Group extends BaseGroup
         }
 
         $command = "CREATE TABLE IF NOT EXISTS $groupName
-            ( Member VARCHAR(30) not NULL , UNIQUE KEY ( Member )) ";
+            ( Member VARCHAR(30) not NULL , UNIQUE KEY ( Member ), Manager INT(32)) ";
         $this->link->query($command);
-        $command = "Insert into $groupName (Member)
-             VALUES('$account')";
+        $command = "Insert into $groupName (Member, Manager)
+             VALUES('$account', '1')";
         $this->link->query($command);
 
         $GroupArticle = $groupName."_GroupArticle";
         $command = "CREATE TABLE IF NOT EXISTS $GroupArticle 
                 (id INTEGER not NULL AUTO_INCREMENT , PRIMARY KEY ( id ) , Owner VARCHAR(30) not NULL
-                , Title VARCHAR(30) not NULL, Content TEXT, DeliveryDate TIMESTAMP )" ;
+                , Title VARCHAR(30) not NULL, Content TEXT, Comment TEXT , ThumbUpNnumber INT, ThumbUp TEXT, DeliveryDate TIMESTAMP )" ;
         $this->link->query($command);
 
         return $last_id;
@@ -71,7 +71,6 @@ class MySQL_Group extends BaseGroup
 
     public function KillGroup($groupName)
     {
-
         $command = "DELETE FROM Groups WHERE GroupName =  '$groupName' ";
         $this->link->query($command);
 
@@ -114,8 +113,17 @@ class MySQL_Group extends BaseGroup
 
     }
 
-    public function AddMember($groupName,$account)
+    public function AddMember($groupName, $ManagerAccount, $account)
     {
+        $command = "SELECT * FROM $groupName where Member = '$ManagerAccount'";
+        $result = $this->link->query($command);
+        if ($result && mysqli_num_rows($result) > 0) {
+            while ($row = $result->fetch_assoc()) {
+                if( $row["Manager"]!=1)
+                    return -1;
+            }
+        }
+
         $command = "SELECT * FROM account where Account = '$account'";
         $result = $this->link->query($command);
         if ($result && mysqli_num_rows($result) > 0) {
@@ -134,8 +142,17 @@ class MySQL_Group extends BaseGroup
         return 1;
     }
 
-    public function KickMember($groupName,$account)
+    public function KickMember($groupName, $ManagerAccount, $account)
     {
+        $command = "SELECT * FROM $groupName where Member = '$ManagerAccount'";
+        $result = $this->link->query($command);
+        if ($result && mysqli_num_rows($result) > 0) {
+            while ($row = $result->fetch_assoc()) {
+                if( $row["Manager"]!=1)
+                    return -1;
+            }
+        }
+
         $command = "DELETE FROM $groupName WHERE Member =  '$account' ";
         if(!$this->link->query($command))
             return -1;
@@ -150,6 +167,17 @@ class MySQL_Group extends BaseGroup
             $this->link->query($command);
         }
         return 1;
+    }
+
+    public function CheckMember($groupName,$account)
+    {
+        $command = "SELECT * FROM $groupName WHERE Member = '$account'";
+        $result = $this->link->query($command);
+        if ($result && mysqli_num_rows($result) > 0) {
+            return 1;
+        }
+        else
+            return -1;
     }
 
     public function ListGroupAllMembers($groupName)
@@ -177,11 +205,25 @@ class MySQL_Group extends BaseGroup
     public function AddGroupArticle($group, $owner, $title, $content)
     {
         $tableName = $group."_GroupArticle";
-        $command = "Insert into $tableName (Owner, Title, Content)
-             VALUES('$owner', '$title', '$content')";
+        $comment = $group.$title."_Comment";
+        $thumbUp = $group.$title."_ThumbUp";
+        $command = "Insert into $tableName (Owner, Title, Content,Comment,ThumbUpNnumber,ThumbUp)
+             VALUES('$owner', '$title', '$content', '$comment', '0', '$thumbUp')";
         $result = $this->link->query($command);
-        $last_id = mysqli_insert_id($this->link);
         if ($result && mysqli_num_rows($result) > 0) {
+
+             $last_id = mysqli_insert_id($this->link);
+
+            //Comment Table
+            $command = "CREATE TABLE IF NOT EXISTS $comment
+            ( id INTEGER not NULL AUTO_INCREMENT , PRIMARY KEY ( id ) , Owner VARCHAR(30) not NULL,  Content TEXT, DeliveryDate TIMESTAMP) ";
+            $this->link->query($command);
+
+            //ThumbUp Table
+            $command = "CREATE TABLE IF NOT EXISTS $thumbUp
+            (Account VARCHAR(30) not NULL, UNIQUE KEY ( Account ) , DeliveryDate TIMESTAMP) ";
+            $this->link->query($command);
+
             return $last_id;
         }
         else
@@ -210,6 +252,96 @@ class MySQL_Group extends BaseGroup
         }
         else
             return null;
+    }
+
+    public function AddComment($groupName, $groupArticleID, $content, $account)
+    {
+        $GroupArticle = $groupName."_GroupArticle";
+        $command = "SELECT * FROM $GroupArticle where id = '$groupArticleID' ";
+        $result = $this->link->query($command);
+        if ($result && mysqli_num_rows($result) > 0) {
+            while ($row = $result->fetch_assoc()) {
+                $table = $row["Comment"];
+            }
+            $command = "Insert into $table(Owner, Content)
+             VALUES('$account' , '$content')";
+
+            if($this->link->query($command))
+                return  mysqli_insert_id($this->link);
+            else
+                return -1;
+        }
+        else
+            return -1;
+    }
+
+
+    public function GetAllComment($groupName, $groupArticleID)
+    {
+        $GroupArticle = $groupName."_GroupArticle";
+        $command = "SELECT * FROM $GroupArticle where id = '$groupArticleID' ";
+        $result = $this->link->query($command);
+        if ($result && mysqli_num_rows($result) > 0) {
+            while ($row = $result->fetch_assoc()) {
+                $table = $row["Comment"];
+            }
+            $command = "SELECT * FROM $table ORDER BY DeliveryDate ASC";
+            $result = $this->link->query($command);
+            if ($result && mysqli_num_rows($result) > 0) {
+                return $result;
+            }
+            else
+                return
+                    null;
+        }
+        else
+            return
+                null;
+    }
+
+    public function AddThumbUp($groupName, $groupArticleID, $account)
+    {
+        $GroupArticle = $groupName."_GroupArticle";
+        $command = "SELECT * FROM $GroupArticle where id = '$groupArticleID' ";
+        $result = $this->link->query($command);
+
+        if ($result && mysqli_num_rows($result) > 0) {
+            while ($row = $result->fetch_assoc()) {
+                $table = $row["ThumbUp"];
+                $number = $row["ThumbUpNnumber"];
+                $number+=1;
+            }
+            $command = "Insert into $table(Account)
+             VALUES('$account')";
+            if($this->link->query($command))
+            {
+                $lastid = mysqli_insert_id($this->link);
+                $command = "UPDATE $GroupArticle 
+                SET ThumbUpNnumber =  '$number' WHERE id = '$groupArticleID' ";
+                $this->link->query($command);
+                return  $lastid;
+
+            }
+            else
+                return -1;
+        }
+        else
+            return -1;
+    }
+
+
+    public function GetNumberOfThumbUp($groupName, $groupArticleID)
+    {
+        $GroupArticle = $groupName."_GroupArticle";
+        $command = "SELECT * FROM $GroupArticle where id = '$groupArticleID' ";
+        $result = $this->link->query($command);
+        if ($result && mysqli_num_rows($result) > 0) {
+            while ($row = $result->fetch_assoc()) {
+                return $row["ThumbUpNnumber"];
+            }
+        }
+        else
+            return -1;
     }
 
 

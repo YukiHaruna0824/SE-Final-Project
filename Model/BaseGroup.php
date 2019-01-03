@@ -7,9 +7,9 @@ abstract class BaseGroup
 
     public abstract function KillGroup($groupName);
 
-    public abstract function AddMember($groupName,$account);
+    public abstract function AddMember($groupName, $ManagerAccount, $account);
 
-    public abstract function KickMember($groupName,$account);
+    public abstract function KickMember($groupName, $ManagerAccount, $account);
 
     public abstract function ListGroupAllMembers($groupName);
 
