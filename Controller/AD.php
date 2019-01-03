@@ -4,6 +4,7 @@
         session_start(); 
     } 
 ?>
+
 <?php
 require_once('../Model/ADModel.php');
 class AD
@@ -46,35 +47,21 @@ class AD
             return json_encode(null);
     }
 }
-//add AD
-if(isset($_POST['tit'])&&isset($_POST['con']))
+
+
+//有檔案名稱進入
+if(isset($_FILES['file']['name']))
 {
-    $username=$_SESSION['$inaccountname'];
-    if(isset($_SESSION[$username]))
-    {
-        $newAD=new AD();
-        if($newAD->addAD($_POST['tit'],$_POST['con'])==TRUE)
-            return "AC";
-        else
-            return "ER";
-    }
-    else
-    {
-        return "WN";
+    //檢查是否為JPG,JPEG,PNG
+    if($_FILES['file']['type'] == "image/png" || $_FILES['file']['type'] == "image/jpg" || $_FILES['file']['type'] == "image/jpeg"){
+        
+    }else{
+        echo '<script>alert("廣告只接受JPG,JPEG,PNG形式");window.location.href = "../View/buyAdView.php"</script>';
     }
 }
-//get one ad
-elseif(isset($_POST['rad']))//隨便給rad
+else
 {
-    $username=$_SESSION['$inaccountname'];
-    if(isset($_SESSION[$username]))
-    {
-        $newAD=new AD();
-        echo $newAD->getAD();
-    }
-    else
-    {
-        echo json_encode (null);
-    }
+    echo '<script>alert("查無檔案，點擊確定返回");window.location.href = "../View/buyAdView.php"</script>';
 }
+
 ?>

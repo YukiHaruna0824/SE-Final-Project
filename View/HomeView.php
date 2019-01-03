@@ -24,13 +24,14 @@ $(document).ready(function(data) {
 		},
 		dataType : 'json',
 	}).done(function(data){
-		//console.log(data);
 		$('#articles > tbody').html(getHTML(data));
 	}).fail(function(jqXHR, textStatus, errorThrown){
 		alert("有錯誤產生，請看 console log");
 		console.log(jqXHR.responseText);
 	});
 	
+
+
 	//抽卡按鈕註冊
 	$("#drawcard").click(function(){
 		$.ajax({
@@ -105,6 +106,8 @@ $(document).ready(function(data) {
 			console.log(jqXHR.responseText);
 		});
 	});
+
+
 });
 
 
@@ -189,11 +192,18 @@ function prePage() {
 </div>
 
 <div id="BH-menu-path" class="BH-menu">
-		<ul class="BH-menuE">
-			<li class="dropList"><a href="#">文章列表</a></li>
-			<li><a id="logout"><span style="color:red;">登出</span></a></li>
-		<ul>
-	</div>
+	<ul class="BH-menuE">
+		<li class="dropList"><a href="#">文章列表</a></li>
+		<li><a id="allarticle"><span style="color:orange;">全部貼文</span></a></li>
+		<li><a id="myartile"><span style="color:blue;">我的貼文</span></a></li>
+		<li><a id="friendarticle"><span style="color:black;">朋友貼文</span></a></li>
+		<li><a id="grouparticle"><span style="color:white;">群組貼文</span></a></li>
+		
+		<li><a><span id="currentUser" style="color:white;">使用者 :</span></a></li>
+		<li><a><span id="DaSaBi" style="color:white;">台科幣 :</span></a></li>
+		<li><a id="logout"><span style="color:red;">登出</span></a></li>
+	<ul>
+</div>
 
 <!--將頁面往下挪以免btn被蓋住-->
 <div id="bh-banner" class="bh-banner"></div>
