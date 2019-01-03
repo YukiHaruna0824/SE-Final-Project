@@ -29,26 +29,25 @@
 				console.log(jqXHR.responseText);
 		});*/
 
-        /*$(".login").submit(function(){
+        /*$(".Ad").submit(function(){
 			$.ajax({
 				type : "POST",
 				url : "../Controller/AD.php",
 				data : {
                     p : $("#price").val(),
+                    f : $("#file").val()
 				},
 				dataType : 'html'
 			}).done(function(data){
-				window.location.href = "HomeView.php"; //跳到文章頁面
+                console.log(data);
+				//window.location.href = "HomeView.php"; //跳到文章頁面
 			}).fail(function(jqXHR, textStatus, errorThrown) {
 				alert("有錯誤產生，請看 console log");//失敗的時候
 				console.log(jqXHR.responseText);
 			});
 			return false;
 		});*/
-
-        $(".login").submit(function(){
-			console.log($("#file").val());
-		});
+        
 
     });
 
@@ -66,7 +65,7 @@
 			</div>
 			<br>
 			<br>
-            <form class="Ad">
+            <form class="Ad" method="post" action="../Controller/AD.php" enctype="multipart/form-data">
                 <div class="form-group">
                     <label for="currentprice">當前廣告標價</label>
                     <h1 id="currentprice"></h1>
@@ -83,6 +82,7 @@
                     購買
                 </button>
             </form>
+
             <br>
 			<button onclick="history.back()" class="b-list__filter__expert">
                 返回文章頁面

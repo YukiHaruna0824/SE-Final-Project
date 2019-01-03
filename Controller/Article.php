@@ -252,7 +252,7 @@ class Article
             $json=array(
                 'Owner'=> $row["Owner"],
                 'Title'=> $row["Title"],
-                'Content'=> urlencode($row["Content"]),
+                'Content'=> $row["Content"],
                 'commit'=>($commitjson),
                 'thumb'=>$thumbtmp->GetNumberOfThumbUp($id),
                 'DeliveryDate'=>$row["DeliveryDate"]
