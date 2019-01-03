@@ -79,10 +79,11 @@
 				url : "../Controller/Article.php",
 				data : {
 					id : articleid,
-					su : PostUserName[1]
+					na : PostUserName[1]
 				},
 				dataType : 'html'
 			}).done(function(data){
+				console.log(data);
 				if(data == "AC"){
 					$("#thumb").text(Number($("#thumb").text()) + 1);
 				}else if(data == "ER"){
