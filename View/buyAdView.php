@@ -54,7 +54,7 @@
                 </div>
                 <div class="form-group">
                     <label for="price">標價</label>
-                    <input type="text" class="form-control" id="price" name="price" required>
+                    <input type="number" class="form-control" id="price" name="price" required>
                 </div>
                 <div class="form-group">
                     <label for="file">上傳廣告</label>

@@ -22,10 +22,17 @@ class AD
             return FALSE;
         $topmoney=$this->AD_Model->GetCurrentDaSaBi();
         $tmpaccount=new AccountModel();
-        if(($this->AD_Model->Add("Title", "Content", "owner", $price)!=-1)&&($tmpaccount->UseDaSaBi($_SESSION['$inaccountname'],$price)!=-1))
+        if($tmpaccount->UseDaSaBi($_SESSION['$inaccountname'],$price)!=-1)
         {
-            move_uploaded_file($file,"../AD/output.jpg");
-            return TRUE;
+            if($this->AD_Model->Add("Title", "Content", "owner", $price)!=-1)
+            {
+                move_uploaded_file($file,"../AD/output.jpg");
+                return TRUE;
+            }
+            else
+            {
+                return FALSE;
+            }
         }
         else
             return FALSE;
